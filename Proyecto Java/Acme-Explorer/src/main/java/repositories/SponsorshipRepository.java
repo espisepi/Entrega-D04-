@@ -1,6 +1,12 @@
+
 package repositories;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface SponsorshipRepository {
+import domain.Sponsorship;
+
+@Repository
+public interface SponsorshipRepository extends JpaRepository<Sponsorship, Integer> {
 
 }
