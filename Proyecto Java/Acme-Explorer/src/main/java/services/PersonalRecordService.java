@@ -32,8 +32,10 @@ public class PersonalRecordService {
 	// Simple CRUD methods------------------------------------------------
 
 	public PersonalRecord create() {
-		//TODO: Hacer
-		return null;
+		PersonalRecord personalRecord;
+		personalRecord = new PersonalRecord();
+
+		return personalRecord;
 	}
 	public Collection<PersonalRecord> findAll() {
 		Collection<PersonalRecord> personalRecords;
@@ -57,7 +59,7 @@ public class PersonalRecordService {
 		Assert.notNull(personalRecord);
 		PersonalRecord result;
 
-		result = this.personalRecordRepository.save(personalRecord);
+		result = this.personalRecordRepository.saveAndFlush(personalRecord);
 
 		return result;
 
@@ -67,7 +69,7 @@ public class PersonalRecordService {
 		PersonalRecord newPersonalRecord;
 		Assert.notNull(personalRecord);
 
-		newPersonalRecord = this.personalRecordRepository.save(personalRecord);
+		newPersonalRecord = this.personalRecordRepository.saveAndFlush(personalRecord);
 
 		return newPersonalRecord;
 	}

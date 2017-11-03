@@ -57,7 +57,7 @@ public class ProfessionalRecordService {
 		Assert.notNull(professionalRecord);
 		ProfessionalRecord result;
 
-		result = this.professionalRecordRepository.save(professionalRecord);
+		result = this.professionalRecordRepository.saveAndFlush(professionalRecord);
 
 		return result;
 
@@ -67,7 +67,7 @@ public class ProfessionalRecordService {
 		ProfessionalRecord newProfessionalRecord;
 		Assert.notNull(professionalRecord);
 
-		newProfessionalRecord = this.professionalRecordRepository.save(professionalRecord);
+		newProfessionalRecord = this.professionalRecordRepository.saveAndFlush(professionalRecord);
 
 		return newProfessionalRecord;
 	}

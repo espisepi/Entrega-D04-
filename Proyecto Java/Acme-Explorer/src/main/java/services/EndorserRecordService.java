@@ -57,7 +57,7 @@ public class EndorserRecordService {
 		Assert.notNull(endorserRecord);
 		EndorserRecord result;
 
-		result = this.endorserRecordRepository.save(endorserRecord);
+		result = this.endorserRecordRepository.saveAndFlush(endorserRecord);
 
 		return result;
 
@@ -67,7 +67,7 @@ public class EndorserRecordService {
 		EndorserRecord newEndorserRecord;
 		Assert.notNull(endorserRecord);
 
-		newEndorserRecord = this.endorserRecordRepository.save(endorserRecord);
+		newEndorserRecord = this.endorserRecordRepository.saveAndFlush(endorserRecord);
 
 		return newEndorserRecord;
 	}

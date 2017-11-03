@@ -52,7 +52,8 @@ public class CurriculaService {
 		Curricula newCurricula;
 		Assert.notNull(curricula);
 
-		newCurricula = this.curriculaRepository.save(curricula);
+		newCurricula = this.curriculaRepository.saveAndFlush(curricula);
+		Assert.notNull(newCurricula);
 
 		return newCurricula;
 	}
@@ -61,15 +62,16 @@ public class CurriculaService {
 		Curricula newCurricula;
 		Assert.notNull(curricula);
 
-		newCurricula = this.curriculaRepository.save(curricula);
+		newCurricula = this.curriculaRepository.saveAndFlush(curricula);
 
 		return newCurricula;
 	}
-
 	public Curricula create() {
-		//TODO: Hacer un create de curricula, a esa curricula hay que crearle un 
-		//personalRecord que se puede crear facilmente, lo demas puede ser vacio
-		return null;
+		Curricula curricula;
+		curricula = new Curricula();
+
+		return curricula;
+
 	}
 
 	public void delete(Curricula curricula) {

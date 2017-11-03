@@ -56,7 +56,7 @@ public class EducationRecordService {
 		Assert.notNull(educationRecord);
 		EducationRecord result;
 
-		result = this.educationRecordRepository.save(educationRecord);
+		result = this.educationRecordRepository.saveAndFlush(educationRecord);
 
 		return result;
 
@@ -66,7 +66,7 @@ public class EducationRecordService {
 		EducationRecord newEducationRecord;
 		Assert.notNull(educationRecord);
 
-		newEducationRecord = this.educationRecordRepository.save(educationRecord);
+		newEducationRecord = this.educationRecordRepository.saveAndFlush(educationRecord);
 
 		return newEducationRecord;
 	}
