@@ -2479,9 +2479,9 @@
 		<property name="text" value="text Story 1" />
 		<property name="attachments">
 			<list>
-				<value>attachments1 Story1</value>
-				<value>attachments2 Story1</value>
-				<value>attachments3 Story1</value>
+				<value>https://www.attachments1Story1.es</value>
+				<value>https://www.attachments2Story1.es</value>
+				<value>https://www.attachments3Story1.es</value>
 			</list>
 		</property>
 		<property name="trip" ref="trip1" />
@@ -2492,9 +2492,9 @@
 		<property name="text" value="text Story 2" />
 		<property name="attachments">
 			<list>
-				<value>attachments1 Story2</value>
-				<value>attachments2 Story2</value>
-				<value>attachments3 Story2</value>
+				<value>https://www.attachments1Story2.es</value>
+				<value>https://www.attachments2Story2.es</value>
+				<value>https://www.attachments3Story2.es</value>
 			</list>
 		</property>
 		<property name="trip" ref="trip2" />
@@ -2507,9 +2507,9 @@
 		<property name="text" value="text Story 3" />
 		<property name="attachments">
 			<list>
-				<value>attachments1 Story3</value>
-				<value>attachments2 Story3</value>
-				<value>attachments3 Story3</value>
+				<value>https://www.attachments1Story3.es</value>
+				<value>https://www.attachments2Story3.es</value>
+				<value>https://www.attachments3Story3.es</value>
 			</list>
 		</property>
 		<property name="trip" ref="trip3" />
@@ -2521,9 +2521,9 @@
 		<property name="text" value="text Story 4" />
 		<property name="attachments">
 			<list>
-				<value>attachments1 Story4</value>
-				<value>attachments2 Story4</value>
-				<value>attachments3 Story4</value>
+				<value>https://www.attachments1Story4.es</value>
+				<value>https://www.attachments2Story4.es</value>
+				<value>https://www.attachments3Story4.es</value>
 			</list>
 		</property>
 		<property name="trip" ref="trip4" />
@@ -2534,9 +2534,9 @@
 		<property name="text" value="text Story 5" />
 		<property name="attachments">
 			<list>
-				<value>attachments1 Story5</value>
-				<value>attachments2 Story5</value>
-				<value>attachments3 Story5</value>
+				<value>https://www.attachments1Story5.es</value>
+				<value>https://www.attachments2Story5.es</value>
+				<value>https://www.attachments3Story5.es</value>
 			</list>
 		</property>
 		<property name="trip" ref="trip5" />
