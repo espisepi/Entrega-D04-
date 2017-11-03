@@ -1,6 +1,12 @@
+
 package repositories;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public class MessageFolderRepository {
+import domain.MessageFolder;
+
+@Repository
+public interface MessageFolderRepository extends JpaRepository<MessageFolder, Integer> {
 
 }
