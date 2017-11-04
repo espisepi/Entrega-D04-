@@ -1,7 +1,9 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +12,10 @@ import org.springframework.util.Assert;
 
 import repositories.CurriculaRepository;
 import domain.Curricula;
+import domain.EducationRecord;
+import domain.EndorserRecord;
+import domain.MiscellaneousRecord;
+import domain.ProfessionalRecord;
 
 @Service
 @Transactional
@@ -52,32 +58,36 @@ public class CurriculaService {
 		Curricula newCurricula;
 		Assert.notNull(curricula);
 
+		Assert.notNull(curricula.getPersonalRecord());
+
 		newCurricula = this.curriculaRepository.saveAndFlush(curricula);
+
 		Assert.notNull(newCurricula);
 
 		return newCurricula;
 	}
 
-	public Curricula update(Curricula curricula) {
-		Curricula newCurricula;
-		Assert.notNull(curricula);
-
-		newCurricula = this.curriculaRepository.saveAndFlush(curricula);
-
-		return newCurricula;
-	}
 	public Curricula create() {
 		Curricula curricula;
 		curricula = new Curricula();
+
+		List<ProfessionalRecord> professionalRecords = new ArrayList<>();
+		List<MiscellaneousRecord> miscellaneousRecords = new ArrayList<>();
+		List<EndorserRecord> endorserRecords = new ArrayList<>();
+		List<EducationRecord> educationRecords = new ArrayList<>();
+
+		curricula.setEducationRecords(educationRecords);
+		curricula.setEndorserRecords(endorserRecords);
+		curricula.setMiscellaneousRecords(miscellaneousRecords);
+		curricula.setProfessionalRecords(professionalRecords);
 
 		return curricula;
 
 	}
 
 	public void delete(Curricula curricula) {
-
-		//TODO: Mirar como se borra una curricula y lo que necesita para que se borre
 		Assert.notNull(curricula);
+		Assert.notNull(this.curriculaRepository.findOne(curricula.getId()));
 
 		this.curriculaRepository.delete(curricula);
 

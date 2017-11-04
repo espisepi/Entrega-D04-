@@ -43,6 +43,16 @@ public class PersonalRecordServiceTest extends AbstractTest {
 	}
 	@Test
 	public void testSavePositive() {
+		PersonalRecord personalRecord;
+		personalRecord = this.personalRecordService.create();
 
+		personalRecord.setFullName("personalRecord 8");
+		personalRecord.setEmail("dany@gmail.com");
+		personalRecord.setLinkedProfile("https://www.example.com");
+		personalRecord.setPhoto("https://www.example.com");
+		personalRecord.setPhone("+34(578)1239");
+
+		PersonalRecord newPersonalRecord = this.personalRecordService.save(personalRecord);
+		Assert.notNull(newPersonalRecord);
 	}
 }

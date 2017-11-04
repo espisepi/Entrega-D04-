@@ -1,9 +1,7 @@
 
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,11 +13,7 @@ import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.Curricula;
-import domain.EducationRecord;
-import domain.EndorserRecord;
-import domain.MiscellaneousRecord;
 import domain.PersonalRecord;
-import domain.ProfessionalRecord;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -60,18 +54,10 @@ public class CurriculaServiceTest extends AbstractTest {
 		personalRecord.setPhoto("https://www.example.com");
 		personalRecord.setPhone("+34(578)1239");
 
-		List<ProfessionalRecord> professionalRecords = new ArrayList<>();
-		List<MiscellaneousRecord> miscellaneousRecords = new ArrayList<>();
-		List<EndorserRecord> endorserRecords = new ArrayList<>();
-		List<EducationRecord> educationRecords = new ArrayList<>();
+		PersonalRecord newPersonalRecord = this.personalRecordService.save(personalRecord);
+		curricula.setPersonalRecord(newPersonalRecord);
 
-		curricula.setEducationRecords(educationRecords);
-		curricula.setEndorserRecords(endorserRecords);
-		curricula.setMiscellaneousRecords(miscellaneousRecords);
-		curricula.setProfessionalRecords(professionalRecords);
-		curricula.setPersonalRecord(personalRecord);
-
-		Assert.notNull(curricula);
+		curricula.setTicker("041117-FFFF");
 
 		this.curriculaService.save(curricula);
 

@@ -63,15 +63,6 @@ public class EndorserRecordService {
 
 	}
 
-	public EndorserRecord update(EndorserRecord endorserRecord) {
-		EndorserRecord newEndorserRecord;
-		Assert.notNull(endorserRecord);
-
-		newEndorserRecord = this.endorserRecordRepository.saveAndFlush(endorserRecord);
-
-		return newEndorserRecord;
-	}
-
 	public void delete(EndorserRecord endorserRecord) {
 		//TODO: Hacer pero antes hay que mirar si se puede borrar del tiron.
 	}

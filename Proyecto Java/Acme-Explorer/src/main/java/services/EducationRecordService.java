@@ -62,15 +62,6 @@ public class EducationRecordService {
 
 	}
 
-	public EducationRecord update(EducationRecord educationRecord) {
-		EducationRecord newEducationRecord;
-		Assert.notNull(educationRecord);
-
-		newEducationRecord = this.educationRecordRepository.saveAndFlush(educationRecord);
-
-		return newEducationRecord;
-	}
-
 	public void delete(EducationRecord educationRecord) {
 		//TODO: Hacer pero antes hay que mirar si se puede borrar del tiron.
 	}

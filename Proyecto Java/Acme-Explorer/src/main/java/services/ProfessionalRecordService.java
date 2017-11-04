@@ -63,15 +63,6 @@ public class ProfessionalRecordService {
 
 	}
 
-	public ProfessionalRecord update(ProfessionalRecord professionalRecord) {
-		ProfessionalRecord newProfessionalRecord;
-		Assert.notNull(professionalRecord);
-
-		newProfessionalRecord = this.professionalRecordRepository.saveAndFlush(professionalRecord);
-
-		return newProfessionalRecord;
-	}
-
 	public void delete(ProfessionalRecord professionalRecord) {
 		//TODO: Hacer pero antes hay que mirar si se puede borrar del tiron.
 	}

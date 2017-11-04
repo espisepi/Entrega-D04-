@@ -65,15 +65,6 @@ public class PersonalRecordService {
 
 	}
 
-	public PersonalRecord update(PersonalRecord personalRecord) {
-		PersonalRecord newPersonalRecord;
-		Assert.notNull(personalRecord);
-
-		newPersonalRecord = this.personalRecordRepository.saveAndFlush(personalRecord);
-
-		return newPersonalRecord;
-	}
-
 	public void delete(PersonalRecord personalRecord) {
 
 		this.personalRecordRepository.delete(personalRecord);
