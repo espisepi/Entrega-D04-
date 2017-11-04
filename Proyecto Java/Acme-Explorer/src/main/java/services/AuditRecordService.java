@@ -50,8 +50,9 @@ public class AuditRecordService {
 	public AuditRecord findOne(final int auditrecordId) {
 		AuditRecord result;
 		result = this.auditRecordRepository.findOne(auditrecordId);
-		if (result.isDraftMode())
+		if (result.isDraftMode()){
 			Assert.isTrue(result.getAuditor().getId() == this.auditorService.findByPrincipal().getId());
+		}
 		Assert.notNull(result);
 		return result;
 	}
@@ -67,11 +68,9 @@ public class AuditRecordService {
 	}
 
 	public void delete(final AuditRecord auditrecord) {
-		assert auditrecord != null;
-		assert auditrecord.getId() != 0;
-		Assert.isTrue(this.auditRecordRepository.exists(auditrecord.getId()));
 		this.auditRecordRepository.delete(auditrecord);
 	}
+
 	// Other business methods------------------------------------------------------
 
 	public Collection<AuditRecord> findAuditRecordInDraftMode(int auditorId) {
