@@ -37,6 +37,7 @@ public class PersonalRecordService {
 
 		return personalRecord;
 	}
+
 	public Collection<PersonalRecord> findAll() {
 		Collection<PersonalRecord> personalRecords;
 
@@ -65,7 +66,20 @@ public class PersonalRecordService {
 
 	}
 
+	public Integer exitsCurriculaWithThisPersonalRecord(int personalRecordId) {
+
+		Assert.isTrue(personalRecordId != 0);
+		return this.personalRecordRepository.exitsCurriculaWithThisPersonalRecord(personalRecordId);
+	}
+
 	public void delete(PersonalRecord personalRecord) {
+
+		assert personalRecord != null;
+		assert personalRecord.getId() != 0;
+
+		Assert.isTrue(this.personalRecordRepository.exitsCurriculaWithThisPersonalRecord(personalRecord.getId()) == 0, "Debe de eliminar antes la curricula asociada a este PersonalRecord");
+
+		Assert.isTrue(this.personalRecordRepository.exists(personalRecord.getId()));
 
 		this.personalRecordRepository.delete(personalRecord);
 
