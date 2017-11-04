@@ -69,6 +69,7 @@ public class AuditRecord extends DomainEntity {
 		this.attachments = attachments;
 	}
 
+	@NotNull
 	public boolean isDraftMode() {
 		return this.draftMode;
 	}
