@@ -75,7 +75,9 @@ public class PersonalRecordService {
 	}
 
 	public void delete(PersonalRecord personalRecord) {
-		//TODO: Hacer pero antes hay que mirar si se puede borrar del tiron.
+
+		this.personalRecordRepository.delete(personalRecord);
+
 	}
 
 }

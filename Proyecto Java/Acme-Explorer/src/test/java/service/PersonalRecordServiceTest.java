@@ -34,4 +34,16 @@ public class PersonalRecordServiceTest extends AbstractTest {
 		Assert.isTrue(personalRecord != null);
 
 	}
+	@Test
+	public void testDeletePositive() {
+
+		PersonalRecord personalRecord = this.personalRecordService.findOne(6179);
+		this.personalRecordService.delete(personalRecord);
+
+		Assert.isNull(this.personalRecordService.findOne(6179));
+	}
+	@Test
+	public void testSavePositive() {
+
+	}
 }
