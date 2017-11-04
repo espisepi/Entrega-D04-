@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.AdministratorRepository;
+import security.LoginService;
+import security.UserAccount;
 import domain.Administrator;
 
 @Service
@@ -61,5 +63,15 @@ public class AdministratorService {
 		Assert.notNull(administrator);
 		Assert.isTrue(administrator.getId() != 0);
 		this.administratorRepository.delete(administrator);
+	}
+
+	// Other business methods------------------------------------------------------
+
+	public Administrator findByPrincipal() {
+		Administrator result;
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		result = this.administratorRepository.findByUserAccountId(userAccount.getId());
+		return result;
 	}
 }
