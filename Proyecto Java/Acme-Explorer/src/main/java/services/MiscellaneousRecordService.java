@@ -59,8 +59,13 @@ public class MiscellaneousRecordService {
 	}
 	public MiscellaneousRecord save(MiscellaneousRecord miscellaneousRecord) {
 
-		// TODO : hacer
-		return null;
+		Assert.notNull(miscellaneousRecord);
+
+		MiscellaneousRecord result;
+
+		result = this.miscellaneousRecordRepository.save(miscellaneousRecord);
+
+		return result;
 	}
 
 	public void delete(MiscellaneousRecord miscellaneousRecord) {

@@ -61,8 +61,13 @@ public class ManagerService {
 
 	public Manager save(Manager manager) {
 
-		// TODO : hacer
-		return null;
+		Assert.notNull(manager);
+
+		Manager result;
+
+		result = this.managerRepository.save(manager);
+
+		return result;
 	}
 
 	public void delete(Manager manager) {
