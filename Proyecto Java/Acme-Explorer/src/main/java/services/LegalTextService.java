@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,13 @@ public class LegalTextService {
 	// Simple CRUD methods-----------------------------------------------------
 	public LegalText create() {
 		LegalText result;
+		Date moment;
+		//TODO: ¿Quien lo crea? 
+
 		result = new LegalText();
+		moment = new Date(System.currentTimeMillis() - 1000);
+
+		result.setMoment(moment);
 		return result;
 	}
 

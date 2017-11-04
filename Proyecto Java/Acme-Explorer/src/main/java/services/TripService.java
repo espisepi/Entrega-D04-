@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,7 +45,13 @@ public class TripService {
 
 	public Trip findOne(final int tripId) {
 		Trip result;
+		Date publicationDate;
+		//TODO: ¿Quien lo crea?-> Manager
+
 		result = this.tripRepository.findOne(tripId);
+		publicationDate = new Date(System.currentTimeMillis() - 1000);
+
+		result.setPublicationDate(publicationDate);
 		return result;
 	}
 
