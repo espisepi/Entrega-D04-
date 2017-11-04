@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.Collection;
+
 import javax.transaction.Transactional;
 
 import org.junit.Test;
@@ -34,6 +36,12 @@ public class NoteServiceTest extends AbstractTest {
 		res = this.noteService.create();
 		Assert.notNull(res);
 
+	}
+
+	@Test
+	public void testFindAll() {
+		Collection<Note> res = this.noteService.findAll();
+		Assert.notEmpty(res);
 	}
 
 }
