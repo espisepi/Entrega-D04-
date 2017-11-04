@@ -46,6 +46,7 @@ public class AdministratorService {
 	}
 
 	public Administrator findOne(int administratorId) {
+		Assert.isTrue(administratorId != 0);
 		Administrator result;
 		result = this.administratorRepository.findOne(administratorId);
 		Assert.notNull(result);

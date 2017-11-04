@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.Collection;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,9 +37,16 @@ public class SponsorshipService {
 	}
 
 	public Sponsorship findOne(final int sponsorshipId) {
+		Assert.isTrue(sponsorshipId != 0);
 		Sponsorship result;
 		result = this.sponsorshipRepository.findOne(sponsorshipId);
 		Assert.notNull(result);
+		return result;
+	}
+
+	public Collection<Sponsorship> findAll() {
+		Collection<Sponsorship> result;
+		result = this.sponsorshipRepository.findAll();
 		return result;
 	}
 
