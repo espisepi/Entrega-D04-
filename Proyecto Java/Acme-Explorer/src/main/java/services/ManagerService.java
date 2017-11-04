@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.ManagerRepository;
+import security.LoginService;
+import security.UserAccount;
 import domain.Manager;
 
 @Service
@@ -78,4 +80,31 @@ public class ManagerService {
 		this.managerRepository.delete(manager);
 
 	}
+
+	// Other business methods----------------------------------
+
+	public Manager findByPrincipal() {
+
+		Manager result;
+		UserAccount userAccount;
+
+		userAccount = LoginService.getPrincipal();
+		Assert.notNull(userAccount);
+		result = this.findByUserAccount(userAccount);
+		Assert.notNull(result);
+
+		return result;
+	}
+
+	public Manager findByUserAccount(UserAccount userAccount) {
+
+		Assert.notNull(userAccount);
+
+		Manager result;
+
+		result = this.managerRepository.findByUserAccountId(userAccount.getId());
+
+		return result;
+	}
+
 }
