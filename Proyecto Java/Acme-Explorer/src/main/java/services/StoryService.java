@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,12 +34,14 @@ public class StoryService {
 
 	public Story create() {
 		Story result;
+		Collection<String> attachments;
+		attachments = new ArrayList<String>();
 
 		result = new Story();
+		result.setAttachments(attachments);
 
 		return result;
 	}
-
 	public Collection<Story> findAll() {
 		Collection<Story> result;
 

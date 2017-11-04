@@ -3,6 +3,7 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -14,8 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
+import domain.ApplicationFor;
 import domain.Explorer;
-import domain.Story;
 import domain.Trip;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -23,60 +24,59 @@ import domain.Trip;
 	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
 })
 @Transactional
-public class StoryServiceTest extends AbstractTest {
+public class ApplicationForServiceTest extends AbstractTest {
 
 	//Service under test----------------------------------------------------------	
 
 	@Autowired
-	private StoryService	storyService;
+	private ApplicationForService	applicationForService;
 
 	// Supporting services ----------------------------------------------------
 
 	@Autowired
-	private ExplorerService	explorerService;
+	private ExplorerService			explorerService;
 	@Autowired
-	private TripService		tripService;
+	private TripService				tripService;
 
 
 	@Test
 	public void testCreatePositive() {
-		Story story;
-		story = this.storyService.create();
-		Assert.notNull(story);
+		ApplicationFor applicationFor;
+		applicationFor = this.applicationForService.create();
+		Assert.notNull(applicationFor);
+		Assert.isTrue(applicationFor.getStatus() == "PENDING");
 	}
 
 	@Test
 	public void testSavePositive() {
-		Story story;
-		story = this.storyService.create();
+		ApplicationFor applicationFor;
+
+		applicationFor = this.applicationForService.create();
 
 		final List<Explorer> explorers = new ArrayList<Explorer>(this.explorerService.findAll());
 		final List<Trip> trips = new ArrayList<Trip>(this.tripService.findAll());
-		final Collection<String> attachments = new ArrayList<String>();
-		attachments.add("https://www.attachment1Test.es");
+		final List<ApplicationFor> applicationsFor = new ArrayList<ApplicationFor>(this.applicationForService.findAll());
 
-		story.setTitle("title story test");
-		story.setText("text story test");
-		story.setAttachments(attachments);
-		story.setExplorer(explorers.get(0));
-		story.setTrip(trips.get(0));
-		Assert.notNull(story.getExplorer());
+		applicationFor.setMoment(new Date());
+		applicationFor.setExplorer(explorers.get(0));
+		applicationFor.setCreditCard(applicationsFor.get(0).getCreditCard());
+		applicationFor.setTrip(trips.get(0));
 
-		story = this.storyService.save(story);
-		Assert.notNull(story.getId());
+		applicationFor = this.applicationForService.save(applicationFor);
+		Assert.notNull(applicationFor.getId());
 
 	}
 	@Test
 	public void testFindAllPositive() {
-		Collection<Story> storys;
-		storys = this.storyService.findAll();
-		Assert.notEmpty(storys);
+		Collection<ApplicationFor> applicationFors;
+		applicationFors = this.applicationForService.findAll();
+		Assert.notEmpty(applicationFors);
 	}
 
 	//	@Test
 	//	public void testFindOnePositive() {
-	//		Story story;
-	//		story = this.storyService.findOne(6248);
-	//		Assert.notNull(story);
+	//		ApplicationFor applicationFor;
+	//		applicationFor = this.applicationForService.findOne(6248);
+	//		Assert.notNull(applicationFor);
 	//	}
 }

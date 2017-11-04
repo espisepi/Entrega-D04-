@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,12 +34,18 @@ public class ApplicationForService {
 
 	public ApplicationFor create() {
 		ApplicationFor result;
+		String status;
+		Collection<String> comments;
 
 		result = new ApplicationFor();
+		status = "PENDING";
+		comments = new ArrayList<String>();
+
+		result.setStatus(status);
+		result.setComments(comments);
 
 		return result;
 	}
-
 	public Collection<ApplicationFor> findAll() {
 		Collection<ApplicationFor> result;
 
