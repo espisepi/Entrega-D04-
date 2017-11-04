@@ -1,5 +1,5 @@
 
-package service;
+package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -13,8 +13,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import services.CurriculaService;
-import services.PersonalRecordService;
 import utilities.AbstractTest;
 import domain.Curricula;
 import domain.EducationRecord;
