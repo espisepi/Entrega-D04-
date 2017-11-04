@@ -24,8 +24,7 @@ public class MessageFolderService {
 	@Autowired
 	private MessageFolderRepository	messageFolderRepository;
 	// Supporting services ----------------------------------------------------
-	@Autowired
-	private MessageService			messageService;
+
 	@Autowired
 	private ActorService			actorService;
 

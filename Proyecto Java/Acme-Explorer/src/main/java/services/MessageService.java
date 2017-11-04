@@ -20,13 +20,12 @@ public class MessageService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private MessageRepository		messageRepository;
+	private MessageRepository	messageRepository;
 
 	// Supporting services ----------------------------------------------------
+
 	@Autowired
-	private MessageFolderService	messageFolderService;
-	@Autowired
-	private ActorService			actorService;
+	private ActorService		actorService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -56,6 +55,7 @@ public class MessageService {
 	}
 
 	public Collection<Message> findAll() {
+		Actor actorfind = this.actorService.findPrincipal();
 		Collection<Message> result;
 		result = this.messageRepository.findAll();
 		return result;
