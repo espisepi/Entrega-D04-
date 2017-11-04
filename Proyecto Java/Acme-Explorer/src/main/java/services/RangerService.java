@@ -6,6 +6,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import repositories.RangerRepository;
 import domain.Ranger;
@@ -29,19 +30,36 @@ public class RangerService {
 	// Simple CRUD methods------------------------------------------------
 
 	public Ranger create() {
-		// TODO: Auto-generated method stub
-		return null;
+
+		Ranger result;
+
+		result = new Ranger();
+
+		return result;
 	}
 
 	public Collection<Ranger> findAll() {
-		// TODO: hacer
-		return null;
+
+		Collection<Ranger> result;
+
+		result = this.RangerRepository.findAll();
+
+		Assert.notNull(result);
+
+		return result;
 	}
 
 	public Ranger findOne(int RangerId) {
 
-		// TODO: HACER
-		return null;
+		Assert.isTrue(RangerId != 0);
+
+		Ranger result;
+
+		result = this.RangerRepository.findOne(RangerId);
+
+		Assert.notNull(result);
+
+		return result;
 	}
 
 	public Ranger save(Ranger ranger) {

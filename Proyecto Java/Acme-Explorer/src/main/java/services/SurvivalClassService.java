@@ -6,6 +6,7 @@ import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import repositories.SurvivalClassRepository;
 import domain.SurvivalClass;
@@ -30,19 +31,32 @@ public class SurvivalClassService {
 	// Simple CRUD methods------------------------------------------------
 
 	public SurvivalClass create() {
-		// TODO: Auto-generated method stub
-		return null;
+
+		SurvivalClass result;
+
+		result = new SurvivalClass();
+
+		return result;
 	}
 
 	public Collection<SurvivalClass> findAll() {
-		// TODO: hacer
-		return null;
+
+		Collection<SurvivalClass> result;
+
+		result = this.survivalClassRecordRepository.findAll();
+
+		Assert.notNull(result);
+
+		return result;
 	}
 
 	public SurvivalClass findOne(int survivalClassId) {
 
-		// TODO: HACER
-		return null;
+		SurvivalClass result;
+
+		result = this.survivalClassRecordRepository.findOne(survivalClassId);
+
+		return result;
 	}
 
 	public SurvivalClass save(SurvivalClass survivalClass) {
