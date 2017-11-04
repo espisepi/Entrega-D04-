@@ -71,8 +71,10 @@ public class SurvivalClassService {
 	}
 	public void delete(SurvivalClass survivalClass) {
 
-		// TODO: HACER
+		Assert.notNull(survivalClass);
+		Assert.isTrue(survivalClass.getId() != 0);
+
+		this.survivalClassRecordRepository.delete(survivalClass);
 
 	}
-
 }

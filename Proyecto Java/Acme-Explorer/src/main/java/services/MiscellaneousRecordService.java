@@ -70,7 +70,10 @@ public class MiscellaneousRecordService {
 
 	public void delete(MiscellaneousRecord miscellaneousRecord) {
 
-		// TODO: HACER
+		Assert.notNull(miscellaneousRecord);
+		Assert.isTrue(miscellaneousRecord.getId() != 0);
+
+		this.miscellaneousRecordRepository.delete(miscellaneousRecord);
 
 	}
 }

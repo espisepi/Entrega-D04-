@@ -72,7 +72,10 @@ public class ManagerService {
 
 	public void delete(Manager manager) {
 
-		// TODO: HACER
+		Assert.notNull(manager);
+		Assert.isTrue(manager.getId() != 0);
+
+		this.managerRepository.delete(manager);
 
 	}
 }

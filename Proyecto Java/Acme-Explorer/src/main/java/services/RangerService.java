@@ -75,7 +75,10 @@ public class RangerService {
 
 	public void delete(Ranger ranger) {
 
-		// TODO: HACER
+		Assert.notNull(ranger);
+		Assert.isTrue(ranger.getId() != 0);
+
+		this.RangerRepository.delete(ranger);
 
 	}
 
