@@ -9,6 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.RangerRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.Ranger;
 
 @Service
@@ -80,6 +83,20 @@ public class RangerService {
 
 		this.RangerRepository.delete(ranger);
 
+	}
+
+	public void checkPrincipal() {
+
+		UserAccount userAccount = LoginService.getPrincipal();
+		Assert.notNull(userAccount);
+
+		Collection<Authority> authorities = userAccount.getAuthorities();
+		Assert.notNull(authorities);
+
+		Authority auth = new Authority();
+		auth.setAuthority("ADMIN");
+
+		Assert.isTrue(authorities.contains(auth));
 	}
 
 }
