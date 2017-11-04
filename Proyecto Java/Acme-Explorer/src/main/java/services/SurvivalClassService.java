@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.SurvivalClassRepository;
+import domain.Manager;
 import domain.SurvivalClass;
 
 @Service
@@ -20,6 +21,11 @@ public class SurvivalClassService {
 	@Autowired
 	private SurvivalClassRepository	survivalClassRecordRepository;
 
+	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private ManagerService			managerService;
+
 
 	// Constructors-------------------------------------------------------
 
@@ -30,15 +36,15 @@ public class SurvivalClassService {
 
 	// Simple CRUD methods------------------------------------------------
 
-	public SurvivalClass create() {
+	public SurvivalClass create(Manager manager) {
 
+		manager = this.managerService.findByPrincipal();
 		SurvivalClass result;
 
 		result = new SurvivalClass();
 
 		return result;
 	}
-
 	public Collection<SurvivalClass> findAll() {
 
 		Collection<SurvivalClass> result;

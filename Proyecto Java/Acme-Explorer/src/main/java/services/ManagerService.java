@@ -90,19 +90,8 @@ public class ManagerService {
 
 		userAccount = LoginService.getPrincipal();
 		Assert.notNull(userAccount);
-		result = this.findByUserAccount(userAccount);
-		Assert.notNull(result);
-
-		return result;
-	}
-
-	public Manager findByUserAccount(UserAccount userAccount) {
-
-		Assert.notNull(userAccount);
-
-		Manager result;
-
 		result = this.managerRepository.findByUserAccountId(userAccount.getId());
+		Assert.notNull(result);
 
 		return result;
 	}
