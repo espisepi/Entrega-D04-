@@ -61,14 +61,20 @@ public class SurvivalClassService {
 
 	public SurvivalClass save(SurvivalClass survivalClass) {
 
-		// TODO : hacer
-		return null;
-	}
+		Assert.notNull(survivalClass);
 
+		SurvivalClass result;
+
+		result = this.survivalClassRecordRepository.save(survivalClass);
+
+		return result;
+	}
 	public void delete(SurvivalClass survivalClass) {
 
-		// TODO: HACER
+		Assert.notNull(survivalClass);
+		Assert.isTrue(survivalClass.getId() != 0);
+
+		this.survivalClassRecordRepository.delete(survivalClass);
 
 	}
-
 }

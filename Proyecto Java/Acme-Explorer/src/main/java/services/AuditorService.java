@@ -46,6 +46,7 @@ public class AuditorService {
 	}
 
 	public Auditor findOne(int auditorId) {
+		Assert.isTrue(auditorId != 0);
 		Auditor result;
 		result = this.auditorRepository.findOne(auditorId);
 		Assert.notNull(result);

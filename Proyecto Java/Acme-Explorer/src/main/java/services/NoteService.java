@@ -37,14 +37,20 @@ public class NoteService {
 		Date createdMoment;
 		createdMoment = new Date();
 		result.setCreatedMoment(createdMoment);
-
 		return result;
 	}
 
 	public Note findOne(final int noteId) {
+		Assert.isTrue(noteId != 0);
 		Note result;
 		result = this.noteRepository.findOne(noteId);
 		Assert.notNull(result);
+		return result;
+	}
+
+	public Collection<Note> findAll() {
+		Collection<Note> result;
+		result = this.noteRepository.findAll();
 		return result;
 	}
 

@@ -50,9 +50,8 @@ public class AuditRecordService {
 	public AuditRecord findOne(final int auditrecordId) {
 		AuditRecord result;
 		result = this.auditRecordRepository.findOne(auditrecordId);
-		if (result.isDraftMode()){
+		if (result.isDraftMode())
 			Assert.isTrue(result.getAuditor().getId() == this.auditorService.findByPrincipal().getId());
-		}
 		Assert.notNull(result);
 		return result;
 	}
@@ -64,6 +63,13 @@ public class AuditRecordService {
 		realisedMoment = new Date(System.currentTimeMillis() - 1000);
 		result.setRealisedMoment(realisedMoment);
 		Assert.notNull(result);
+		//empieza aquí lo del draftmode
+		Boolean res = false;
+		for (AuditRecord a : auditrecord.getAuditor().getAuditRecords())
+			if (!a.isDraftMode())
+				res = true;
+		Assert.isTrue(!res || auditrecord.isDraftMode());
+		result = this.auditRecordRepository.save(auditrecord);
 		return result;
 	}
 

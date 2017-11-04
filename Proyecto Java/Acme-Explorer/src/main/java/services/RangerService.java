@@ -64,13 +64,21 @@ public class RangerService {
 
 	public Ranger save(Ranger ranger) {
 
-		// TODO : hacer
-		return null;
+		Assert.notNull(ranger);
+
+		Ranger result;
+
+		result = this.RangerRepository.save(ranger);
+
+		return result;
 	}
 
 	public void delete(Ranger ranger) {
 
-		// TODO: HACER
+		Assert.notNull(ranger);
+		Assert.isTrue(ranger.getId() != 0);
+
+		this.RangerRepository.delete(ranger);
 
 	}
 

@@ -19,16 +19,10 @@ public class ActorService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private ActorRepository			actorRepository;
+	private ActorRepository	actorRepository;
+
 
 	// Supporting services ----------------------------------------------------
-	@Autowired
-	private MessageFolderService	messageFolderService;
-	@Autowired
-	private SocialIdentityService	socialIdentityService;
-	@Autowired
-	private MessageService			messageService;
-
 
 	// Constructors -----------------------------------------------------------
 	public ActorService() {
@@ -77,10 +71,8 @@ public class ActorService {
 	public Actor findPrincipal() {
 		Actor result;
 		int userAccountId;
-
 		userAccountId = LoginService.getPrincipal().getId();
-		result = this.actorRepository.findOne(userAccountId);
-
+		result = this.actorRepository.findActorByUseraccount(userAccountId);
 		Assert.notNull(result);
 
 		return result;

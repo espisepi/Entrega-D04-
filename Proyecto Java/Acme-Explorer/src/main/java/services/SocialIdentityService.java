@@ -20,10 +20,8 @@ public class SocialIdentityService {
 	@Autowired
 	private SocialIdentityRepository	socialIdentityRepository;
 
-	// Supporting services ----------------------------------------------------
-	@Autowired
-	private ActorService				actorService;
 
+	// Supporting services ----------------------------------------------------
 
 	// Constructors -----------------------------------------------------------
 	public SocialIdentityService() {
