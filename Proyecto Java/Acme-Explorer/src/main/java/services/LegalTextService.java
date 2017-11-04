@@ -1,16 +1,23 @@
 
 package services;
 
+import java.util.Collection;
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import repositories.LegalTextRepository;
+import domain.LegalText;
 
 @Service
 @Transactional
 public class LegalTextService {
 
 	// Managed repository -----------------------------------------------------
+	@Autowired
 	private LegalTextRepository	legalTextRepository;
 
 
@@ -21,4 +28,49 @@ public class LegalTextService {
 		super();
 	}
 
+	// Simple CRUD methods-----------------------------------------------------
+	public LegalText create() {
+		LegalText result;
+		Date moment;
+		//TODO: ¿Quien lo crea? 
+
+		result = new LegalText();
+		moment = new Date(System.currentTimeMillis() - 1000);
+
+		result.setMoment(moment);
+		return result;
+	}
+
+	public Collection<LegalText> findAll() {
+		Collection<LegalText> result;
+		Assert.notNull(this.legalTextRepository);
+		result = this.legalTextRepository.findAll();
+		Assert.notNull(result);
+		return result;
+	}
+
+	public LegalText findOne(final int legalTextId) {
+		LegalText result;
+		result = this.legalTextRepository.findOne(legalTextId);
+		return result;
+	}
+
+	public LegalText save(final LegalText legalText) {
+		assert legalText != null;
+
+		LegalText result;
+
+		result = this.legalTextRepository.save(legalText);
+
+		return result;
+	}
+
+	public void delete(final LegalText legalText) {
+		assert legalText != null;
+		assert legalText.getId() != 0;
+
+		Assert.isTrue(this.legalTextRepository.exists(legalText.getId()));
+
+		this.legalTextRepository.delete(legalText);
+	}
 }

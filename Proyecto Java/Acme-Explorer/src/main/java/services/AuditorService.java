@@ -9,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.AuditorRepository;
+import security.LoginService;
+import security.UserAccount;
 import domain.Auditor;
 
 @Service
@@ -61,5 +63,15 @@ public class AuditorService {
 		Assert.notNull(auditor);
 		Assert.isTrue(auditor.getId() != 0);
 		this.auditorRepository.delete(auditor);
+	}
+
+	// Other business methods------------------------------------------------------
+
+	public Auditor findByPrincipal() {
+		Auditor result;
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		result = this.auditorRepository.findByUserAccountId(userAccount.getId());
+		return result;
 	}
 }

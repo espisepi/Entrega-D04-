@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,5 +64,13 @@ public class NoteService {
 		assert note.getId() != 0;
 		Assert.isTrue(this.noteRepository.exists(note.getId()));
 		this.noteRepository.delete(note);
+	}
+
+	// Other business methods------------------------------------------------------
+
+	public Collection<Note> findNotesWritenByAuditor() {
+		Collection<Note> result;
+		result = this.noteRepository.findNotesWritenByAuditor();
+		return result;
 	}
 }
