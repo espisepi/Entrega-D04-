@@ -35,13 +35,12 @@ public class MessageFolderService {
 	}
 	// Simple CRUD methods ----------------------------------------------------
 	public MessageFolder create() {
+		Actor actorcreator = this.actorService.findPrincipal();
 		MessageFolder messagefolder = new MessageFolder();
-		Actor actor;
-		List<Message> messages = new ArrayList<>();
-		actor = this.actorService.findPrincipal();
-		Collection<MessageFolder> messagesFolders = this.messageFolderRepository.ActorFolders(actor.getId());
-		messagesFolders.add(messagefolder);
-		messagefolder.setMessages(messages);
+		List<Message> message = new ArrayList<>();
+		messagefolder.setMessages(message);
+		actorcreator.getMessagesFolders().add(messagefolder);
+
 		return messagefolder;
 	}
 

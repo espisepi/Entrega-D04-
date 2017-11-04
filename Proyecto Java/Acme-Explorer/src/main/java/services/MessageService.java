@@ -55,7 +55,6 @@ public class MessageService {
 	}
 
 	public Collection<Message> findAll() {
-		Actor actorfind = this.actorService.findPrincipal();
 		Collection<Message> result;
 		result = this.messageRepository.findAll();
 		return result;
@@ -64,11 +63,11 @@ public class MessageService {
 
 	public Message Save(Message message) {
 		Message result;
-		result = new Message();
+		result = message;
 		Date current;
 		current = new Date(System.currentTimeMillis() - 1000);
 		result.setMoment(current);
-		result = this.messageRepository.save(message);
+		this.messageRepository.save(result);
 		return result;
 	}
 	public void delete(Message message) {
