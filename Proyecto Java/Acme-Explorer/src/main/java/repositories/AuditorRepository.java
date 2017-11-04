@@ -12,4 +12,5 @@ public interface AuditorRepository extends JpaRepository<Auditor, Integer> {
 
 	@Query("select a from Auditor a where a.userAccount.id = ?1")
 	Auditor findByUserAccountId(int id);
+
 }
