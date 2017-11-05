@@ -13,17 +13,29 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity
 @Access(AccessType.PROPERTY)
 public class Note extends DomainEntity {
 
-	//----------------------------Atibuttes----------------------------------------
+	//----------------------------Atributes----------------------------------------
 
 	private Date	createdMoment;
 	private int		remark;
 	private String	reply;
 	private Date	replyMoment;
+	private String	body;
 
+
+	@NotBlank
+	public String getBody() {
+		return this.body;
+	}
+
+	public void setBody(String body) {
+		this.body = body;
+	}
 
 	@NotNull
 	@Past

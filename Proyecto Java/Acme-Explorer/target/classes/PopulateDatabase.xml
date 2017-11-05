@@ -1675,6 +1675,7 @@
 		<property name="remark" value="3" />
 		<property name="auditor" ref="auditor1" />
 		<property name="trip" ref="trip1" />
+		<property name="body" value="Description note 1"/>
 
 	</bean>
 
@@ -1683,6 +1684,7 @@
 		<property name="remark" value="3" />
 		<property name="auditor" ref="auditor1" />
 		<property name="trip" ref="trip2" />
+		<property name="body" value="Description note 2"/>
 
 	</bean>
 
@@ -1691,6 +1693,7 @@
 		<property name="remark" value="3" />
 		<property name="auditor" ref="auditor2" />
 		<property name="trip" ref="trip3" />
+		<property name="body" value="Description note 3"/>
 	</bean>
 
 	<bean id="note4" class="domain.Note">
@@ -1698,7 +1701,7 @@
 		<property name="remark" value="3" />
 		<property name="auditor" ref="auditor2" />
 		<property name="trip" ref="trip4" />
-
+		<property name="body" value="Description note 4"/>
 	</bean>
 
 	<bean id="note5" class="domain.Note">
@@ -1706,7 +1709,7 @@
 		<property name="remark" value="2" />
 		<property name="auditor" ref="auditor3" />
 		<property name="trip" ref="trip4" />
-
+		<property name="body" value="Description note 5"/>
 	</bean>
 
 	<!-- AuditRecord -->
