@@ -13,16 +13,16 @@ public class Attachment {
 
 	// Attributes ---------------------------------------------------------
 
-	private String	uri;
+	private String	url;
 
 
 	@URL
-	public String getUri() {
-		return this.uri;
+	public String getUrl() {
+		return this.url;
 	}
 
-	public void setUri(String uri) {
-		this.uri = uri;
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 }

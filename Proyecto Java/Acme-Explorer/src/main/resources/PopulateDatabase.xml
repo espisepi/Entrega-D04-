@@ -1366,11 +1366,11 @@
 	<!-- attachment -->
 	
 	<bean id="attachment1" class="domain.Attachment">
-		<property name="uri" value ="http://www.driver.com"/>
+		<property name="url" value ="http://www.driver.com"/>
 	</bean>
 	
 	<bean id="attachment2" class="domain.Attachment">
-		<property name="uri" value ="http://www.driver.com"/>
+		<property name="url" value ="http://www.driver.com"/>
 	</bean>
 	
 	<!-- CreditCard -->
