@@ -1034,7 +1034,7 @@
 		</property>
 		<property name="categories">
 			<list>
-				<ref bean="category1"></ref>
+				<ref bean="safari"></ref>
 			</list>
 		</property>
 		<property name="sponsorships">
@@ -1100,8 +1100,7 @@
 		</property>
 		<property name="categories">
 			<list>
-				<ref bean="category2"></ref>
-				<ref bean="category3"></ref>
+				<ref bean="safari"></ref>
 			</list>
 		</property>
 		<property name="sponsorships">
@@ -1169,7 +1168,7 @@
 		</property>
 		<property name="categories">
 			<list>
-				<ref bean="category22"></ref>
+				<ref bean="climbing"></ref>
 
 			</list>
 		</property>
@@ -1241,8 +1240,8 @@
 		</property>
 		<property name="categories">
 			<list>
-				<ref bean="category44"></ref>
-				<ref bean="category55"></ref>
+				<ref bean="water"></ref>
+				<ref bean="lake"></ref>
 
 			</list>
 		</property>
@@ -1315,7 +1314,7 @@
 		</property>
 		<property name="categories">
 			<list>
-				<ref bean="category5"></ref>
+				<ref bean="mountain"></ref>
 
 			</list>
 		</property>
@@ -1950,106 +1949,85 @@
 		CATEGORY Category2: Category11,Category33 Category3: Category11,Category22,Category33,Category44,Category55 
 		Category4: Category11 Category5: Category11,Category55 -->
 
-	<!--Categoria Hija 11 -->
-	<bean id="category11" class="domain.Category">
-		<property name="name" value="category 11" />
+	
+	<!--Categoria Lake-->
+	<bean id="lake" class="domain.Category">
+		<property name="name" value="Lake" />
+		<property name="subCategories">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<!--Categoria Savana-->
+	<bean id="savana" class="domain.Category">
+		<property name="name" value="Savana" />
 		<property name="subCategories">
 			<list>
 			</list>
 		</property>
 	</bean>
 
-	<!--Categoria Hija 22 -->
-	<bean id="category22" class="domain.Category">
-		<property name="name" value="category 22" />
+	<!--Categoria River-->
+	<bean id="river" class="domain.Category">
+		<property name="name" value="River" />
 		<property name="subCategories">
 			<list>
 			</list>
 		</property>
 	</bean>
 
-	<!--Categoria Hija 33 -->
-	<bean id="category33" class="domain.Category">
-		<property name="name" value="category 33" />
+	<!--Categoria Mountain -->
+	<bean id="mountain" class="domain.Category">
+		<property name="name" value="Mountain" />
 		<property name="subCategories">
 			<list>
 			</list>
 		</property>
 	</bean>
 
-	<!--Categoria Hija 44 -->
-	<bean id="category44" class="domain.Category">
-		<property name="name" value="category 44" />
+	<!--Categoria Hija de Safari-> Water -->
+	<bean id="water" class="domain.Category">
+		<property name="name" value="water" />
 		<property name="subCategories">
 			<list>
+				<ref bean="lake" />
+				<ref bean="river" />
 			</list>
 		</property>
 	</bean>
 
-	<!--Categoria Hija 55 -->
-	<bean id="category55" class="domain.Category">
-		<property name="name" value="category 55" />
+	<!--Categoria Hija de Safari -> Ground -->
+	<bean id="ground" class="domain.Category">
+		<property name="name" value="ground" />
 		<property name="subCategories">
 			<list>
+				<ref bean="savana" />
+				<ref bean="mountain" />
 			</list>
 		</property>
 	</bean>
 
 
-	<!--Categoria Padre 1 -->
-	<bean id="category1" class="domain.Category">
-		<property name="name" value="category 1" />
+
+	<!--Categoria Climbing-->
+	<bean id="climbing" class="domain.Category">
+		<property name="name" value="Climbing" />
 		<property name="subCategories">
 			<list>
-				<ref bean="category11" />
-				<ref bean="category33" />
-				<ref bean="category44" />
+				<ref bean="mountain" />
+				<ref bean="river" />
 			</list>
 		</property>
 	</bean>
 
-	<!--Categoria Padre 2 -->
-	<bean id="category2" class="domain.Category">
-		<property name="name" value="category 2" />
+	<!--Categoria Safari-->
+	<bean id="safari" class="domain.Category">
+		<property name="name" value="Safari" />
 		<property name="subCategories">
 			<list>
-				<ref bean="category11" />
-				<ref bean="category33" />
-			</list>
-		</property>
-	</bean>
-
-	<!--Categoria Padre 3 -->
-	<bean id="category3" class="domain.Category">
-		<property name="name" value="category 3" />
-		<property name="subCategories">
-			<list>
-				<ref bean="category11" />
-				<ref bean="category22" />
-				<ref bean="category33" />
-				<ref bean="category44" />
-				<ref bean="category55" />
-			</list>
-		</property>
-	</bean>
-
-	<!--Categoria Padre 4 -->
-	<bean id="category4" class="domain.Category">
-		<property name="name" value="category 4" />
-		<property name="subCategories">
-			<list>
-				<ref bean="category11" />
-			</list>
-		</property>
-	</bean>
-
-	<!--Categoria Padre 5 -->
-	<bean id="category5" class="domain.Category">
-		<property name="name" value="category 5" />
-		<property name="subCategories">
-			<list>
-				<ref bean="category11" />
-				<ref bean="category55" />
+				<ref bean="ground" />
+				<ref bean="water" />
 			</list>
 		</property>
 	</bean>
@@ -2059,11 +2037,8 @@
 		<property name="name" value="CATEGORY" />
 		<property name="subCategories">
 			<list>
-				<ref bean="category1" />
-				<ref bean="category2" />
-				<ref bean="category3" />
-				<ref bean="category4" />
-				<ref bean="category5" />
+				<ref bean="safari" />
+				<ref bean="climbing" />
 			</list>
 		</property>
 	</bean>
