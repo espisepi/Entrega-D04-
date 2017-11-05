@@ -1363,7 +1363,16 @@
 		<property name="latitude" value="43.65" />
 		<property name="name" value="Monaco" />
 	</bean>
-
+	<!-- attachment -->
+	
+	<bean id="attachment1" class="domain.Attachment">
+		<property name="uri" value ="http://www.driver.com"/>
+	</bean>
+	
+	<bean id="attachment2" class="domain.Attachment">
+		<property name="uri" value ="http://www.driver.com"/>
+	</bean>
+	
 	<!-- CreditCard -->
 
 	<bean id="creditCard1" class="domain.CreditCard">
@@ -1719,8 +1728,8 @@
 		<property name="description" value="attachments auditrecord 1" />
 		<property name="attachments">
 			<list>
-				<value>prueba auditrecord1 de attachemen 1</value>
-				<value>prueba auditrecord1 de attachemen 2</value>
+				<ref bean="attachment1" />
+				<ref bean="attachment2"/>
 			</list>
 		</property>
 		<property name="draftMode" value="true" />
@@ -1734,8 +1743,7 @@
 		<property name="description" value="attachments auditrecord 2" />
 		<property name="attachments">
 			<list>
-				<value>prueba auditrecord2 de attachemen 1</value>
-				<value>prueba auditrecord2 de attachemen 2</value>
+				
 			</list>
 		</property>
 		<property name="draftMode" value="true" />
@@ -1748,8 +1756,7 @@
 		<property name="description" value="attachments auditrecord 3" />
 		<property name="attachments">
 			<list>
-				<value>prueba auditrecord 3 de attachemen 1</value>
-				<value>prueba auditrecord 3 de attachemen 2</value>
+				
 			</list>
 		</property>
 		<property name="draftMode" value="true" />
@@ -1762,8 +1769,7 @@
 		<property name="description" value="attachments auditrecord 4" />
 		<property name="attachments">
 			<list>
-				<value>prueba auditrecord 4 de attachemen 1</value>
-				<value>prueba auditrecord 4 de attachemen 2</value>
+			
 			</list>
 		</property>
 		<property name="draftMode" value="true" />
@@ -1776,8 +1782,7 @@
 		<property name="description" value="attachments auditrecord 5" />
 		<property name="attachments">
 			<list>
-				<value>prueba auditrecord 5 de attachemen 1</value>
-				<value>prueba auditrecord 5 de attachemen 2</value>
+		
 			</list>
 		</property>
 		<property name="draftMode" value="true" />

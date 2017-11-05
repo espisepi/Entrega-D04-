@@ -23,11 +23,11 @@ public class AuditRecord extends DomainEntity {
 
 	// Attributes -------------------------------------------------------------
 
-	private Date				realisedMoment;
-	private String				title;
-	private String				description;
-	private Collection<String>	attachments;
-	private boolean				draftMode;
+	private Date					realisedMoment;
+	private String					title;
+	private String					description;
+	private Collection<Attachment>	attachments;
+	private boolean					draftMode;
 
 
 	@NotNull
@@ -61,11 +61,12 @@ public class AuditRecord extends DomainEntity {
 
 	@NotNull
 	@ElementCollection
-	public Collection<String> getAttachments() {
+	@Valid
+	public Collection<Attachment> getAttachments() {
 		return this.attachments;
 	}
 
-	public void setAttachments(final Collection<String> attachments) {
+	public void setAttachments(final Collection<Attachment> attachments) {
 		this.attachments = attachments;
 	}
 
