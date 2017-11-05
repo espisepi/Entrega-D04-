@@ -105,8 +105,8 @@ public class MessageFolderService {
 		inbox.setName("in box");
 		outbox.setName("out box");
 		notificationbox.setName("Notification box");
-		trashbox.setName("trashbox");
-		spambox.setName("spambox");
+		trashbox.setName("trash box");
+		spambox.setName("spam box");
 
 		inbox = this.save(inbox);
 		outbox = this.save(outbox);
