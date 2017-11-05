@@ -11,6 +11,7 @@ import org.springframework.util.Assert;
 
 import repositories.ActorRepository;
 import security.LoginService;
+import security.UserAccount;
 import domain.Actor;
 
 @Service
@@ -19,10 +20,12 @@ public class ActorService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private ActorRepository	actorRepository;
-
+	private ActorRepository			actorRepository;
 
 	// Supporting services ----------------------------------------------------
+	@Autowired
+	private MessageFolderService	messageFolder;
+
 
 	// Constructors -----------------------------------------------------------
 	public ActorService() {
@@ -63,7 +66,6 @@ public class ActorService {
 		Assert.notNull(actor);
 		Assert.isTrue(actor.getId() != 0);
 		Assert.isTrue(this.actorRepository.exists(actor.getId()));
-
 		this.actorRepository.delete(actor);
 	}
 	// Other business methods -------------------------------------------------
@@ -75,6 +77,14 @@ public class ActorService {
 		result = this.actorRepository.findActorByUseraccount(userAccountId);
 		Assert.notNull(result);
 
+		return result;
+	}
+	public boolean isAuthenticated() {
+		boolean result = false;
+		UserAccount userAccount;
+		userAccount = LoginService.getPrincipal();
+		if (userAccount != null)
+			result = true;
 		return result;
 	}
 }

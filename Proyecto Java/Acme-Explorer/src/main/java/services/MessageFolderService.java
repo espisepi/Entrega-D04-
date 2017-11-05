@@ -62,13 +62,15 @@ public class MessageFolderService {
 		return messagefolder;
 	}
 	public MessageFolder save(MessageFolder messageFolder) {
+		Assert.isTrue(this.actorService.isAuthenticated());
 		Assert.notNull(messageFolder);
-		MessageFolder result;
-		result = this.messageFolderRepository.save(messageFolder);
-		return result;
+		MessageFolder res;
+		res = this.messageFolderRepository.save(messageFolder);
+		return res;
 	}
 	public void delete(MessageFolder messageFolder) {
 		Assert.notNull(messageFolder);
+		Assert.isTrue(messageFolder.isModifiable() == true);
 		Assert.isTrue(messageFolder.getId() != 0);
 		Assert.isTrue(this.messageFolderRepository.exists(messageFolder.getId()));
 		this.messageFolderRepository.delete(messageFolder);
@@ -81,6 +83,44 @@ public class MessageFolderService {
 		actor = this.actorService.findPrincipal();
 		Collection<MessageFolder> messagesFolders = this.messageFolderRepository.ActorFolders(actor.getId());
 		return messagesFolders;
+
+	}
+
+	public Collection<MessageFolder> createDefaultFolders() {
+		Collection<MessageFolder> res;
+		MessageFolder inbox, outbox, notificationbox, trashbox, spambox;
+		res = new ArrayList<MessageFolder>();
+
+		inbox = this.create();
+		outbox = this.create();
+		notificationbox = this.create();
+		trashbox = this.create();
+		spambox = this.create();
+
+		inbox.setModifiable(false);
+		outbox.setModifiable(false);
+		trashbox.setModifiable(false);
+		spambox.setModifiable(false);
+
+		inbox.setName("in box");
+		outbox.setName("out box");
+		notificationbox.setName("Notification box");
+		trashbox.setName("trashbox");
+		spambox.setName("spambox");
+
+		inbox = this.save(inbox);
+		outbox = this.save(outbox);
+		notificationbox = this.save(notificationbox);
+		trashbox = this.save(trashbox);
+		spambox = this.save(spambox);
+
+		res.add(inbox);
+		res.add(outbox);
+		res.add(notificationbox);
+		res.add(trashbox);
+		res.add(spambox);
+
+		return res;
 
 	}
 }

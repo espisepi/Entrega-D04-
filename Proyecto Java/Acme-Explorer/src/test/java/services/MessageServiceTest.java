@@ -1,12 +1,13 @@
 
 package services;
 
+import java.util.Collection;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
@@ -18,7 +19,6 @@ import domain.MessageFolder;
 @ContextConfiguration(locations = {
 	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
 })
-@Transactional
 public class MessageServiceTest extends AbstractTest {
 
 	//Service under test----------------------------------------------------------
@@ -31,26 +31,26 @@ public class MessageServiceTest extends AbstractTest {
 	private MessageFolderService	messageFolderService;
 
 
-	//	@Test
-	//	public void testCreatePositive() {
-	//		this.authenticate("Explorer 5");
-	//		Message message;
-	//		message = this.messageService.create();
-	//		Assert.notNull(message);
-	//		this.unauthenticate();
-	//	}
-	//
-	//	@Test
-	//	public void testFindOneAndFindAllPositive() {
-	//		Collection<Message> messages;
-	//		Message message;
-	//		int id;
-	//		messages = this.messageService.findAll();
-	//		id = messages.iterator().next().getId();
-	//		message = this.messageService.findOne(id);
-	//		Assert.notNull(message);
-	//
-	//	}
+	@Test
+	public void testCreatePositive() {
+		this.authenticate("Explorer 5");
+		Message message;
+		message = this.messageService.create();
+		Assert.notNull(message);
+		this.unauthenticate();
+	}
+
+	@Test
+	public void testFindOneAndFindAllPositive() {
+		Collection<Message> messages;
+		Message message;
+		int id;
+		messages = this.messageService.findAll();
+		id = messages.iterator().next().getId();
+		message = this.messageService.findOne(id);
+		Assert.notNull(message);
+
+	}
 
 	@Test
 	public void testSavePositive() {
@@ -65,6 +65,7 @@ public class MessageServiceTest extends AbstractTest {
 		folder.setName("BASURA");
 		folder.setModifiable(true);
 		message1.setMessageFolder(folder);
+		this.messageFolderService.save(folder);
 		folder.getMessages().add(message1);
 		message1.setBody("hola caracola");
 		message1.setRecipient(recipient);
