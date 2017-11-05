@@ -20,7 +20,6 @@ public class Sponsorship extends DomainEntity {
 	private CreditCard	creditCard;
 
 
-	@NotNull
 	@URL
 	public String getBannerURL() {
 		return this.bannerURL;

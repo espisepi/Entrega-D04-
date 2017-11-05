@@ -1930,7 +1930,7 @@
 
 
 	<bean id="sponsorship5" class="domain.Sponsorship">
-		<property name="bannerURL" value="http://www.example.com" />
+		<property name="bannerURL"><null/></property>
 		<property name="link" value="http://www.example.com" />
 		<property name="creditCard">
 			<ref bean="creditCard2" />
