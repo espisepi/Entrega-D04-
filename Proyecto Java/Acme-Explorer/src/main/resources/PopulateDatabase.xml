@@ -1988,7 +1988,7 @@
 
 	<!--Categoria Hija de Safari-> Water -->
 	<bean id="water" class="domain.Category">
-		<property name="name" value="water" />
+		<property name="name" value="Water" />
 		<property name="subCategories">
 			<list>
 				<ref bean="lake" />
@@ -1999,7 +1999,7 @@
 
 	<!--Categoria Hija de Safari -> Ground -->
 	<bean id="ground" class="domain.Category">
-		<property name="name" value="ground" />
+		<property name="name" value="Ground" />
 		<property name="subCategories">
 			<list>
 				<ref bean="savana" />
