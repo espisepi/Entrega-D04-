@@ -12,6 +12,7 @@ import repositories.AdministratorRepository;
 import security.LoginService;
 import security.UserAccount;
 import domain.Administrator;
+import domain.Trip;
 
 @Service
 @Transactional
@@ -75,4 +76,119 @@ public class AdministratorService {
 		result = this.administratorRepository.findByUserAccountId(userAccount.getId());
 		return result;
 	}
+
+	public Double[] findMaxMinAvgStddevOfTheNumOfApplicationsPerTrip() {
+		Double[] result;
+		result = this.administratorRepository.findMaxMinAvgStddevOfTheNumOfApplicationsPerTrip();
+		Assert.notNull(result);
+		return result;
+	}
+
+	public Double[] findMaxMinAvgStddevOfTheNumOfTripsPerManager() {
+		Double[] result;
+		result = this.administratorRepository.findMaxMinAvgStddevOfTheNumOfTripsPerManager();
+		Assert.notNull(result);
+		return result;
+	}
+
+	public Double[] findMaxMinAvgStddevOfThePriceOfTheTrips() {
+		Double[] result;
+		result = this.administratorRepository.findMaxMinAvgStddevOfThePriceOfTheTrips();
+		Assert.notNull(result);
+		return result;
+	}
+
+	public Double[] findMaxMinAvgStddevOfTheNumTripsPerRanger() {
+		Double[] result;
+		result = this.administratorRepository.findMaxMinAvgStddevOfTheNumTripsPerRanger();
+		Assert.notNull(result);
+		return result;
+	}
+
+	public Double findRatioOfApplicationsPending() {
+		Double result;
+		result = this.administratorRepository.findRatioOfApplicationsPending();
+		return result;
+	}
+
+	public Double findRatioOfApplicationsDue() {
+		Double result;
+		result = this.administratorRepository.findRatioOfApplicationsDue();
+		return result;
+	}
+
+	public Double findRatioOfApplicationsAccepted() {
+		Double result;
+		result = this.administratorRepository.findRatioOfApplicationsAccepted();
+		return result;
+	}
+
+	public Double findRatioOfApplicationsCancelled() {
+		Double result;
+		result = this.administratorRepository.findRatioOfApplicationsCancelled();
+		return result;
+	}
+
+	public Double findRatioOfTheTripsCancelledvsTripsOrganised() {
+		Double result;
+		result = this.administratorRepository.findRatioOfTheTripsCancelledvsTripsOrganised();
+		return result;
+	}
+
+	public Collection<Trip> findTrips10porcentMoreApplicationsThanAvg() {
+		Collection<Trip> result;
+		result = this.administratorRepository.findTrips10porcentMoreApplicationsThanAvg();
+		return result;
+	}
+
+	public Collection<Integer> findNumOfTimesALegalTextIsReferenced() {
+		Collection<Integer> result;
+		result = this.administratorRepository.findNumOfTimesALegalTextIsReferenced();
+		return result;
+	}
+
+	public Double[] findMaxMinAvgStddevOfTheNumOfNotesPerTrip() {
+		Double[] result;
+		result = this.administratorRepository.findMaxMinAvgStddevOfTheNumOfNotesPerTrip();
+		Assert.notNull(result);
+		return result;
+	}
+
+	public Double[] findMaxMinAvgStddevOfTheNumOfAuditRecordsPerTrip() {
+		Double[] result;
+		result = this.administratorRepository.findMaxMinAvgStddevOfTheNumOfAuditRecordsPerTrip();
+		Assert.notNull(result);
+		return result;
+	}
+
+	public Double findTheRatOfTripsWihoutAnAuditRecord() {
+		Double result;
+		result = this.administratorRepository.findTheRatOfTripsWihoutAnAuditRecord();
+		return result;
+	}
+
+	public Double findTheRatOfRangersWhoHaveRegisteredCurricula() {
+		Double result;
+		result = this.administratorRepository.findTheRatOfRangersWhoHaveRegisteredCurricula();
+		return result;
+	}
+
+	public Double findTheRatOfRangersWhoseCurrIsEndorsed() {
+		Double result;
+		result = this.administratorRepository.findTheRatOfRangersWhoseCurrIsEndorsed();
+		return result;
+	}
+
+	public Double findTheRatioOFSuspiciousManagers() {
+		Double result;
+		result = this.administratorRepository.findTheRatioOFSuspiciousManagers();
+		return result;
+	}
+
+	public Double findTheRatioOFSuspiciousRangers() {
+		Double result;
+		result = this.administratorRepository.findTheRatioOFSuspiciousRangers();
+		return result;
+	}
+
 }
