@@ -1055,6 +1055,7 @@
 		</property>
 	</bean>
 
+
 	<bean id="trip2" class="domain.Trip">
 		<property name="ticker" value="160112-AAAA"></property>
 		<property name="title" value="title 2"></property>
@@ -1067,10 +1068,11 @@
 			</list>
 		</property>
 		<property name="publicationDate" value="2015/01/20 22:45"></property>
-		<property name="startDate" value="2017/07/11"></property>
-		<property name="finishDate" value="2017/08/04"></property>
-		<property name="reasonWhy" value="reasonWhy 2"></property>
+		<property name="startDate" value="2016/07/11"></property>
+		<property name="finishDate" value="2016/08/04"></property>
+		<property name="reasonWhy"> <null /></property>
 		<property name="cancelled" value="false"></property>
+
 
 		<property name="ranger" ref="ranger1"></property>
 		<property name="manager" ref="manager1"></property>
@@ -1136,8 +1138,8 @@
 		<property name="publicationDate" value="2014/06/10 22:45"></property>
 		<property name="startDate" value="2014/07/11"></property>
 		<property name="finishDate" value="2014/08/04"></property>
-		<property name="reasonWhy" value="reasonWhy 3"></property>
-		<property name="cancelled" value="true"></property>
+		<property name="reasonWhy"> <null /></property>
+		<property name="cancelled" value="false"></property>
 
 		<property name="ranger" ref="ranger2"></property>
 		<property name="manager" ref="manager2"></property>
@@ -1278,9 +1280,9 @@
 		<property name="publicationDate">
 			<null />
 		</property>
-		<property name="startDate" value="2014/02/21"></property>
-		<property name="finishDate" value="2015/08/04"></property>
-		<property name="reasonWhy" value="reasonWhy 5"></property>
+		<property name="startDate" value="2018/02/21"></property>
+		<property name="finishDate" value="2018/03/04"></property>
+		<property name="reasonWhy"> <null /></property>
 		<property name="cancelled" value="false"></property>
 
 		<property name="ranger" ref="ranger3"></property>
