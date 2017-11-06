@@ -86,7 +86,6 @@ public class TripServiceTest {
 
 		Ranger ranger = this.rangerService.create();
 		Manager manager = this.managerService.create();
-		//SurvivalClass classes = this.survivalClassService.create();
 		Story stories = this.storyService.create();
 		ApplicationFor applicationFors = this.applicationForService.create();
 		AuditRecord auditRecords = this.auditRecordService.create();
