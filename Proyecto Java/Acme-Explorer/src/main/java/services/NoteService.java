@@ -74,9 +74,4 @@ public class NoteService {
 
 	// Other business methods------------------------------------------------------
 
-	public Collection<Note> findNotesWritenByAuditor() {
-		Collection<Note> result;
-		result = this.noteRepository.findNotesWritenByAuditor();
-		return result;
-	}
 }
