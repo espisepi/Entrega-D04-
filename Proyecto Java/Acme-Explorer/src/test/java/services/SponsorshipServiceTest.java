@@ -2,6 +2,7 @@
 package services;
 
 import java.util.Collection;
+import java.util.Iterator;
 
 import javax.transaction.Transactional;
 
@@ -26,6 +27,12 @@ public class SponsorshipServiceTest extends AbstractTest {
 	@Autowired
 	private SponsorshipService	sponsorshipService;
 
+	@Autowired
+	private TripService			tripService;
+
+	@Autowired
+	private SponsorService		sponsorService;
+
 
 	// Tests ----------------------------------------------
 
@@ -34,7 +41,6 @@ public class SponsorshipServiceTest extends AbstractTest {
 		Sponsorship res;
 		res = this.sponsorshipService.create();
 		Assert.notNull(res);
-
 	}
 
 	@Test
@@ -43,4 +49,44 @@ public class SponsorshipServiceTest extends AbstractTest {
 		Assert.notEmpty(res);
 	}
 
+	//	@Test
+	//	public void testSave() {
+	//		Sponsorship sponsorship;
+	//		CreditCard creditcard;
+	//		Sponsor sponsor;
+	//
+	//		sponsorship = this.sponsorshipService.create();
+	//		creditcard = new CreditCard();
+	//		Trip trip = this.tripService.findAll().iterator().next();
+	//		sponsor = this.sponsorService.findAll().iterator().next(); // falla el findall de sponsor
+	//
+	//		creditcard.setBrandName("brandName");
+	//		creditcard.setHolderName("holderName");
+	//		creditcard.setNumber("4388576018410707");
+	//		creditcard.setExpirationMonth(2);
+	//		creditcard.setExpirationYear(2019);
+	//		creditcard.setCvv(655);
+	//
+	//		sponsorship.setLink("http://www.link-banner.com");
+	//		sponsorship.setBannerURL("http://www.banner.com");
+	//		sponsorship.setCreditCard(creditcard);
+	//		sponsorship.setTrip(trip);
+	//		sponsorship.setSponsor(sponsor);
+	//
+	//		sponsorship = this.sponsorshipService.save(sponsorship);
+	//	}
+
+	@Test
+	public void testDelete() {
+		Collection<Sponsorship> sponsorships;
+		Iterator<Sponsorship> sponsorship; // para poder recorrer la colección
+
+		sponsorships = this.sponsorshipService.findAll();
+		System.out.println(this.sponsorshipService.findAll());
+		sponsorship = sponsorships.iterator();
+
+		this.sponsorshipService.delete(sponsorship.next());
+		System.out.println(this.sponsorshipService.findAll());
+
+	}
 }

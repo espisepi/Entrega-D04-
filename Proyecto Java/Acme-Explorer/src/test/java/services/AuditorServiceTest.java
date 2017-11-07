@@ -31,20 +31,27 @@ public class AuditorServiceTest extends AbstractTest {
 
 	@Test
 	public void testCreate() {
-		this.authenticate("auditor 1");
 
 		Auditor auditor;
-
 		auditor = this.auditorService.create();
-		auditor.setName("name1");
-		auditor.setSurname("surname1");
-		auditor.setEmail("admin1@gmail.com");
-		auditor.setPhone("7777");
-		auditor.setAddress("addres1");
-
-		this.auditorService.save(auditor);
+		Assert.notNull(auditor);
 	}
 
+	@Test
+	public void testSave() {
+		Auditor auditor;
+		auditor = this.auditorService.create();
+
+		auditor.setName("name");
+		auditor.setSurname("surname");
+		auditor.setEmail("email@gmail.com");
+		auditor.setPhone("31333");
+		auditor.setAddress("address");
+
+		auditor = this.auditorService.save(auditor);
+		Assert.notNull(auditor.getId());
+
+	}
 	@Test
 	public void testFindAll() {
 		Collection<Auditor> auditors;
@@ -52,5 +59,13 @@ public class AuditorServiceTest extends AbstractTest {
 		Assert.notEmpty(auditors);
 		Assert.notNull(auditors);
 	}
-
+	//	@Test
+	//	public void testDelete() {
+	//
+	//		Auditor auditor;
+	//		auditor = this.auditorService.findOne(6086);
+	//		this.auditorService.delete(auditor);
+	//
+	//		Con el find one va bien se borra, estaba desesperada y he usado el findone
+	//	}
 }

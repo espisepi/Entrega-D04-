@@ -13,5 +13,5 @@ import domain.AuditRecord;
 public interface AuditRecordRepository extends JpaRepository<AuditRecord, Integer> {
 
 	@Query("select a from AuditRecord a where a.draftMode= true and a.auditor.id=?1")
-	Collection<AuditRecord> findAuditRecordInDraftMode(int auditorId);
+	Collection<AuditRecord> findAllAuditRecordInDraftMode();
 }

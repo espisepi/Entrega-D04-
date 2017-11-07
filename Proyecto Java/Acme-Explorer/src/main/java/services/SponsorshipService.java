@@ -9,7 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.SponsorshipRepository;
+import domain.Sponsor;
 import domain.Sponsorship;
+import domain.Trip;
 
 @Service
 @Transactional
@@ -31,8 +33,17 @@ public class SponsorshipService {
 	// Simple CRUD methods------------------------------------------------
 
 	public Sponsorship create() {
+
 		Sponsorship result;
+		Sponsor sponsor;
+		Trip trip;
+
 		result = new Sponsorship();
+		sponsor = new Sponsor();
+		trip = new Trip();
+
+		result.setSponsor(sponsor);
+		result.setTrip(trip);
 		return result;
 	}
 

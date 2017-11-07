@@ -10,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.NoteRepository;
+import domain.Auditor;
 import domain.Note;
+import domain.Trip;
 
 @Service
 @Transactional
@@ -33,10 +35,17 @@ public class NoteService {
 
 	public Note create() {
 		Note result;
-		result = new Note();
+		Auditor auditor;
+		Trip trip;
 		Date createdMoment;
+		result = new Note();
+		auditor = new Auditor();
+		trip = new Trip();
 		createdMoment = new Date();
+
 		result.setCreatedMoment(createdMoment);
+		result.setAuditor(auditor);
+		result.setTrip(trip);
 		return result;
 	}
 
@@ -65,12 +74,13 @@ public class NoteService {
 		return result;
 	}
 
-	public void delete(final Note note) {
-		assert note != null;
-		assert note.getId() != 0;
-		Assert.isTrue(this.noteRepository.exists(note.getId()));
-		this.noteRepository.delete(note);
-	}
+	//dijimos que la nota iba sin el método delete.
+	//	public void delete(final Note note) {
+	//		assert note != null;
+	//		assert note.getId() != 0;
+	//		Assert.isTrue(this.noteRepository.exists(note.getId()));
+	//		this.noteRepository.delete(note);
+	//	}
 
 	// Other business methods------------------------------------------------------
 
