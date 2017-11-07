@@ -12,6 +12,7 @@ import repositories.RangerRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.Manager;
 import domain.Ranger;
 
 @Service
@@ -83,6 +84,21 @@ public class RangerService {
 
 		this.RangerRepository.delete(ranger);
 
+	}
+
+	// Other business methods----------------------------------
+
+	public Manager findByPrincipal() {
+
+		Manager result;
+		UserAccount userAccount;
+
+		userAccount = LoginService.getPrincipal();
+		Assert.notNull(userAccount);
+		result = this.RangerRepository.findByUserAccountId(userAccount.getId());
+		Assert.notNull(result);
+
+		return result;
 	}
 
 	public void checkPrincipal() {
