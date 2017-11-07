@@ -36,14 +36,14 @@ public class CurriculaServiceTest extends AbstractTest {
 	//TODO
 
 	@Test
-	public void testCreatePositive() {
+	public void testCreate() {
 		Curricula curricula;
 		curricula = this.curriculaService.create();
 		Assert.notNull(curricula);
 	}
 
 	@Test
-	public void testSavePositive() {
+	public void testSave() {
 		Curricula curricula;
 		curricula = this.curriculaService.create();
 
@@ -63,24 +63,31 @@ public class CurriculaServiceTest extends AbstractTest {
 
 	}
 	@Test
-	public void testFindAllPositive() {
+	public void testFindAll() {
 		Collection<Curricula> curriculas;
 		curriculas = this.curriculaService.findAll();
-		Assert.notEmpty(curriculas);
+		Assert.notNull(curriculas);
 	}
 
 	@Test
-	public void testFindOnePositive() {
+	public void testFindOne() {
 		Curricula curricula;
-		curricula = this.curriculaService.findOne(6248);
+
+		curricula = this.curriculaService.findOne(6190);
 		Assert.notNull(curricula);
 	}
 
 	@Test
-	public void testDeletePositive() {
+	public void testDelete() {
 		Curricula curricula;
-		curricula = this.curriculaService.findOne(6248);
+		curricula = this.curriculaService.findOne(6190);
 
 		this.curriculaService.delete(curricula);
+	}
+	@Test
+	public void testUpdate() {
+		Curricula curriculaModify = this.curriculaService.findOne(6190);
+
+		this.curriculaService.update(curriculaModify);
 	}
 }

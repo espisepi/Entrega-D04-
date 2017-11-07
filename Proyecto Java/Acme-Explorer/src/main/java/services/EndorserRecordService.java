@@ -1,7 +1,9 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,8 +34,11 @@ public class EndorserRecordService {
 	// Simple CRUD methods------------------------------------------------
 
 	public EndorserRecord create() {
-		//TODO: Hacer
-		return null;
+		EndorserRecord endorserRecord;
+		endorserRecord = new EndorserRecord();
+		List<String> comments = new ArrayList<String>();
+		endorserRecord.setComments(comments);
+		return endorserRecord;
 	}
 	public Collection<EndorserRecord> findAll() {
 		Collection<EndorserRecord> endorserRecords;
@@ -45,6 +50,7 @@ public class EndorserRecordService {
 	}
 
 	public EndorserRecord findOne(int endorserRecordId) {
+		Assert.isTrue(endorserRecordId != 0);
 		EndorserRecord endorserRecord;
 
 		endorserRecord = this.endorserRecordRepository.findOne(endorserRecordId);
@@ -55,16 +61,21 @@ public class EndorserRecordService {
 
 	public EndorserRecord save(EndorserRecord endorserRecord) {
 		Assert.notNull(endorserRecord);
-		EndorserRecord result;
+		Assert.isTrue(endorserRecord.getId() == 0);
 
-		result = this.endorserRecordRepository.saveAndFlush(endorserRecord);
+		EndorserRecord newResult;
 
-		return result;
+		newResult = this.endorserRecordRepository.saveAndFlush(endorserRecord);
+
+		return newResult;
 
 	}
 
 	public void delete(EndorserRecord endorserRecord) {
-		//TODO: Hacer pero antes hay que mirar si se puede borrar del tiron.
+		Assert.notNull(endorserRecord);
+		Assert.notNull(this.endorserRecordRepository.findOne(endorserRecord.getId()));
+
+		this.endorserRecordRepository.delete(endorserRecord);
 	}
 
 }

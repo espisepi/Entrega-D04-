@@ -28,14 +28,14 @@ public class PersonalRecordServiceTest extends AbstractTest {
 	// Supporting services ----------------------------------------------------
 
 	@Test
-	public void testCreatePositive() {
+	public void testCreate() {
 		PersonalRecord personalRecord = this.personalRecordService.create();
 		Assert.isTrue(personalRecord != null);
 
 	}
 
 	@Test
-	public void testSavePositive() {
+	public void testSave() {
 		PersonalRecord personalRecord;
 		personalRecord = this.personalRecordService.create();
 
@@ -50,7 +50,7 @@ public class PersonalRecordServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testDeletePositive() {
+	public void testDelete() {
 
 		PersonalRecord personalRecord;
 		personalRecord = this.personalRecordService.create();
@@ -67,11 +67,4 @@ public class PersonalRecordServiceTest extends AbstractTest {
 
 	}
 
-	@Test(expected = IllegalArgumentException.class)
-	public void testDeleteNegative() {
-
-		PersonalRecord personalRecord = this.personalRecordService.findOne(6179);
-		this.personalRecordService.delete(personalRecord);
-
-	}
 }

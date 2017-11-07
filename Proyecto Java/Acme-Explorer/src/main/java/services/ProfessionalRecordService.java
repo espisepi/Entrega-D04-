@@ -1,7 +1,9 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,9 +34,14 @@ public class ProfessionalRecordService {
 	// Simple CRUD methods------------------------------------------------
 
 	public ProfessionalRecord create() {
-		//TODO: Hacer
-		return null;
+		ProfessionalRecord professionalRecord;
+		professionalRecord = new ProfessionalRecord();
+		List<String> comments = new ArrayList<String>();
+
+		professionalRecord.setComments(comments);
+		return professionalRecord;
 	}
+
 	public Collection<ProfessionalRecord> findAll() {
 		Collection<ProfessionalRecord> professionalRecords;
 
@@ -45,6 +52,7 @@ public class ProfessionalRecordService {
 	}
 
 	public ProfessionalRecord findOne(int professionalRecordId) {
+		Assert.isTrue(professionalRecordId != 0);
 		ProfessionalRecord professionalRecord;
 
 		professionalRecord = this.professionalRecordRepository.findOne(professionalRecordId);
@@ -55,16 +63,20 @@ public class ProfessionalRecordService {
 
 	public ProfessionalRecord save(ProfessionalRecord professionalRecord) {
 		Assert.notNull(professionalRecord);
+		Assert.isTrue(professionalRecord.getId() == 0);
 		ProfessionalRecord result;
 
 		result = this.professionalRecordRepository.saveAndFlush(professionalRecord);
-
+		Assert.isTrue(result.getId() != 0);
 		return result;
 
 	}
-
 	public void delete(ProfessionalRecord professionalRecord) {
-		//TODO: Hacer pero antes hay que mirar si se puede borrar del tiron.
-	}
 
+		Assert.notNull(professionalRecord);
+		Assert.notNull(this.professionalRecordRepository.findOne(professionalRecord.getId()));
+
+		this.professionalRecordRepository.delete(professionalRecord);
+		Assert.isNull(this.professionalRecordRepository.findOne(professionalRecord.getId()));
+	}
 }

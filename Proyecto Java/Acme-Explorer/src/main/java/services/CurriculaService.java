@@ -55,6 +55,7 @@ public class CurriculaService {
 	}
 
 	public Curricula save(Curricula curricula) {
+		Assert.isTrue(curricula.getId() == 0);
 		Curricula newCurricula;
 		Assert.notNull(curricula);
 
@@ -67,6 +68,19 @@ public class CurriculaService {
 		return newCurricula;
 	}
 
+	public Curricula update(Curricula curricula) {
+
+		Assert.notNull(curricula);
+		Assert.isTrue(curricula.getId() != 0);
+
+		Curricula curriculaBD = this.curriculaRepository.findOne(curricula.getId());
+		String tike = curricula.getTicker();
+		Assert.isTrue(curriculaBD.getTicker() == curricula.getTicker());
+
+		Curricula newCurricula = this.curriculaRepository.saveAndFlush(curricula);
+
+		return newCurricula;
+	}
 	public Curricula create() {
 		Curricula curricula;
 		curricula = new Curricula();
