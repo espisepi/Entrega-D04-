@@ -20,10 +20,8 @@ public class TripService {
 	@Autowired
 	private TripRepository	tripRepository;
 
-	// Supporting services ----------------------------------------------------
-	@Autowired
-	private ManagerService	managerService;
 
+	// Supporting services ----------------------------------------------------
 
 	// Constructors------------------------------------------------------------
 	public TripService() {
@@ -32,7 +30,6 @@ public class TripService {
 
 	// Simple CRUD methods-----------------------------------------------------
 	public Trip create() {
-		//Assert.notNull(managerService.findByPrincipal());
 		Trip result;
 		result = new Trip();
 		return result;
