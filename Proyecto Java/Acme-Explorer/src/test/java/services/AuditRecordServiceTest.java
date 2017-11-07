@@ -42,18 +42,18 @@ public class AuditRecordServiceTest extends AbstractTest {
 		Assert.notEmpty(result);
 	}
 
-	@Test
-	public void testDeletePositive() {
-		AuditRecord auditRecord;
-		auditRecord = this.auditRecordService.findOne(6163);
-
-		this.auditRecordService.delete(auditRecord);
-	}
-
 	//	@Test
-	//	public void testDeleteNegative() {
+	//	public void testDeletePositive() {
 	//		AuditRecord auditRecord;
 	//		auditRecord = this.auditRecordService.findOne(6163);
+	//
+	//		this.auditRecordService.delete(auditRecord);
+	//	}
+	//
+	//	@Test(expected = IllegalArgumentException.class)
+	//	public void testDeleteNegative() {
+	//		AuditRecord auditRecord;
+	//		auditRecord = this.auditRecordService.findOne(6164);
 	//
 	//		this.auditRecordService.delete(auditRecord);
 	//	}
