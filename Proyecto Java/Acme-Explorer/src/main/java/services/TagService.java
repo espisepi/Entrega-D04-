@@ -31,38 +31,42 @@ public class TagService {
 	public Tag create() {
 		Tag result;
 		result = new Tag();
+
 		return result;
 	}
 
 	public Collection<Tag> findAll() {
 		Collection<Tag> result;
-		Assert.notNull(this.tagRepository);
+
 		result = this.tagRepository.findAll();
 		Assert.notNull(result);
+
 		return result;
 	}
 
 	public Tag findOne(final int tagId) {
+		Assert.isTrue(tagId != 0);
+
 		Tag result;
 		result = this.tagRepository.findOne(tagId);
+		Assert.notNull(result);
+
 		return result;
 	}
 
 	public Tag save(final Tag tag) {
-		assert tag != null;
+		Assert.notNull(tag);
+		Assert.isTrue(tag.getId() == 0);
 
 		Tag result;
-
-		result = this.tagRepository.save(tag);
+		result = this.tagRepository.saveAndFlush(tag);
+		Assert.isTrue(result.getId() != 0);
 
 		return result;
 	}
-
 	public void delete(final Tag tag) {
-		assert tag != null;
-		assert tag.getId() != 0;
-
-		Assert.isTrue(this.tagRepository.exists(tag.getId()));
+		Assert.notNull(tag);
+		Assert.notNull(this.tagRepository.findOne(tag.getId()));
 
 		this.tagRepository.delete(tag);
 	}
