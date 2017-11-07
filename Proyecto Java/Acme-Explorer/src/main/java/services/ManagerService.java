@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,11 @@ import repositories.ManagerRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.ApplicationFor;
 import domain.Manager;
+import domain.MessageFolder;
+import domain.SocialIdentity;
+import domain.Trip;
 
 @Service
 @Transactional
@@ -21,7 +26,12 @@ public class ManagerService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private ManagerRepository	managerRepository;
+	private ManagerRepository		managerRepository;
+
+	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private MessageFolderService	messageFolderService;
 
 
 	// Constructors-------------------------------------------------------
@@ -36,40 +46,56 @@ public class ManagerService {
 
 		Manager result;
 
+		UserAccount userAccount;
+		Authority authority;
+		Collection<SocialIdentity> socialIdentities;
+		Collection<MessageFolder> messagesFolders;
+		Collection<Trip> trips;
+		Collection<ApplicationFor> applicationsFor;
+
 		result = new Manager();
+		userAccount = new UserAccount();
+		authority = new Authority();
+		socialIdentities = new ArrayList<>();
+		messagesFolders = new ArrayList<>();
+		trips = new ArrayList<>();
+		applicationsFor = new ArrayList<>();
+
+		messagesFolders.addAll(this.messageFolderService.createDefaultFolders());
+
+		authority.setAuthority("MANAGER");
+		userAccount.addAuthority(authority);
+		result.setUserAccount(userAccount);
+		result.setMessagesFolders(messagesFolders);
+		result.setSocialIdentities(socialIdentities);
+		result.setTrips(trips);
+		result.setApplicationsFor(applicationsFor);
 
 		return result;
 
 	}
-
 	public Collection<Manager> findAll() {
 
 		Collection<Manager> result;
-
 		result = this.managerRepository.findAll();
-
 		Assert.notNull(result);
-
 		return result;
 	}
 
 	public Manager findOne(int managerId) {
 
+		Assert.isTrue(managerId != 0);
 		Manager result;
-
 		result = this.managerRepository.findOne(managerId);
-
+		Assert.notNull(result);
 		return result;
 	}
 
 	public Manager save(Manager manager) {
 
 		Assert.notNull(manager);
-
 		Manager result;
-
 		result = this.managerRepository.save(manager);
-
 		return result;
 	}
 
@@ -77,7 +103,6 @@ public class ManagerService {
 
 		Assert.notNull(manager);
 		Assert.isTrue(manager.getId() != 0);
-
 		this.managerRepository.delete(manager);
 
 	}
