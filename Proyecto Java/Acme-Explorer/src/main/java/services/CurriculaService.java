@@ -25,8 +25,10 @@ public class CurriculaService {
 	@Autowired
 	private CurriculaRepository	curriculaRepository;
 
-
 	// Supporting services ----------------------------------------------------
+	@Autowired
+	private RangerService		rangerService;
+
 
 	// Constructors-------------------------------------------------------
 
@@ -55,6 +57,7 @@ public class CurriculaService {
 	}
 
 	public Curricula save(Curricula curricula) {
+
 		Assert.isTrue(curricula.getId() == 0);
 		Curricula newCurricula;
 		Assert.notNull(curricula);
