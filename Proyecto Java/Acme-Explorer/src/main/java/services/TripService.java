@@ -144,4 +144,11 @@ public class TripService {
 		if (trips.contains(trip))
 			trip.setCancelled(true);
 	}
+
+	public Trip findTripWithStatusPendingById(int tripId) {
+		Assert.notNull(tripId);
+		Trip result = this.findTripWithStatusPendingById(tripId);
+		Assert.notNull(result);
+		return result;
+	}
 }
