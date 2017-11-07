@@ -59,7 +59,7 @@ public class AdministratorService {
 		userAccount.addAuthority(authority);
 		result.setUserAccount(userAccount);
 		result.setSocialIdentities(socialIdentities);
-		result.getMessagesFolders().addAll(messagesFolders);
+		result.setMessagesFolders(messagesFolders);
 
 		return result;
 	}

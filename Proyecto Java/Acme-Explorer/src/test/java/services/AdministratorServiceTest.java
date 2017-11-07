@@ -32,7 +32,6 @@ public class AdministratorServiceTest extends AbstractTest {
 
 	@Test
 	public void testCreate() {
-		this.authenticate("administrator1");
 		Administrator administrator;
 		administrator = this.administratorService.create();
 		Assert.notNull(administrator);
