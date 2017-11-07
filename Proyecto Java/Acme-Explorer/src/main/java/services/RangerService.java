@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,10 @@ import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Manager;
+import domain.MessageFolder;
 import domain.Ranger;
+import domain.SocialIdentity;
+import domain.Trip;
 
 @Service
 @Transactional
@@ -22,7 +26,12 @@ public class RangerService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private RangerRepository	RangerRepository;
+	private RangerRepository		RangerRepository;
+
+	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private MessageFolderService	messageFolderService;
 
 
 	// Constructors-------------------------------------------------------
@@ -36,44 +45,52 @@ public class RangerService {
 	public Ranger create() {
 
 		Ranger result;
+		UserAccount userAccount;
+		Authority authority;
+		Collection<SocialIdentity> socialIdentities;
+		Collection<MessageFolder> messagesFolders;
+		Collection<Trip> trips;
 
 		result = new Ranger();
+		userAccount = new UserAccount();
+		authority = new Authority();
+		socialIdentities = new ArrayList<>();
+		messagesFolders = new ArrayList<>();
+		trips = new ArrayList<>();
+
+		messagesFolders.addAll(this.messageFolderService.createDefaultFolders());
+
+		authority.setAuthority("RANGER");
+		userAccount.addAuthority(authority);
+		result.setUserAccount(userAccount);
+		result.setMessagesFolders(messagesFolders);
+		result.setSocialIdentities(socialIdentities);
+		result.setTrips(trips);
 
 		return result;
 	}
-
 	public Collection<Ranger> findAll() {
 
 		Collection<Ranger> result;
-
 		result = this.RangerRepository.findAll();
-
 		Assert.notNull(result);
-
 		return result;
 	}
 
-	public Ranger findOne(int RangerId) {
+	public Ranger findOne(int rangerId) {
 
-		Assert.isTrue(RangerId != 0);
-
+		Assert.isTrue(rangerId != 0);
 		Ranger result;
-
-		result = this.RangerRepository.findOne(RangerId);
-
+		result = this.RangerRepository.findOne(rangerId);
 		Assert.notNull(result);
-
 		return result;
 	}
 
 	public Ranger save(Ranger ranger) {
 
 		Assert.notNull(ranger);
-
 		Ranger result;
-
 		result = this.RangerRepository.save(ranger);
-
 		return result;
 	}
 
@@ -81,7 +98,6 @@ public class RangerService {
 
 		Assert.notNull(ranger);
 		Assert.isTrue(ranger.getId() != 0);
-
 		this.RangerRepository.delete(ranger);
 
 	}
