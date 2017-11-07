@@ -1746,7 +1746,7 @@
 				
 			</list>
 		</property>
-		<property name="draftMode" value="true" />
+		<property name="draftMode" value="false" />
 		<property name="auditor" ref="auditor1" />
 		<property name="trip" ref="trip4" />
 	</bean>

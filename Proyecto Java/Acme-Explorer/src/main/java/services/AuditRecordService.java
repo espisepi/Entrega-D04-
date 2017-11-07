@@ -20,11 +20,8 @@ public class AuditRecordService {
 	@Autowired
 	private AuditRecordRepository	auditRecordRepository;
 
+
 	// Supporting services ----------------------------------------------------
-
-	@Autowired
-	private AuditorService			auditorService;
-
 
 	// Constructors-------------------------------------------------------
 
@@ -37,7 +34,10 @@ public class AuditRecordService {
 	public AuditRecord create() {
 		AuditRecord result;
 		result = new AuditRecord();
-		result.setDraftMode(true);
+		result.setDraftMode(true); // Una vez que se crea está en modo borrador
+		Date realisedMoment;
+		realisedMoment = new Date();
+		result.setRealisedMoment(realisedMoment);
 		return result;
 	}
 
@@ -50,38 +50,34 @@ public class AuditRecordService {
 	public AuditRecord findOne(final int auditrecordId) {
 		AuditRecord result;
 		result = this.auditRecordRepository.findOne(auditrecordId);
-		if (result.isDraftMode())
-			Assert.isTrue(result.getAuditor().getId() == this.auditorService.findByPrincipal().getId());
 		Assert.notNull(result);
 		return result;
 	}
 
 	public AuditRecord save(AuditRecord auditrecord) {
+		Assert.notNull(auditrecord);
 		AuditRecord result;
 		result = this.auditRecordRepository.save(auditrecord);
 		Date realisedMoment;
 		realisedMoment = new Date(System.currentTimeMillis() - 1000);
 		result.setRealisedMoment(realisedMoment);
 		Assert.notNull(result);
-		//empieza aquí lo del draftmode
-		Boolean res = false;
-		for (AuditRecord a : auditrecord.getAuditor().getAuditRecords())
-			if (!a.isDraftMode())
-				res = true;
-		Assert.isTrue(!res || auditrecord.isDraftMode());
+
 		result = this.auditRecordRepository.save(auditrecord);
 		return result;
 	}
 
 	public void delete(final AuditRecord auditrecord) {
+		//se puede borrar o modificar si está en modo borrador
+		Assert.isTrue(auditrecord.isDraftMode() == true);
 		this.auditRecordRepository.delete(auditrecord);
 	}
 
 	// Other business methods------------------------------------------------------
 
-	public Collection<AuditRecord> findAuditRecordInDraftMode(int auditorId) {
+	public Collection<AuditRecord> findAllAuditRecordInDraftMode() {
 		Collection<AuditRecord> result;
-		result = this.auditRecordRepository.findAuditRecordInDraftMode(auditorId);
+		result = this.auditRecordRepository.findAllAuditRecordInDraftMode();
 		return result;
 	}
 }

@@ -25,10 +25,13 @@ public class AuditorService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private AuditorRepository	auditorRepository;
-
+	private AuditorRepository		auditorRepository;
 
 	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private MessageFolderService	messageFolderService;
+
 
 	// Constructors-------------------------------------------------------
 
@@ -39,6 +42,7 @@ public class AuditorService {
 	// Simple CRUD methods------------------------------------------------
 
 	public Auditor create() {
+
 		Auditor result;
 		UserAccount useraccount;
 		Authority authority;
@@ -52,6 +56,18 @@ public class AuditorService {
 		authority = new Authority();
 		messagesFolders = new ArrayList<MessageFolder>();
 		socialIdentities = new ArrayList<SocialIdentity>();
+		notes = new ArrayList<Note>();
+		auditrecords = new ArrayList<AuditRecord>();
+
+		messagesFolders = this.messageFolderService.createDefaultFolders();
+
+		authority.setAuthority(Authority.ADMINISTRATOR);
+		useraccount.addAuthority(authority);
+		result.setUserAccount(useraccount);
+		result.setMessagesFolders(messagesFolders);
+		result.setSocialIdentities(socialIdentities);
+		result.setNotes(notes);
+		result.setAuditRecords(auditrecords);
 
 		return result;
 	}

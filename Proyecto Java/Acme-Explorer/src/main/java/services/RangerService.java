@@ -13,7 +13,6 @@ import repositories.RangerRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
-import domain.Manager;
 import domain.MessageFolder;
 import domain.Ranger;
 import domain.SocialIdentity;
@@ -104,9 +103,9 @@ public class RangerService {
 
 	// Other business methods----------------------------------
 
-	public Manager findByPrincipal() {
+	public Ranger findByPrincipal() {
 
-		Manager result;
+		Ranger result;
 		UserAccount userAccount;
 
 		userAccount = LoginService.getPrincipal();
@@ -116,7 +115,6 @@ public class RangerService {
 
 		return result;
 	}
-
 	public void checkPrincipal() {
 
 		UserAccount userAccount = LoginService.getPrincipal();
