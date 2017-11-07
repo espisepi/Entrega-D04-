@@ -49,6 +49,7 @@ public class PersonalRecordService {
 
 	public PersonalRecord findOne(int personalRecordId) {
 		Assert.isTrue(personalRecordId != 0);
+
 		PersonalRecord personalRecord;
 
 		personalRecord = this.personalRecordRepository.findOne(personalRecordId);

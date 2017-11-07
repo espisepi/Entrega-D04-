@@ -1,7 +1,9 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,8 +33,12 @@ public class EducationRecordService {
 	// Simple CRUD methods------------------------------------------------
 
 	public EducationRecord create() {
-		//TODO: Hacer
-		return null;
+		EducationRecord educationRecord = new EducationRecord();
+
+		List<String> comments = new ArrayList<String>();
+		educationRecord.setComments(comments);
+		return educationRecord;
+
 	}
 	public Collection<EducationRecord> findAll() {
 		Collection<EducationRecord> educationRecords;
@@ -44,6 +50,8 @@ public class EducationRecordService {
 	}
 
 	public EducationRecord findOne(int educationRecordId) {
+		Assert.isTrue(educationRecordId != 0);
+
 		EducationRecord educationRecord;
 
 		educationRecord = this.educationRecordRepository.findOne(educationRecordId);
@@ -54,16 +62,19 @@ public class EducationRecordService {
 
 	public EducationRecord save(EducationRecord educationRecord) {
 		Assert.notNull(educationRecord);
-		EducationRecord result;
+		Assert.isTrue(educationRecord.getId() == 0);
 
-		result = this.educationRecordRepository.saveAndFlush(educationRecord);
-
-		return result;
+		EducationRecord newEducationRecord = this.educationRecordRepository.saveAndFlush(educationRecord);
+		Assert.isTrue(newEducationRecord.getId() != 0);
+		return newEducationRecord;
 
 	}
 
 	public void delete(EducationRecord educationRecord) {
-		//TODO: Hacer pero antes hay que mirar si se puede borrar del tiron.
+		Assert.notNull(educationRecord);
+		Assert.notNull(this.educationRecordRepository.findOne(educationRecord.getId()));
+
+		this.educationRecordRepository.delete(educationRecord);
 	}
 
 }

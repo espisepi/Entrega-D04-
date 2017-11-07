@@ -36,8 +36,10 @@ public class EndorserRecordService {
 	public EndorserRecord create() {
 		EndorserRecord endorserRecord;
 		endorserRecord = new EndorserRecord();
+
 		List<String> comments = new ArrayList<String>();
 		endorserRecord.setComments(comments);
+
 		return endorserRecord;
 	}
 	public Collection<EndorserRecord> findAll() {

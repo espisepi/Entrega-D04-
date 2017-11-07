@@ -32,13 +32,36 @@ public class EndorserRecordServiceTest extends AbstractTest {
 	@Test
 	public void testCreate() {
 		EndorserRecord endorserRecord = this.endorserRecordService.create();
+
 		Assert.isTrue(endorserRecord != null);
 
 	}
 
 	@Test
 	public void testSave() {
-		EndorserRecord endorserRecord = new EndorserRecord();
-	}
+		EndorserRecord endorserRecord = this.endorserRecordService.create();
 
+		endorserRecord.setFullName("Endorser Record 11");
+		endorserRecord.setEmail("test@gmail.com");
+		endorserRecord.setLinkedProfile("https://endorsserRecord11.com");
+		endorserRecord.setPhone("111111111");
+
+		EndorserRecord newEndorserRecord = this.endorserRecordService.save(endorserRecord);
+		Assert.notNull(newEndorserRecord);
+
+	}
+	@Test
+	public void testDelete() {
+		EndorserRecord endorserRecord = this.endorserRecordService.create();
+
+		endorserRecord.setFullName("Endorser Record 11");
+		endorserRecord.setEmail("test@gmail.com");
+		endorserRecord.setLinkedProfile("https://endorsserRecord11.com");
+		endorserRecord.setPhone("111111111");
+
+		EndorserRecord newEndorserRecord = this.endorserRecordService.save(endorserRecord);
+		Assert.notNull(newEndorserRecord);
+
+		this.endorserRecordService.delete(newEndorserRecord);
+	}
 }
