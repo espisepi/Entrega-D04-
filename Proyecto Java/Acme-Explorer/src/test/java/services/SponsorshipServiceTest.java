@@ -58,8 +58,12 @@ public class SponsorshipServiceTest extends AbstractTest {
 	//		sponsorship = this.sponsorshipService.create();
 	//		creditcard = new CreditCard();
 	//		Trip trip = this.tripService.findAll().iterator().next();
-	//		sponsor = this.sponsorService.findAll().iterator().next(); // falla el findall de sponsor
-	//
+	//		//sponsor = this.sponsorService.findAll().iterator().next(); // falla el findall de sponsor
+	//		
+	//		sponsor = new Sponsor();
+	//		sponsor.setAddress("eni");
+	//		sponsor.setEmail("nier@gmail.com")
+	//		sponsor.setName(name)
 	//		creditcard.setBrandName("brandName");
 	//		creditcard.setHolderName("holderName");
 	//		creditcard.setNumber("4388576018410707");
@@ -71,7 +75,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 	//		sponsorship.setBannerURL("http://www.banner.com");
 	//		sponsorship.setCreditCard(creditcard);
 	//		sponsorship.setTrip(trip);
-	//		sponsorship.setSponsor(sponsor);
+	//		//sponsorship.setSponsor(sponsor);
 	//
 	//		sponsorship = this.sponsorshipService.save(sponsorship);
 	//	}
