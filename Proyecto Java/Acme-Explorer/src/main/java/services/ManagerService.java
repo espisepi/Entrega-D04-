@@ -70,6 +70,7 @@ public class ManagerService {
 		result.setSocialIdentities(socialIdentities);
 		result.setTrips(trips);
 		result.setApplicationsFor(applicationsFor);
+		result.setSuspicious(false);
 
 		return result;
 
