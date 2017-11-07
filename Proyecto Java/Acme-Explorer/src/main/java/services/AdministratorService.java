@@ -26,8 +26,11 @@ public class AdministratorService {
 	@Autowired
 	private AdministratorRepository	administratorRepository;
 
-
 	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private MessageFolderService	messageFolderService;
+
 
 	// Constructors-------------------------------------------------------
 
@@ -50,10 +53,14 @@ public class AdministratorService {
 		messagesFolders = new ArrayList<MessageFolder>();
 		socialIdentities = new ArrayList<SocialIdentity>();
 
+		messagesFolders = this.messageFolderService.createDefaultFolders();
+
 		authority.setAuthority(Authority.ADMINISTRATOR);
+		userAccount.addAuthority(authority);
 		result.setUserAccount(userAccount);
 		result.setSocialIdentities(socialIdentities);
-		result.setMessagesFolders(messagesFolders);
+		result.getMessagesFolders().addAll(messagesFolders);
+
 		return result;
 	}
 

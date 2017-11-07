@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.AuditorRepository;
+import security.Authority;
 import security.LoginService;
 import security.UserAccount;
+import domain.AuditRecord;
 import domain.Auditor;
+import domain.MessageFolder;
+import domain.Note;
+import domain.SocialIdentity;
 
 @Service
 @Transactional
@@ -34,7 +40,19 @@ public class AuditorService {
 
 	public Auditor create() {
 		Auditor result;
+		UserAccount useraccount;
+		Authority authority;
+		Collection<SocialIdentity> socialIdentities;
+		Collection<MessageFolder> messagesFolders;
+		Collection<Note> notes;
+		Collection<AuditRecord> auditrecords;
+
 		result = new Auditor();
+		useraccount = new UserAccount();
+		authority = new Authority();
+		messagesFolders = new ArrayList<MessageFolder>();
+		socialIdentities = new ArrayList<SocialIdentity>();
+
 		return result;
 	}
 
