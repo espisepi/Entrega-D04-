@@ -62,7 +62,6 @@ public class MessageFolderService {
 		return messagefolder;
 	}
 	public MessageFolder save(MessageFolder messageFolder) {
-		Assert.isTrue(this.actorService.isAuthenticated());
 		Assert.notNull(messageFolder);
 		MessageFolder res;
 		res = this.messageFolderRepository.save(messageFolder);
@@ -88,37 +87,42 @@ public class MessageFolderService {
 
 	public Collection<MessageFolder> createDefaultFolders() {
 		Collection<MessageFolder> res;
-		MessageFolder inbox, outbox, notificationbox, trashbox, spambox;
 		res = new ArrayList<MessageFolder>();
+		Collection<Message> messages = new ArrayList<>();
 
-		inbox = this.create();
-		outbox = this.create();
-		notificationbox = this.create();
-		trashbox = this.create();
-		spambox = this.create();
-
+		MessageFolder inbox = new MessageFolder();
+		MessageFolder notificationbox = new MessageFolder();
+		MessageFolder outbox = new MessageFolder();
+		MessageFolder trashbox = new MessageFolder();
+		MessageFolder spambox = new MessageFolder();
 		inbox.setModifiable(false);
 		outbox.setModifiable(false);
+		notificationbox.setModifiable(false);
 		trashbox.setModifiable(false);
 		spambox.setModifiable(false);
+
+		inbox.setMessages(messages);
+		outbox.setMessages(messages);
+		notificationbox.setMessages(messages);
+		trashbox.setMessages(messages);
+		spambox.setMessages(messages);
 
 		inbox.setName("in box");
 		outbox.setName("out box");
 		notificationbox.setName("Notification box");
 		trashbox.setName("trash box");
 		spambox.setName("spam box");
-
-		inbox = this.save(inbox);
-		outbox = this.save(outbox);
-		notificationbox = this.save(notificationbox);
-		trashbox = this.save(trashbox);
-		spambox = this.save(spambox);
-
 		res.add(inbox);
 		res.add(outbox);
 		res.add(notificationbox);
 		res.add(trashbox);
 		res.add(spambox);
+
+		inbox = this.messageFolderRepository.save(inbox);
+		outbox = this.messageFolderRepository.save(outbox);
+		notificationbox = this.messageFolderRepository.save(notificationbox);
+		trashbox = this.messageFolderRepository.save(trashbox);
+		spambox = this.messageFolderRepository.save(spambox);
 
 		return res;
 

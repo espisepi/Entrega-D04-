@@ -32,36 +32,26 @@ public class AdministratorServiceTest extends AbstractTest {
 
 	@Test
 	public void testCreate() {
-		this.authenticate("administrator1");
-
 		Administrator administrator;
-
 		administrator = this.administratorService.create();
-		administrator.setName("name1");
-		administrator.setSurname("surname1");
-		administrator.setEmail("admin1@gmail.com");
-		administrator.setPhone("7777");
-		administrator.setAddress("addres1");
-
-		this.administratorService.save(administrator);
+		Assert.notNull(administrator);
 	}
 
-	//	@Test
-	//	public void testSave() {
-	//
-	//		Administrator administrator;
-	//		administrator = this.administratorService.create();
-	//
-	//		administrator.setName("name1");
-	//		administrator.setSurname("surname1");
-	//		administrator.setEmail("admin1@gmail.com");
-	//		administrator.setPhone("7777");
-	//		administrator.setAddress("addres1");
-	//
-	//		System.out.println(this.administratorService.findAll());
-	//		this.administratorService.save(administrator);
-	//		System.out.println(this.administratorService.findAll());
-	//	}
+	@Test
+	public void testSave() {
+		Administrator administrator;
+		administrator = this.administratorService.create();
+
+		administrator.setName("name");
+		administrator.setSurname("surname");
+		administrator.setEmail("email@gmail.com");
+		administrator.setPhone("31333");
+		administrator.setAddress("address");
+
+		administrator = this.administratorService.save(administrator);
+		Assert.notNull(administrator.getId());
+
+	}
 
 	@Test
 	public void testDelete() {
@@ -86,10 +76,10 @@ public class AdministratorServiceTest extends AbstractTest {
 		Assert.notNull(administrators);
 	}
 
-	@Test
-	public void testFindOne() {
-		Administrator administrator;
-		administrator = this.administratorService.findOne(6122);
-		Assert.notNull(administrator);
-	}
+	//		@Test
+	//		public void testFindOne() {
+	//			Administrator administrator;
+	//			administrator = this.administratorService.findOne(12);
+	//			Assert.notNull(administrator);
+	//		}
 }

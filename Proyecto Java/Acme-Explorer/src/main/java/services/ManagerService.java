@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.ManagerRepository;
+import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Manager;
@@ -94,6 +95,20 @@ public class ManagerService {
 		Assert.notNull(result);
 
 		return result;
+	}
+
+	public void checkPrincipal() {
+
+		UserAccount userAccount = LoginService.getPrincipal();
+		Assert.notNull(userAccount);
+
+		Collection<Authority> authorities = userAccount.getAuthorities();
+		Assert.notNull(authorities);
+
+		Authority auth = new Authority();
+		auth.setAuthority("MANAGER");
+
+		Assert.isTrue(authorities.contains(auth));
 	}
 
 }

@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,9 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.AdministratorRepository;
+import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import domain.Administrator;
+import domain.MessageFolder;
+import domain.SocialIdentity;
 import domain.Trip;
 
 @Service
@@ -22,8 +26,11 @@ public class AdministratorService {
 	@Autowired
 	private AdministratorRepository	administratorRepository;
 
-
 	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private MessageFolderService	messageFolderService;
+
 
 	// Constructors-------------------------------------------------------
 
@@ -35,7 +42,25 @@ public class AdministratorService {
 
 	public Administrator create() {
 		Administrator result;
+		UserAccount userAccount;
+		Authority authority;
+		Collection<SocialIdentity> socialIdentities;
+		Collection<MessageFolder> messagesFolders;
+
 		result = new Administrator();
+		userAccount = new UserAccount();
+		authority = new Authority();
+		messagesFolders = new ArrayList<MessageFolder>();
+		socialIdentities = new ArrayList<SocialIdentity>();
+
+		messagesFolders = this.messageFolderService.createDefaultFolders();
+
+		authority.setAuthority(Authority.ADMINISTRATOR);
+		userAccount.addAuthority(authority);
+		result.setUserAccount(userAccount);
+		result.setSocialIdentities(socialIdentities);
+		result.setMessagesFolders(messagesFolders);
+
 		return result;
 	}
 
