@@ -88,15 +88,13 @@ public class MessageFolderService {
 
 	public Collection<MessageFolder> createDefaultFolders() {
 		Collection<MessageFolder> res;
-		MessageFolder inbox, outbox, notificationbox, trashbox, spambox;
 		res = new ArrayList<MessageFolder>();
 
-		inbox = this.create();
-		outbox = this.create();
-		notificationbox = this.create();
-		trashbox = this.create();
-		spambox = this.create();
-
+		MessageFolder inbox = new MessageFolder();
+		MessageFolder notificationbox = new MessageFolder();
+		MessageFolder outbox = new MessageFolder();
+		MessageFolder trashbox = new MessageFolder();
+		MessageFolder spambox = new MessageFolder();
 		inbox.setModifiable(false);
 		outbox.setModifiable(false);
 		trashbox.setModifiable(false);
