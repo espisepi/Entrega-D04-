@@ -20,6 +20,9 @@ public interface TripRepository extends JpaRepository<Trip, Integer> {
 	@Query("select t from Trip t where t.manager.id= ?1")
 	Collection<Trip> findAllTripsByManagerId(int managerId);
 
+	@Query("select t from Trip t join t.applicationsFor a where a.explorer.id=?1 and a.status like 'ACCEPTED'")
+	Collection<Trip> findAllTripsByExplorerIdWithStatusAccepted(int explorerId);
+
 	@Query("select count(t) from Trip t where t.publicationDate!=null")
 	Collection<Trip> findAllTripsPublishedNotStarted();
 
@@ -28,4 +31,7 @@ public interface TripRepository extends JpaRepository<Trip, Integer> {
 
 	@Query("select t from Trip t join t.applicationsFor a where a.status like 'PENDING' and t.id= ?1")
 	Trip findTripWithStatusPendingById(int tripId);
+
+	@Query("select t from Trip t join t.applicationsFor a where a.explorer.id=?1")
+	Trip findAllTripsApplyByExplorerId(int explorerId);
 }

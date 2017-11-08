@@ -12,6 +12,18 @@ import org.springframework.util.Assert;
 
 import repositories.TripRepository;
 import security.Authority;
+import domain.ApplicationFor;
+import domain.AuditRecord;
+import domain.Category;
+import domain.LegalText;
+import domain.Manager;
+import domain.Note;
+import domain.Ranger;
+import domain.Sponsorship;
+import domain.Stage;
+import domain.Story;
+import domain.SurvivalClass;
+import domain.Tag;
 import domain.Trip;
 
 @Service
@@ -24,9 +36,12 @@ public class TripService {
 
 	// Supporting services ----------------------------------------------------
 	@Autowired
-	//private ManagerService	managerService;
+	private ManagerService	managerService;
+	private ExplorerService	explorerService;
 	private ActorService	actorService;
 
+
+	//private LegalText		legalTextService;
 
 	// Constructors------------------------------------------------------------
 	public TripService() {
@@ -36,13 +51,66 @@ public class TripService {
 	// Simple CRUD methods-----------------------------------------------------
 	public Trip create() {
 		//Comprobamos que solo el manager sea el que puede crear Trip
-		Assert.isTrue(!this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.MANAGER));
-		Trip result;
-		result = new Trip();
-		//result.setPrice(totalPrice);
-		return result;
+		//Assert.isTrue(!this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.MANAGER));
+		this.managerService.checkPrincipal();
+		final Collection<SurvivalClass> classes = new ArrayList<SurvivalClass>();
+		final Collection<Story> stories = new ArrayList<Story>();
+		final Collection<ApplicationFor> applicationsFor = new ArrayList<ApplicationFor>();
+		final Collection<AuditRecord> auditRecords = new ArrayList<AuditRecord>();
+		final Collection<Note> notes = new ArrayList<Note>();
+		final Collection<Category> categories = new ArrayList<Category>();
+		final Collection<Sponsorship> sponsorships = new ArrayList<Sponsorship>();
+		final Collection<Stage> stages = new ArrayList<Stage>();
+		final Collection<Tag> tags = new ArrayList<Tag>();
+		LegalText legalText = new LegalText();
+		Ranger ranger = new Ranger();
+		Trip trip;
+		trip = new Trip();
+		Manager manager = this.managerService.findByPrincipal();
+		trip.setManager(manager);
+		trip.setRanger(ranger);
+		trip.setRanger(ranger);
+		trip.setClasses(classes);
+		trip.setStories(stories);
+		trip.setApplicationsFor(applicationsFor);
+		trip.setAuditRecords(auditRecords);
+		trip.setNotes(notes);
+		trip.setCategories(categories);
+		trip.setSponsorships(sponsorships);
+		trip.setStages(stages);
+		trip.setTags(tags);
+		trip.setLegalText(legalText);
+
+		return trip;
 	}
 
+	public Trip update(Trip trip) {
+		assert trip != null;
+		Date currentDate = new Date();
+		//Si no tiene fecha de publicación podemos continuar editando
+		Assert.isTrue(trip.getPublicationDate() == null);
+		//Comprobamos que el trip aun no ha empezado
+		Assert.isTrue(trip.getStartDate().after(currentDate));
+		boolean isManager = this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.MANAGER);
+		boolean isExplorer = this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.EXPLORER);
+
+		if (isManager) {
+			//Saco los trips del manager
+			Collection<Trip> trips = this.findAllTripsByManagerId(this.managerService.findByPrincipal().getId());
+			//Compruebo que ese trip que quiera editar lo creó él
+			Assert.isTrue(trips.contains(trip));
+			trip.setCancelled(true);
+		} else if (isExplorer) {
+			//Saco los trips del explorer con estado ACCEPTED
+			Collection<Trip> trips = this.findAllTripsByExplorerIdWithStatusAccepted(this.explorerService.findByPrincipal().getId());
+			//Compruebo que ese trip que quiera editar lo organizó él
+			Assert.isTrue(trips.contains(trip));
+			trip.setCancelled(true);
+		}
+		Trip result;
+		result = this.tripRepository.save(trip);
+		return result;
+	}
 	public Collection<Trip> findAll() {
 		Collection<Trip> result;
 		Assert.notNull(this.tripRepository);
@@ -74,12 +142,14 @@ public class TripService {
 	}
 
 	public void delete(final Trip trip) {
-		Assert.isTrue(!this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.MANAGER));
 		assert trip != null;
 		assert trip.getId() != 0;
-		Assert.isTrue(trip.getPublicationDate() != null);
-
-		Assert.isTrue(this.tripRepository.exists(trip.getId()));
+		//Assert.isTrue(!this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.MANAGER));
+		this.managerService.checkPrincipal();
+		Assert.isTrue(trip.getPublicationDate() == null);
+		//Saco los trips del manager
+		Collection<Trip> trips = this.findAllTripsByManagerId(this.managerService.findByPrincipal().getId());
+		Assert.isTrue(trips.contains(trip));
 
 		this.tripRepository.delete(trip);
 	}
@@ -93,8 +163,17 @@ public class TripService {
 	}
 
 	public Collection<Trip> findAllTripsByManagerId(int managerId) {
+		Assert.notNull(managerId);
 		Collection<Trip> res;
 		res = this.tripRepository.findAllTripsByManagerId(managerId);
+		Assert.notNull(res);
+		return res;
+	}
+
+	public Collection<Trip> findAllTripsByExplorerIdWithStatusAccepted(int explorerId) {
+		Assert.notNull(explorerId);
+		Collection<Trip> res;
+		res = this.tripRepository.findAllTripsByExplorerIdWithStatusAccepted(explorerId);
 		Assert.notNull(res);
 		return res;
 	}
@@ -103,7 +182,8 @@ public class TripService {
 		Collection<Trip> trips = new ArrayList<>();
 		Collection<Trip> res = new ArrayList<>();
 		Date currentDate = new Date();
-		Assert.isTrue(!this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.MANAGER));
+		this.managerService.checkPrincipal();
+		//Assert.isTrue(!this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.MANAGER));
 		res = this.tripRepository.findAllTripsPublishedNotStarted();
 		Assert.notNull(res);
 
@@ -117,7 +197,7 @@ public class TripService {
 		Collection<Trip> trips = new ArrayList<>();
 		Collection<Trip> res = new ArrayList<>();
 		Date currentDate = new Date();
-		Assert.isTrue(!this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.EXPLORER));
+		Assert.isTrue(this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.EXPLORER));
 		trips = this.tripRepository.findTripsWhitStatusAccepted();
 		Assert.notNull(res);
 		for (Trip t : trips)
@@ -150,5 +230,12 @@ public class TripService {
 		Trip result = this.findTripWithStatusPendingById(tripId);
 		Assert.notNull(result);
 		return result;
+	}
+
+	public Collection<Trip> findAllTripsApplyByExplorerId(int explorerId) {
+		Assert.notNull(explorerId);
+		Collection<Trip> trips = new ArrayList<Trip>(explorerId);
+		Assert.notNull(trips);
+		return trips;
 	}
 }
