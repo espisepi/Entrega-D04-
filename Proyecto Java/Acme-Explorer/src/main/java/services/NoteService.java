@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.NoteRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.Auditor;
 import domain.Note;
 import domain.Trip;
@@ -34,6 +37,8 @@ public class NoteService {
 	// Simple CRUD methods------------------------------------------------
 
 	public Note create() {
+		this.checkPrincipal();
+
 		Note result;
 		Auditor auditor;
 		Trip trip;
@@ -83,5 +88,17 @@ public class NoteService {
 	//	}
 
 	// Other business methods------------------------------------------------------
+	public void checkPrincipal() {
 
+		UserAccount userAccount = LoginService.getPrincipal();
+		Assert.notNull(userAccount);
+
+		Collection<Authority> authorities = userAccount.getAuthorities();
+		Assert.notNull(authorities);
+
+		Authority auth = new Authority();
+		auth.setAuthority("AUDITOR");
+
+		Assert.isTrue(authorities.contains(auth));
+	}
 }
