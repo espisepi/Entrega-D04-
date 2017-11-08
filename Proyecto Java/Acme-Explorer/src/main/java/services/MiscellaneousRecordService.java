@@ -1,7 +1,9 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -75,5 +77,13 @@ public class MiscellaneousRecordService {
 
 		this.miscellaneousRecordRepository.delete(miscellaneousRecord);
 
+	}
+
+	public Collection<MiscellaneousRecord> saveAll(Collection<MiscellaneousRecord> miscellaneousRecords) {
+		Assert.notNull(miscellaneousRecords);
+		List<MiscellaneousRecord> newMiscellaneousRecords = new ArrayList<MiscellaneousRecord>();
+		newMiscellaneousRecords.addAll(this.miscellaneousRecordRepository.save(miscellaneousRecords));
+
+		return newMiscellaneousRecords;
 	}
 }

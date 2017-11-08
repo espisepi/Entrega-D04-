@@ -28,26 +28,14 @@ public class CurriculaService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private CurriculaRepository			curriculaRepository;
+	private CurriculaRepository		curriculaRepository;
 
 	// Supporting services ----------------------------------------------------
 	@Autowired
-	private RangerService				rangerService;
+	private RangerService			rangerService;
 
 	@Autowired
-	private PersonalRecordService		personalRecordService;
-
-	@Autowired
-	private ProfessionalRecordService	professionalRecordService;
-
-	@Autowired
-	private EducationRecordService		educationRecordService;
-
-	@Autowired
-	private EndorserRecordService		endorserRecordService;
-
-	@Autowired
-	private MiscellaneousRecordService	miscellaneousRecordService;
+	private PersonalRecordService	personalRecordService;
 
 
 	// Constructors-------------------------------------------------------
@@ -106,13 +94,10 @@ public class CurriculaService {
 		Curricula curriculaFromRanger = this.findCurriculaFromRanger(ranger.getId());
 		Assert.isTrue(curriculaFromRanger.getId() == (curriculaId));
 
-		this.personalRecordService.save(personalRecord);
-		this.professionalRecordService.saveAll(professionalRecords);
-		this.educationRecordService.saveAll(educationRecords);
-		this.endorserRecordService.saveAll(endorserRecords);
+		PersonalRecord newPersonalRecord = this.personalRecordService.save(personalRecord);
 
 		Curricula curriculaToModify = this.curriculaRepository.findOne(curriculaId);
-		curriculaToModify.setPersonalRecord(personalRecord);
+		curriculaToModify.setPersonalRecord(newPersonalRecord);
 		curriculaToModify.setProfessionalRecords(professionalRecords);
 		curriculaToModify.setEducationRecords(educationRecords);
 		curriculaToModify.setEndorserRecords(endorserRecords);
