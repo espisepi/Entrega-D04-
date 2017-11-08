@@ -32,34 +32,23 @@ public class ExplorerServiceTest extends AbstractTest {
 		Explorer explorer;
 		explorer = this.explorerService.create();
 		Assert.notNull(explorer);
+		Assert.notEmpty(explorer.getMessagesFolders());
 	}
 
-	//	@Test
-	//	public void testSavePositive() {
-	//		Explorer explorer;
-	//		explorer = this.explorerService.create();
-	//
-	//		explorer.setName("name explorer test");
-	//		explorer.setSurname("surname explorer test");
-	//		explorer.setEmail("emailExplorerTest@email.com");
-	//		explorer.setPhone("313(987)7121");
-	//		explorer.setAddress("address explorer test");
-	//
-	//		explorer = this.explorerService.save(explorer);
-	//		Assert.notNull(explorer.getId());
-	//
-	//	}
-	//	@Test
-	//	public void testFindAllPositive() {
-	//		Collection<Explorer> explorers;
-	//		explorers = this.explorerService.findAll();
-	//		Assert.notEmpty(explorers);
-	//	}
+	@Test
+	public void testSavePositive() {
+		Explorer explorer;
+		explorer = this.explorerService.create();
 
-	//	@Test
-	//	public void testFindOnePositive() {
-	//		Explorer explorer;
-	//		explorer = this.explorerService.findOne(6248);
-	//		Assert.notNull(explorer);
-	//	}
+		explorer.setName("name explorer test");
+		explorer.setSurname("surname explorer test");
+		explorer.setEmail("emailExplorerTest@email.com");
+		explorer.setPhone("313(987)7121");
+		explorer.setAddress("address explorer test");
+
+		explorer = this.explorerService.save(explorer);
+		Assert.notNull(explorer.getId());
+
+	}
+
 }

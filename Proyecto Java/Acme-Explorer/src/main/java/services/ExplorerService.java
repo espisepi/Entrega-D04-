@@ -28,10 +28,12 @@ public class ExplorerService {
 	// Managed repository -----------------------------------------------------
 
 	@Autowired
-	private ExplorerRepository	explorerRepository;
-
+	private ExplorerRepository		explorerRepository;
 
 	// Supporting services ----------------------------------------------------
+	@Autowired
+	private MessageFolderService	messageFolderService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -50,17 +52,20 @@ public class ExplorerService {
 		final Collection<Story> stories;
 		final Collection<ApplicationFor> applicationsFor;
 		final Collection<ContactEmergency> contactsEmergency;
+		final Collection<MessageFolder> defaultFolders;
 
 		result = new Explorer();
 		userAccount = new UserAccount();
 		authority = new Authority();
-		messagesFolders = new ArrayList<MessageFolder>();
 		socialIdentities = new ArrayList<SocialIdentity>();
+		messagesFolders = new ArrayList<MessageFolder>();
 		stories = new ArrayList<Story>();
 		applicationsFor = new ArrayList<ApplicationFor>();
 		contactsEmergency = new ArrayList<ContactEmergency>();
 
 		result.setSocialIdentities(socialIdentities);
+		defaultFolders = this.messageFolderService.createDefaultFolders();
+		messagesFolders.addAll(defaultFolders);
 		result.setMessagesFolders(messagesFolders);
 
 		authority.setAuthority(Authority.EXPLORER);
