@@ -3,7 +3,6 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +14,6 @@ import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.Attachment;
-import domain.Explorer;
 import domain.Story;
 import domain.Trip;
 
@@ -41,32 +39,45 @@ public class StoryServiceTest extends AbstractTest {
 
 	@Test
 	public void testCreatePositive() {
+		super.authenticate("explorer1");
 		Story story;
 		story = this.storyService.create();
 		Assert.notNull(story);
+		Assert.notNull(story.getExplorer());
 	}
 
 	@Test
 	public void testSavePositive() {
+		super.authenticate("explorer1");
 		Story story;
+		final Attachment attachment1 = new Attachment();
 		story = this.storyService.create();
+		Trip trip1;
 
-		final List<Explorer> explorers = new ArrayList<Explorer>(this.explorerService.findAll());
-		final List<Trip> trips = new ArrayList<Trip>(this.tripService.findAll());
 		final Collection<Attachment> attachments = new ArrayList<Attachment>();
-		//attachments.add((new Attachment()).setUrl("attachment1Test"));
+
+		attachment1.setUrl("http://www.testStory.com");
+		attachments.add(attachment1);
+		trip1 = this.tripService.findOne(super.getEntityId("trip1"));
 
 		story.setTitle("title story test");
 		story.setText("text story test");
 		story.setAttachments(attachments);
-		story.setExplorer(explorers.get(0));
-		story.setTrip(trips.get(0));
+		story.setTrip(trip1);
 		Assert.notNull(story.getExplorer());
 
 		story = this.storyService.save(story);
 		Assert.notNull(story.getId());
+		//Compruebo que tiene esta Story el explorerPrincipal y la trip1 desde la bd
+		//Para que funcione el siguiente codigo cambiar el metodo save a saveAndFlush de storyRepository en storyService
+		//		final Explorer explorerPrincipal;
+		//		explorerPrincipal = this.explorerService.findByPrincipal();
+		//		trip1 = this.tripService.findOne(super.getEntityId("trip1"));
+		//		Assert.isTrue(explorerPrincipal.getStories().contains(story));
+		//		Assert.isTrue(trip1.getStories().contains(story));
 
 	}
+
 	@Test
 	public void testFindAllPositive() {
 		Collection<Story> storys;
