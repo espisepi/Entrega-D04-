@@ -78,8 +78,14 @@ public class TagService {
 		List<Tag> tagWithTrip = new ArrayList<Tag>();
 		tagWithTrip.addAll(this.tagRepository.findTagWithTrip());
 
+		Tag tagToModify = this.tagRepository.findOne(tagId);
 		Assert.notNull(this.tagRepository.findOne(tagId));
 		Assert.isTrue(!tagWithTrip.contains(this.tagRepository.findOne(tagId)));
-		return null;
+		this.administratorService.checkPrincipal();
+
+		tagToModify.setName(name);
+
+		return tagToModify;
+
 	}
 }

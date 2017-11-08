@@ -59,4 +59,11 @@ public class TagServiceTest extends AbstractTest {
 		this.tagService.delete(newTag);
 
 	}
+
+	@Test
+	public void testUpdate() {
+		this.authenticate("administrator1");
+		this.tagService.update(6078, "Hotel");
+		this.authenticate(null);
+	}
 }
