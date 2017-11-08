@@ -84,8 +84,9 @@ public class RangerServiceTest extends AbstractTest {
 	public void testSave() {
 
 		Ranger ranger;
-		ranger = this.rangerService.create();
 		Ranger rangerSaved;
+
+		ranger = this.rangerService.create();
 
 		ranger.setName("name 1");
 		ranger.setSurname("surname 1");

@@ -24,6 +24,7 @@ import domain.Sponsorship;
 public class SponsorService {
 
 	// Managed repository -----------------------------------------------------
+	@Autowired
 	private SponsorRepository		sponsorRepository;
 
 	// Supporting services ----------------------------------------------------

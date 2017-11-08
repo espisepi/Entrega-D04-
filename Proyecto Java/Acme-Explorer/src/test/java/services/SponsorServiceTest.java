@@ -48,4 +48,51 @@ public class SponsorServiceTest extends AbstractTest {
 		Assert.notEmpty(sponsors);
 	}
 
+	@Test
+	public void testFindOne() {
+
+		Collection<Sponsor> sponsors;
+		int idSponsor;
+		Sponsor sponsor;
+
+		sponsors = this.sponsorService.findAll();
+		idSponsor = sponsors.iterator().next().getId();
+		sponsor = this.sponsorService.findOne(idSponsor);
+
+		Assert.notNull(sponsor);
+
+	}
+
+	@Test
+	public void testSave() {
+
+		Sponsor sponsor;
+		Sponsor sponsoSaved;
+
+		sponsor = this.sponsorService.create();
+
+		sponsor.setName("name 1");
+		sponsor.setSurname("surname 1");
+		sponsor.setEmail("sponsor1@gmail.com");
+
+		sponsoSaved = this.sponsorService.save(sponsor);
+
+		Assert.notNull(sponsoSaved);
+	}
+
+	@Test
+	public void testDelete() {
+
+		Collection<Sponsor> sponsors;
+		int idSponsor;
+		Sponsor sponsor;
+
+		sponsors = this.sponsorService.findAll();
+		idSponsor = sponsors.iterator().next().getId();
+		sponsor = this.sponsorService.findOne(idSponsor);
+
+		this.sponsorService.delete(sponsor);
+
+		Assert.isNull(this.sponsorService.findOne(idSponsor));
+	}
 }
