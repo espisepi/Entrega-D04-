@@ -102,6 +102,20 @@ public class AdministratorService {
 		return result;
 	}
 
+	public void checkPrincipal() {
+
+		UserAccount userAccount = LoginService.getPrincipal();
+		Assert.notNull(userAccount);
+
+		Collection<Authority> authorities = userAccount.getAuthorities();
+		Assert.notNull(authorities);
+
+		Authority auth = new Authority();
+		auth.setAuthority("ADMIN");
+
+		Assert.isTrue(authorities.contains(auth));
+	}
+
 	public Double[] findMaxMinAvgStddevOfTheNumOfApplicationsPerTrip() {
 		Double[] result;
 		result = this.administratorRepository.findMaxMinAvgStddevOfTheNumOfApplicationsPerTrip();
