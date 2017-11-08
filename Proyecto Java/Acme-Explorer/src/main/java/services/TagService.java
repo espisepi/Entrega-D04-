@@ -1,7 +1,9 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -72,13 +74,12 @@ public class TagService {
 
 		this.tagRepository.delete(tag);
 	}
-	public Tag update(Tag tag) {
-		Assert.notNull(tag);
-		Assert.notNull(this.tagRepository.findOne(tag.getId()));
-		
-		this.administratorService.
-		
-		
+	public Tag update(int tagId, String name) {
+		List<Tag> tagWithTrip = new ArrayList<Tag>();
+		tagWithTrip.addAll(this.tagRepository.findTagWithTrip());
 
+		Assert.notNull(this.tagRepository.findOne(tagId));
+		Assert.isTrue(!tagWithTrip.contains(this.tagRepository.findOne(tagId)));
+		return null;
 	}
 }
