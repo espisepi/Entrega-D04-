@@ -41,8 +41,9 @@ public class MessageFolderTest extends AbstractTest {
 
 	@Test
 	public void testSave() {
-		this.authenticate("Explorer 5");
-		MessageFolder messageFolder = new MessageFolder();
+		this.authenticate("administrator1");
+		//final MessageFolder messageFolder = new MessageFolder(); Falla porque no instancias la lista de messages
+		final MessageFolder messageFolder = this.messageFolderService.create();
 		messageFolder.setModifiable(true);
 		messageFolder.setName("Coordinador");
 		this.messageFolderService.save(messageFolder);
@@ -51,7 +52,7 @@ public class MessageFolderTest extends AbstractTest {
 
 	@Test
 	public void testdelete() {
-		MessageFolder messageFolder = this.messageFolderService.findAll().iterator().next();
+		final MessageFolder messageFolder = this.messageFolderService.findAll().iterator().next();
 		messageFolder.setModifiable(true);
 		this.messageFolderService.delete(messageFolder);
 

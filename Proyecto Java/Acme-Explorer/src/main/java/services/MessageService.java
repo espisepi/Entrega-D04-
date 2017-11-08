@@ -38,14 +38,14 @@ public class MessageService {
 	// Simple CRUD methods ----------------------------------------------------
 
 	public Message create() {
-		Actor sender = this.actorService.findPrincipal();
+		final Actor sender = this.actorService.findPrincipal();
 		Message message;
 		message = new Message();
 		message.setMoment(new Date());
 		message.setSender(sender);
 		return message;
 	}
-	public Message findOne(int messageId) {
+	public Message findOne(final int messageId) {
 		Assert.isTrue(messageId != 0);
 
 		Message result;
@@ -63,33 +63,41 @@ public class MessageService {
 
 	}
 
-	public Message Save(Message message) {
+	public Message Save(final Message message) {
 		//TODO
 		Collection<MessageFolder> m;
-		Actor sender = this.actorService.findPrincipal();
+		final Actor sender;
 		Message result;
 		result = message;
 		Date current;
+
+		//sender = this.actorService.findPrincipal(); esta puesto en el create
 		current = new Date(System.currentTimeMillis() - 1000);
 		result.setMoment(current);
-		message.setSender(sender);
-		m = sender.getMessagesFolders();
-		for (MessageFolder folder : m)
-			if (folder.getName().equals("out box"))
-				folder.getMessages().add(message);
-		this.messageRepository.saveAndFlush(result);
+		//message.setSender(sender); esta en el create
+		m = message.getSender().getMessagesFolders();
+		for (final MessageFolder folder : m)
+			if (folder.getName().equals("out box")) {
+				//No entra nunca aqui porque los administradores del populate  no tienen estas carpetas por defecto
+				//TODO Quitar el comentario: folder.getMessages().add(message);, no haria falta porque en las bidireccionales se actualiza automaticamente
+				//de todas maneras lo comprobamos y si no descomentamos el codigo
+				message.setMessageFolder(folder);
+				break;
+			}
+		result = this.messageRepository.save(result);
+		Assert.notNull(result);
 		return result;
 	}
-	public void delete(Message message) {
+	public void delete(final Message message) {
 		Assert.notNull(message);
 		Assert.isTrue(message.getId() != 0);
 		this.messageRepository.delete(message);
 	}
 	// Other business methods -------------------------------------------------
-	public boolean MessageisSpam(Message message) {
+	public boolean MessageisSpam(final Message message) {
 		//Comprueba si un mensaje es spam
 		boolean bool = false;
-		Collection<String> words = new ArrayList<String>();
+		final Collection<String> words = new ArrayList<String>();
 		Collection<String> spams;
 
 		words.add(message.getBody());
@@ -97,9 +105,9 @@ public class MessageService {
 
 		spams = this.SpamWord();
 
-		for (String w : words)
-			for (String spam : spams) {
-				int i = w.indexOf(spam);
+		for (final String w : words)
+			for (final String spam : spams) {
+				final int i = w.indexOf(spam);
 				if (i != -1)
 					bool = true;
 			}
@@ -113,14 +121,14 @@ public class MessageService {
 		return res;
 
 	}
-	public Collection<Message> recipientAllByActor(int idActor) {
+	public Collection<Message> recipientAllByActor(final int idActor) {
 		//Todos los mensajes recibidos de un actor
 		Collection<Message> res;
 		res = this.messageRepository.recipientAllByActor(idActor);
 		return res;
 
 	}
-	public Collection<Message> senderAllByActor(int idActor) {
+	public Collection<Message> senderAllByActor(final int idActor) {
 		//Todos los mensajes enviados de un actor
 		Collection<Message> res;
 		res = this.messageRepository.senderAllByActor(idActor);
@@ -128,7 +136,7 @@ public class MessageService {
 
 	}
 
-	public void ChangeMessageOfFolder(Message message, MessageFolder folder) {
+	public void ChangeMessageOfFolder(final Message message, final MessageFolder folder) {
 
 		if (!message.getMessageFolder().equals(folder))
 			message.setMessageFolder(folder);
