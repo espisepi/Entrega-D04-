@@ -31,6 +31,7 @@ public class ProfessionalRecordServiceTest extends AbstractTest {
 
 	@Test
 	public void testCreate() {
+
 		ProfessionalRecord professionalRecord = this.professionalRecordService.create();
 		Assert.isTrue(professionalRecord != null);
 		Assert.notNull(professionalRecord.getComments());
@@ -72,5 +73,13 @@ public class ProfessionalRecordServiceTest extends AbstractTest {
 
 		ProfessionalRecord newProfessionalRecord = this.professionalRecordService.save(professionalRecord);
 		this.professionalRecordService.delete(newProfessionalRecord);
+	}
+
+	@Test
+	public void testUpdate() {
+		ProfessionalRecord professionalRecord = this.professionalRecordService.findOne(6131);
+		professionalRecord.setCompanyName("modificado");
+
+		this.professionalRecordService.update(professionalRecord);
 	}
 }

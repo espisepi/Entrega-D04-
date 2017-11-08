@@ -12,10 +12,12 @@ import org.springframework.util.Assert;
 
 import repositories.ExplorerRepository;
 import security.Authority;
+import security.LoginService;
 import security.UserAccount;
 import domain.ApplicationFor;
 import domain.ContactEmergency;
 import domain.Explorer;
+import domain.Manager;
 import domain.MessageFolder;
 import domain.SocialIdentity;
 import domain.Story;
@@ -115,4 +117,31 @@ public class ExplorerService {
 	}
 
 	// Other business methods -------------------------------------------------
+
+	public void checkPrincipal() {
+
+		UserAccount userAccount = LoginService.getPrincipal();
+		Assert.notNull(userAccount);
+
+		Collection<Authority> authorities = userAccount.getAuthorities();
+		Assert.notNull(authorities);
+
+		Authority auth = new Authority();
+		auth.setAuthority("Explorer");
+
+		Assert.isTrue(authorities.contains(auth));
+	}
+
+	public Manager findByPrincipal() {
+
+		Manager result;
+		UserAccount userAccount;
+
+		userAccount = LoginService.getPrincipal();
+		Assert.notNull(userAccount);
+		result = this.explorerRepository.findByUserAccountId(userAccount.getId());
+		Assert.notNull(result);
+
+		return result;
+	}
 }

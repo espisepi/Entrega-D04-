@@ -54,7 +54,7 @@ public class SponsorService {
 
 		messagesFolders.addAll(this.messageFolderService.createDefaultFolders());
 
-		authority.setAuthority("SPONSOR");
+		authority.setAuthority(Authority.SPONSOR);
 		userAccount.addAuthority(authority);
 		result.setUserAccount(userAccount);
 		result.setMessagesFolders(messagesFolders);

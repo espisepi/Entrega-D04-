@@ -17,10 +17,12 @@ public class TagService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private TagRepository	tagRepository;
-
+	private TagRepository			tagRepository;
 
 	// Supporting services ----------------------------------------------------
+	@Autowired
+	private AdministratorService	administratorService;
+
 
 	// Constructors------------------------------------------------------------
 	public TagService() {
@@ -69,5 +71,14 @@ public class TagService {
 		Assert.notNull(this.tagRepository.findOne(tag.getId()));
 
 		this.tagRepository.delete(tag);
+	}
+	public Tag update(Tag tag) {
+		Assert.notNull(tag);
+		Assert.notNull(this.tagRepository.findOne(tag.getId()));
+		
+		this.administratorService.
+		
+		
+
 	}
 }
