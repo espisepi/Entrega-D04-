@@ -17,7 +17,6 @@ import security.UserAccount;
 import domain.ApplicationFor;
 import domain.ContactEmergency;
 import domain.Explorer;
-import domain.Manager;
 import domain.MessageFolder;
 import domain.SocialIdentity;
 import domain.Story;
@@ -120,24 +119,34 @@ public class ExplorerService {
 
 	public void checkPrincipal() {
 
-		UserAccount userAccount = LoginService.getPrincipal();
+		final UserAccount userAccount = LoginService.getPrincipal();
 		Assert.notNull(userAccount);
 
-		Collection<Authority> authorities = userAccount.getAuthorities();
+		final Collection<Authority> authorities = userAccount.getAuthorities();
 		Assert.notNull(authorities);
 
-		Authority auth = new Authority();
+		final Authority auth = new Authority();
 		auth.setAuthority("Explorer");
 
 		Assert.isTrue(authorities.contains(auth));
 	}
 
-	public Manager findByPrincipal() {
+	public Explorer findByPrincipal() {
 
-		Manager result;
+		Explorer result;
 		UserAccount userAccount;
 
 		userAccount = LoginService.getPrincipal();
+		Assert.notNull(userAccount);
+		result = this.explorerRepository.findByUserAccountId(userAccount.getId());
+		Assert.notNull(result);
+
+		return result;
+	}
+
+	public Explorer findByUserAccount(final UserAccount userAccount) {
+		Explorer result;
+
 		Assert.notNull(userAccount);
 		result = this.explorerRepository.findByUserAccountId(userAccount.getId());
 		Assert.notNull(result);

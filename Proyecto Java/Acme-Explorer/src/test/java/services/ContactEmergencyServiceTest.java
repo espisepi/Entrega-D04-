@@ -30,14 +30,14 @@ public class ContactEmergencyServiceTest extends AbstractTest {
 	// Supporting services ----------------------------------------------------
 
 	@Test
-	public void testCreatePositive() {
+	public void testCreate() {
 		ContactEmergency contactEmergency;
 		contactEmergency = this.contactEmergencyService.create();
 		Assert.notNull(contactEmergency);
 	}
 
 	@Test
-	public void testSavePositive() {
+	public void testSave() {
 		ContactEmergency contactEmergency;
 		contactEmergency = this.contactEmergencyService.create();
 

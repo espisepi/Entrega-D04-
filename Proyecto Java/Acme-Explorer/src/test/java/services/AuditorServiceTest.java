@@ -59,13 +59,30 @@ public class AuditorServiceTest extends AbstractTest {
 		Assert.notEmpty(auditors);
 		Assert.notNull(auditors);
 	}
-	//	@Test
-	//	public void testDelete() {
-	//
-	//		Auditor auditor;
-	//		auditor = this.auditorService.findOne(6086);
-	//		this.auditorService.delete(auditor);
-	//
-	//		Con el find one va bien se borra, estaba desesperada y he usado el findone
-	//	}
+
+	@Test
+	public void testDelete() {
+
+		Collection<Auditor> auditors;
+
+		auditors = this.auditorService.findAll();
+		Assert.notNull(auditors);
+		Assert.notEmpty(auditors);
+
+		this.auditorService.delete(auditors.iterator().next());
+
+	}
+
+	@Test
+	public void testFindOne() {
+		Collection<Auditor> auditors;
+		Auditor auditor;
+
+		auditors = this.auditorService.findAll();
+		Assert.notNull(auditors);
+		Assert.notEmpty(auditors);
+
+		auditor = this.auditorService.findOne(auditors.iterator().next().getId());
+		Assert.notNull(auditor);
+	}
 }
