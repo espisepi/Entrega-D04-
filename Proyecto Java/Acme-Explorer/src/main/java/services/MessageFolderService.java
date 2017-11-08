@@ -119,17 +119,18 @@ public class MessageFolderService {
 		notificationbox.setName("Notification box");
 		trashbox.setName("trash box");
 		spambox.setName("spam box");
-		res.add(inbox);
-		res.add(outbox);
-		res.add(notificationbox);
-		res.add(trashbox);
-		res.add(spambox);
 
 		inbox = this.messageFolderRepository.save(inbox);
 		outbox = this.messageFolderRepository.save(outbox);
 		notificationbox = this.messageFolderRepository.save(notificationbox);
 		trashbox = this.messageFolderRepository.save(trashbox);
 		spambox = this.messageFolderRepository.save(spambox);
+
+		res.add(inbox);
+		res.add(outbox);
+		res.add(notificationbox);
+		res.add(trashbox);
+		res.add(spambox);
 
 		return res;
 

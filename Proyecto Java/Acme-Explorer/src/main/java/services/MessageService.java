@@ -64,28 +64,23 @@ public class MessageService {
 	}
 
 	public Message Save(final Message message) {
-		//TODO
+		//Guarda el mensaje en la carpeta outbox
 		Collection<MessageFolder> m;
 		final Actor sender;
 		Message result;
 		result = message;
 		Date current;
-
-		//sender = this.actorService.findPrincipal(); esta puesto en el create
 		current = new Date(System.currentTimeMillis() - 1000);
 		result.setMoment(current);
-		//message.setSender(sender); esta en el create
 		m = message.getSender().getMessagesFolders();
 		for (final MessageFolder folder : m)
 			if (folder.getName().equals("out box")) {
-				//No entra nunca aqui porque los administradores del populate  no tienen estas carpetas por defecto
-				//TODO Quitar el comentario: folder.getMessages().add(message);, no haria falta porque en las bidireccionales se actualiza automaticamente
-				//de todas maneras lo comprobamos y si no descomentamos el codigo
 				message.setMessageFolder(folder);
+				folder.getMessages().add(result);
+				this.messageRepository.save(message);
 				break;
 			}
-		result = this.messageRepository.save(result);
-		Assert.notNull(result);
+
 		return result;
 	}
 	public void delete(final Message message) {
