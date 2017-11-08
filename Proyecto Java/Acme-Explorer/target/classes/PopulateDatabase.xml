@@ -94,7 +94,7 @@
 
 
 	<bean id="userAccountManager1" class="security.UserAccount">
-		<property name="username" value="manager 1" />
+		<property name="username" value="manager1" />
 		<property name="password" value="1d0258c2440a8d19e716292b231e3190" />
 		<property name="authorities">
 			<list>
@@ -106,7 +106,7 @@
 	</bean>
 
 	<bean id="userAccountManager2" class="security.UserAccount">
-		<property name="username" value="manager 2" />
+		<property name="username" value="manager2" />
 		<property name="password" value="1d0258c2440a8d19e716292b231e3190" />
 		<property name="authorities">
 			<list>
@@ -118,7 +118,7 @@
 	</bean>
 
 	<bean id="userAccountManager3" class="security.UserAccount">
-		<property name="username" value="manager 3" />
+		<property name="username" value="manager3" />
 		<property name="password" value="1d0258c2440a8d19e716292b231e3190" />
 		<property name="authorities">
 			<list>
@@ -130,7 +130,7 @@
 	</bean>
 
 	<bean id="userAccountManager4" class="security.UserAccount">
-		<property name="username" value="manager 4" />
+		<property name="username" value="manager4" />
 		<property name="password" value="1d0258c2440a8d19e716292b231e3190" />
 		<property name="authorities">
 			<list>
@@ -142,7 +142,7 @@
 	</bean>
 
 	<bean id="userAccountManager5" class="security.UserAccount">
-		<property name="username" value="manager 5" />
+		<property name="username" value="manager5" />
 		<property name="password" value="1d0258c2440a8d19e716292b231e3190" />
 		<property name="authorities">
 			<list>
@@ -154,7 +154,7 @@
 	</bean>
 
 	<bean id="userAccountRanger1" class="security.UserAccount">
-		<property name="username" value="ranger 1" />
+		<property name="username" value="ranger1" />
 		<property name="password" value="ad92694923612da0600d7be498cc2e08" />
 		<property name="authorities">
 			<list>
@@ -166,7 +166,7 @@
 	</bean>
 
 	<bean id="userAccountRanger2" class="security.UserAccount">
-		<property name="username" value="ranger 2" />
+		<property name="username" value="ranger2" />
 		<property name="password" value="ad92694923612da0600d7be498cc2e08" />
 		<property name="authorities">
 			<list>
@@ -178,7 +178,7 @@
 	</bean>
 
 	<bean id="userAccountRanger3" class="security.UserAccount">
-		<property name="username" value="ranger 3" />
+		<property name="username" value="ranger3" />
 		<property name="password" value="ad92694923612da0600d7be498cc2e08" />
 		<property name="authorities">
 			<list>
@@ -190,7 +190,7 @@
 	</bean>
 
 	<bean id="userAccountRanger4" class="security.UserAccount">
-		<property name="username" value="ranger 4" />
+		<property name="username" value="ranger4" />
 		<property name="password" value="ad92694923612da0600d7be498cc2e08" />
 		<property name="authorities">
 			<list>
@@ -202,7 +202,7 @@
 	</bean>
 
 	<bean id="userAccountRanger5" class="security.UserAccount">
-		<property name="username" value="ranger 5" />
+		<property name="username" value="ranger5" />
 		<property name="password" value="ad92694923612da0600d7be498cc2e08" />
 		<property name="authorities">
 			<list>
@@ -214,7 +214,7 @@
 	</bean>
 
 	<bean id="userAccountSponsor1" class="security.UserAccount">
-		<property name="username" value="sponsor 1" />
+		<property name="username" value="sponsor1" />
 		<property name="password" value="08391c959fc8bd0b672c596c4d6bcdcd" />
 		<property name="authorities">
 			<list>
@@ -226,7 +226,7 @@
 	</bean>
 
 	<bean id="userAccountSponsor2" class="security.UserAccount">
-		<property name="username" value="sponsor 2" />
+		<property name="username" value="sponsor2" />
 		<property name="password" value="08391c959fc8bd0b672c596c4d6bcdcd" />
 		<property name="authorities">
 			<list>
@@ -238,7 +238,7 @@
 	</bean>
 
 	<bean id="userAccountSponsor3" class="security.UserAccount">
-		<property name="username" value="sponsor 3" />
+		<property name="username" value="sponsor3" />
 		<property name="password" value="08391c959fc8bd0b672c596c4d6bcdcd" />
 		<property name="authorities">
 			<list>
@@ -250,7 +250,7 @@
 	</bean>
 
 	<bean id="userAccountSponsor4" class="security.UserAccount">
-		<property name="username" value="sponsor 4" />
+		<property name="username" value="sponsor4" />
 		<property name="password" value="08391c959fc8bd0b672c596c4d6bcdcd" />
 		<property name="authorities">
 			<list>
@@ -262,7 +262,7 @@
 	</bean>
 
 	<bean id="userAccountSponsor5" class="security.UserAccount">
-		<property name="username" value="sponsor 5" />
+		<property name="username" value="sponsor5" />
 		<property name="password" value="08391c959fc8bd0b672c596c4d6bcdcd" />
 		<property name="authorities">
 			<list>
@@ -277,7 +277,7 @@
 
 
 	<bean id="userAccountAuditor1" class="security.UserAccount">
-		<property name="username" value="auditor 1" />
+		<property name="username" value="auditor1" />
 		<property name="password" value="f7d07071ed9431ecae3a8d45b4c82bb2" />
 		<property name="authorities">
 			<list>
@@ -290,7 +290,7 @@
 
 
 	<bean id="userAccountAuditor2" class="security.UserAccount">
-		<property name="username" value="auditor 2" />
+		<property name="username" value="auditor2" />
 		<property name="password" value="f7d07071ed9431ecae3a8d45b4c82bb2" />
 		<property name="authorities">
 			<list>
@@ -302,7 +302,7 @@
 	</bean>
 
 	<bean id="userAccountAuditor3" class="security.UserAccount">
-		<property name="username" value="auditor 3" />
+		<property name="username" value="auditor3" />
 		<property name="password" value="f7d07071ed9431ecae3a8d45b4c82bb2" />
 		<property name="authorities">
 			<list>
@@ -314,7 +314,7 @@
 	</bean>
 
 	<bean id="userAccountAuditor4" class="security.UserAccount">
-		<property name="username" value="auditor 4" />
+		<property name="username" value="auditor4" />
 		<property name="password" value="f7d07071ed9431ecae3a8d45b4c82bb2" />
 		<property name="authorities">
 			<list>
@@ -326,7 +326,7 @@
 	</bean>
 
 	<bean id="userAccountAuditor5" class="security.UserAccount">
-		<property name="username" value="auditor 5" />
+		<property name="username" value="auditor5" />
 		<property name="password" value="f7d07071ed9431ecae3a8d45b4c82bb2" />
 		<property name="authorities">
 			<list>
@@ -339,7 +339,7 @@
 
 
 	<bean id="userAccountExplorer1" class="security.UserAccount">
-		<property name="username" value="explorer 1" />
+		<property name="username" value="explorer1" />
 		<property name="password" value="09e592c4a21a21b39f22aa7d7170f162" />
 		<property name="authorities">
 			<list>
@@ -351,7 +351,7 @@
 	</bean>
 
 	<bean id="userAccountExplorer2" class="security.UserAccount">
-		<property name="username" value="explorer 2" />
+		<property name="username" value="explorer2" />
 		<property name="password" value="09e592c4a21a21b39f22aa7d7170f162" />
 		<property name="authorities">
 			<list>
@@ -363,7 +363,7 @@
 	</bean>
 
 	<bean id="userAccountExplorer3" class="security.UserAccount">
-		<property name="username" value="explorer 3" />
+		<property name="username" value="explorer3" />
 		<property name="password" value="09e592c4a21a21b39f22aa7d7170f162" />
 		<property name="authorities">
 			<list>
@@ -375,7 +375,7 @@
 	</bean>
 
 	<bean id="userAccountExplorer4" class="security.UserAccount">
-		<property name="username" value="explorer 4" />
+		<property name="username" value="explorer4" />
 		<property name="password" value="09e592c4a21a21b39f22aa7d7170f162" />
 		<property name="authorities">
 			<list>
@@ -387,7 +387,7 @@
 	</bean>
 
 	<bean id="userAccountExplorer5" class="security.UserAccount">
-		<property name="username" value="explorer 5" />
+		<property name="username" value="explorer5" />
 		<property name="password" value="09e592c4a21a21b39f22aa7d7170f162" />
 		<property name="authorities">
 			<list>
@@ -399,7 +399,7 @@
 	</bean>
 
 	<bean id="userAccountExplorer6" class="security.UserAccount">
-		<property name="username" value="explorer 6" />
+		<property name="username" value="explorer6" />
 		<property name="password" value="09e592c4a21a21b39f22aa7d7170f162" />
 		<property name="authorities">
 			<list>

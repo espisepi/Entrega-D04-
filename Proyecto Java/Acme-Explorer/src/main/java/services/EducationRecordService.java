@@ -77,4 +77,12 @@ public class EducationRecordService {
 		this.educationRecordRepository.delete(educationRecord);
 	}
 
+	public Collection<EducationRecord> saveAll(Collection<EducationRecord> educationRecords) {
+		Assert.notNull(educationRecords);
+		List<EducationRecord> newEducationRecords = new ArrayList<EducationRecord>();
+		newEducationRecords.addAll(this.educationRecordRepository.save(educationRecords));
+
+		return newEducationRecords;
+	}
+
 }
