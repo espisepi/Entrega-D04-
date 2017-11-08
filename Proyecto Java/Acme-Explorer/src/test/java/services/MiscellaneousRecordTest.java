@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.junit.Test;
@@ -30,33 +31,87 @@ public class MiscellaneousRecordTest extends AbstractTest {
 	//Test
 
 	@Test
-	public void testCreatePositive() {
+	public void testCreate() {
 		MiscellaneousRecord miscellaneousRecord;
 		miscellaneousRecord = this.miscellaneousRecordService.create();
 		Assert.notNull(miscellaneousRecord);
 	}
 
 	@Test
-	public void testFindAllPositive() {
+	public void testFindAll() {
 		Collection<MiscellaneousRecord> miscellaneousRecords;
 		miscellaneousRecords = this.miscellaneousRecordService.findAll();
 		Assert.notEmpty(miscellaneousRecords);
 	}
 
 	@Test
-	public void testFindOnePositive() {
+	public void testFindOne() {
 		MiscellaneousRecord miscellaneousRecord;
-		miscellaneousRecord = this.miscellaneousRecordService.findOne(6200);
+		Collection<MiscellaneousRecord> miscellaneousRecords;
+		int idMiscellaneousRecord;
+
+		miscellaneousRecords = this.miscellaneousRecordService.findAll();
+		idMiscellaneousRecord = miscellaneousRecords.iterator().next().getId();
+
+		miscellaneousRecord = this.miscellaneousRecordService.findOne(idMiscellaneousRecord);
 		Assert.notNull(miscellaneousRecord);
 
 	}
 
 	@Test
+	public void testSave() {
+
+		MiscellaneousRecord miscellaneousRecord;
+		MiscellaneousRecord miscellaneousRecordSaved;
+
+		miscellaneousRecord = this.miscellaneousRecordService.create();
+
+		miscellaneousRecord.setTitle("title 1");
+		miscellaneousRecord.setLink("https://link1.com");
+
+		miscellaneousRecordSaved = this.miscellaneousRecordService.save(miscellaneousRecord);
+
+		Assert.notNull(miscellaneousRecordSaved);
+
+	}
+
+	@Test
+	public void testSaveAll() {
+		MiscellaneousRecord miscellaneousRecord1;
+		MiscellaneousRecord miscellaneousRecord2;
+		Collection<MiscellaneousRecord> miscellaneousRecordsSaved;
+		Collection<MiscellaneousRecord> miscellaneousRecords = new ArrayList<>();
+
+		miscellaneousRecord1 = this.miscellaneousRecordService.create();
+
+		miscellaneousRecord1.setTitle("title 1");
+		miscellaneousRecord1.setLink("https://link1.com");
+
+		miscellaneousRecord2 = this.miscellaneousRecordService.create();
+
+		miscellaneousRecord2.setTitle("title 2");
+		miscellaneousRecord2.setLink("https://link2.com");
+
+		miscellaneousRecords.add(miscellaneousRecord1);
+		miscellaneousRecords.add(miscellaneousRecord2);
+
+		miscellaneousRecordsSaved = this.miscellaneousRecordService.saveAll(miscellaneousRecords);
+
+		Assert.notNull(miscellaneousRecordsSaved);
+		Assert.notEmpty(miscellaneousRecordsSaved);
+	}
+	@Test
 	public void testDeletePositive() {
 		MiscellaneousRecord miscellaneousRecord;
-		miscellaneousRecord = this.miscellaneousRecordService.findOne(6200);
+		Collection<MiscellaneousRecord> miscellaneousRecords;
+		int idMiscellaneousRecord;
+
+		miscellaneousRecords = this.miscellaneousRecordService.findAll();
+		idMiscellaneousRecord = miscellaneousRecords.iterator().next().getId();
+
+		miscellaneousRecord = this.miscellaneousRecordService.findOne(idMiscellaneousRecord);
 
 		this.miscellaneousRecordService.delete(miscellaneousRecord);
-		Assert.isNull(this.miscellaneousRecordService.findOne(6200));
+		Assert.isNull(this.miscellaneousRecordService.findOne(idMiscellaneousRecord));
 	}
 }

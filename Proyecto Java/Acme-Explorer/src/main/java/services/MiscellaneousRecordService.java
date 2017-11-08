@@ -35,7 +35,13 @@ public class MiscellaneousRecordService {
 
 		MiscellaneousRecord result;
 
+		Collection<String> comments;
+
+		comments = new ArrayList<>();
+
 		result = new MiscellaneousRecord();
+
+		result.setComments(comments);
 
 		return result;
 	}

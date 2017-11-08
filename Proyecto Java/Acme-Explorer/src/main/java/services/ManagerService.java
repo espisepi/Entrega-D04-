@@ -63,7 +63,7 @@ public class ManagerService {
 
 		messagesFolders.addAll(this.messageFolderService.createDefaultFolders());
 
-		authority.setAuthority("MANAGER");
+		authority.setAuthority(Authority.MANAGER);
 		userAccount.addAuthority(authority);
 		result.setUserAccount(userAccount);
 		result.setMessagesFolders(messagesFolders);
