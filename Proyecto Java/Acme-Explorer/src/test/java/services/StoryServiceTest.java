@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
+import domain.Attachment;
 import domain.Explorer;
 import domain.Story;
 import domain.Trip;
@@ -52,8 +53,8 @@ public class StoryServiceTest extends AbstractTest {
 
 		final List<Explorer> explorers = new ArrayList<Explorer>(this.explorerService.findAll());
 		final List<Trip> trips = new ArrayList<Trip>(this.tripService.findAll());
-		final Collection<String> attachments = new ArrayList<String>();
-		attachments.add("https://www.attachment1Test.es");
+		final Collection<Attachment> attachments = new ArrayList<Attachment>();
+		//attachments.add((new Attachment()).setUrl("attachment1Test"));
 
 		story.setTitle("title story test");
 		story.setText("text story test");

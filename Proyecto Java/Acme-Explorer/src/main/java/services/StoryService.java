@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.StoryRepository;
+import domain.Attachment;
 import domain.Story;
 
 @Service
@@ -34,8 +35,8 @@ public class StoryService {
 
 	public Story create() {
 		Story result;
-		Collection<String> attachments;
-		attachments = new ArrayList<String>();
+		Collection<Attachment> attachments;
+		attachments = new ArrayList<Attachment>();
 
 		result = new Story();
 		result.setAttachments(attachments);

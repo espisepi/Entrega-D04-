@@ -42,7 +42,7 @@ public class ContactEmergencyServiceTest extends AbstractTest {
 		contactEmergency = this.contactEmergencyService.create();
 
 		contactEmergency.setName("name contactEmergency test");
-		contactEmergency.setEmail("email contactEmergency test");
+		contactEmergency.setEmail("emailTest@email.com");
 
 		contactEmergency = this.contactEmergencyService.save(contactEmergency);
 		Assert.notNull(contactEmergency.getId());

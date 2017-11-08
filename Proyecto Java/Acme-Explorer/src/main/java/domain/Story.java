@@ -19,9 +19,9 @@ public class Story extends DomainEntity {
 
 	// Attributes -------------------------------------------------------------
 
-	private String				title;
-	private String				text;
-	private Collection<String>	attachments;
+	private String					title;
+	private String					text;
+	private Collection<Attachment>	attachments;
 
 
 	@NotBlank
@@ -44,11 +44,12 @@ public class Story extends DomainEntity {
 
 	@NotNull
 	@ElementCollection
-	public Collection<String> getAttachments() {
+	@Valid
+	public Collection<Attachment> getAttachments() {
 		return this.attachments;
 	}
 
-	public void setAttachments(final Collection<String> attachments) {
+	public void setAttachments(final Collection<Attachment> attachments) {
 		this.attachments = attachments;
 	}
 
