@@ -33,5 +33,8 @@ public interface TripRepository extends JpaRepository<Trip, Integer> {
 	Trip findTripWithStatusPendingById(int tripId);
 
 	@Query("select t from Trip t join t.applicationsFor a where a.explorer.id=?1")
-	Trip findAllTripsApplyByExplorerId(int explorerId);
+	Collection<Trip> findAllTripsApplyByExplorerId(int explorerId);
+
+	@Query("select t from Trip t join t.auditRecords a where a.auditor.id=?1")
+	Collection<Trip> finAllTripsAuditByAuditorId(int auditorId);
 }

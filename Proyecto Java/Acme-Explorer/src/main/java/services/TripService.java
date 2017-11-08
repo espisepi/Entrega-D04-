@@ -156,24 +156,24 @@ public class TripService {
 
 	// Other business methods -------------------------------------------------
 	public Collection<Trip> findAllTrips() {
-		Collection<Trip> res;
+		Collection<Trip> res = new ArrayList<Trip>();
 		res = this.tripRepository.findAll();
 		Assert.notNull(res);
 		return res;
 	}
 
 	public Collection<Trip> findAllTripsByManagerId(int managerId) {
-		Assert.notNull(managerId);
-		Collection<Trip> res;
-		res = this.tripRepository.findAllTripsByManagerId(managerId);
+		//Assert.notNull(managerId);
+		Collection<Trip> res = new ArrayList<Trip>();
+		res.addAll(this.tripRepository.findAllTripsByManagerId(managerId));
 		Assert.notNull(res);
 		return res;
 	}
 
 	public Collection<Trip> findAllTripsByExplorerIdWithStatusAccepted(int explorerId) {
-		Assert.notNull(explorerId);
-		Collection<Trip> res;
-		res = this.tripRepository.findAllTripsByExplorerIdWithStatusAccepted(explorerId);
+		//Assert.notNull(explorerId);
+		Collection<Trip> res = new ArrayList<Trip>();
+		res.addAll(this.tripRepository.findAllTripsByExplorerIdWithStatusAccepted(explorerId));
 		Assert.notNull(res);
 		return res;
 	}
@@ -184,7 +184,7 @@ public class TripService {
 		Date currentDate = new Date();
 		this.managerService.checkPrincipal();
 		//Assert.isTrue(!this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.MANAGER));
-		res = this.tripRepository.findAllTripsPublishedNotStarted();
+		res.addAll(this.tripRepository.findAllTripsPublishedNotStarted());
 		Assert.notNull(res);
 
 		for (Trip t : trips)
@@ -198,7 +198,7 @@ public class TripService {
 		Collection<Trip> res = new ArrayList<>();
 		Date currentDate = new Date();
 		Assert.isTrue(this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.EXPLORER));
-		trips = this.tripRepository.findTripsWhitStatusAccepted();
+		trips.addAll(this.tripRepository.findTripsWhitStatusAccepted());
 		Assert.notNull(res);
 		for (Trip t : trips)
 			if (t.getStartDate().after(currentDate) == true)
@@ -213,29 +213,36 @@ public class TripService {
 
 	public void cancelTripByManager(Trip trip) {
 		Assert.notNull(trip);
-		Collection<Trip> trips = new ArrayList<Trip>(this.findAllTripsPublishedNotStarted());
+		Collection<Trip> trips = new ArrayList<Trip>();
+		trips.addAll(this.tripRepository.findAllTripsPublishedNotStarted());
 		if (trips.contains(trip))
 			trip.setCancelled(true);
 	}
 
 	public void cancelTripByExplorer(Trip trip) {
 		Assert.notNull(trip);
-		Collection<Trip> trips = new ArrayList<Trip>(this.findTripsWhitStatusAccepted());
+		Collection<Trip> trips = new ArrayList<Trip>();
+		trips.addAll(this.tripRepository.findTripsWhitStatusAccepted());
 		if (trips.contains(trip))
 			trip.setCancelled(true);
 	}
-
 	public Trip findTripWithStatusPendingById(int tripId) {
-		Assert.notNull(tripId);
-		Trip result = this.findTripWithStatusPendingById(tripId);
+		Trip result = this.tripRepository.findTripWithStatusPendingById(tripId);
 		Assert.notNull(result);
 		return result;
 	}
 
 	public Collection<Trip> findAllTripsApplyByExplorerId(int explorerId) {
-		Assert.notNull(explorerId);
-		Collection<Trip> trips = new ArrayList<Trip>(explorerId);
+		Collection<Trip> trips = new ArrayList<Trip>();
+		trips.addAll(this.tripRepository.findAllTripsApplyByExplorerId(explorerId));
 		Assert.notNull(trips);
 		return trips;
+	}
+	public Collection<Trip> finAllTripsAuditByAuditorId(int auditorId) {
+		Collection<Trip> trips = new ArrayList<Trip>();
+		trips.addAll(this.tripRepository.findAllTripsByExplorerIdWithStatusAccepted(auditorId));
+		Assert.notNull(trips);
+		return trips;
+
 	}
 }
