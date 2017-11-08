@@ -67,4 +67,17 @@ public class NoteServiceTest extends AbstractTest {
 		note = this.noteService.save(note);
 	}
 
+	@Test
+	public void findOne() {
+		Collection<Note> notes;
+		Note note;
+
+		notes = this.noteService.findAll();
+		Assert.notNull(notes);
+		Assert.notEmpty(notes);
+
+		note = this.noteService.findOne(notes.iterator().next().getId());
+		Assert.notNull(note);
+	}
+
 }

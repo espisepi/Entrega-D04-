@@ -14,7 +14,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
+import domain.CreditCard;
+import domain.Sponsor;
 import domain.Sponsorship;
+import domain.Trip;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -49,37 +52,32 @@ public class SponsorshipServiceTest extends AbstractTest {
 		Assert.notEmpty(res);
 	}
 
-	//	@Test
-	//	public void testSave() {
-	//		Sponsorship sponsorship;
-	//		CreditCard creditcard;
-	//		Sponsor sponsor;
-	//
-	//		sponsorship = this.sponsorshipService.create();
-	//		creditcard = new CreditCard();
-	//		Trip trip = this.tripService.findAll().iterator().next();
-	//		//sponsor = this.sponsorService.findAll().iterator().next(); // falla el findall de sponsor
-	//		
-	//		sponsor = new Sponsor();
-	//		sponsor.setAddress("eni");
-	//		sponsor.setEmail("nier@gmail.com")
-	//		sponsor.setName(name)
-	//		creditcard.setBrandName("brandName");
-	//		creditcard.setHolderName("holderName");
-	//		creditcard.setNumber("4388576018410707");
-	//		creditcard.setExpirationMonth(2);
-	//		creditcard.setExpirationYear(2019);
-	//		creditcard.setCvv(655);
-	//
-	//		sponsorship.setLink("http://www.link-banner.com");
-	//		sponsorship.setBannerURL("http://www.banner.com");
-	//		sponsorship.setCreditCard(creditcard);
-	//		sponsorship.setTrip(trip);
-	//		//sponsorship.setSponsor(sponsor);
-	//
-	//		sponsorship = this.sponsorshipService.save(sponsorship);
-	//	}
+	@Test
+	public void testSave() {
+		Sponsorship sponsorship;
+		CreditCard creditcard;
+		Sponsor sponsor;
 
+		sponsorship = this.sponsorshipService.create();
+		creditcard = new CreditCard();
+		Trip trip = this.tripService.findAll().iterator().next();
+		sponsor = this.sponsorService.findAll().iterator().next();
+
+		creditcard.setBrandName("brandName");
+		creditcard.setHolderName("holderName");
+		creditcard.setNumber("4388576018410707");
+		creditcard.setExpirationMonth(2);
+		creditcard.setExpirationYear(2019);
+		creditcard.setCvv(655);
+
+		sponsorship.setLink("http://www.link-banner.com");
+		sponsorship.setBannerURL("http://www.banner.com");
+		sponsorship.setCreditCard(creditcard);
+		sponsorship.setTrip(trip);
+		sponsorship.setSponsor(sponsor);
+
+		sponsorship = this.sponsorshipService.save(sponsorship);
+	}
 	@Test
 	public void testDelete() {
 		Collection<Sponsorship> sponsorships;
@@ -92,5 +90,16 @@ public class SponsorshipServiceTest extends AbstractTest {
 		this.sponsorshipService.delete(sponsorship.next());
 		System.out.println(this.sponsorshipService.findAll());
 
+	}
+	@Test
+	public void testFindOne() {
+		Collection<Sponsorship> sponsorships;
+		Sponsorship sponsorship;
+		sponsorships = this.sponsorshipService.findAll();
+		Assert.notNull(sponsorships);
+		Assert.notEmpty(sponsorships);
+
+		sponsorship = this.sponsorshipService.findOne(sponsorships.iterator().next().getId());
+		Assert.notNull(sponsorship);
 	}
 }

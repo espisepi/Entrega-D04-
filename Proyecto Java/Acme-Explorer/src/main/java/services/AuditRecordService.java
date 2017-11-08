@@ -62,7 +62,6 @@ public class AuditRecordService {
 		realisedMoment = new Date(System.currentTimeMillis() - 1000);
 		result.setRealisedMoment(realisedMoment);
 		Assert.notNull(result);
-
 		result = this.auditRecordRepository.save(auditrecord);
 		return result;
 	}

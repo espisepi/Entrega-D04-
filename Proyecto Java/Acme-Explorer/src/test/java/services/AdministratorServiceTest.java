@@ -76,10 +76,18 @@ public class AdministratorServiceTest extends AbstractTest {
 		Assert.notNull(administrators);
 	}
 
-	//		@Test
-	//		public void testFindOne() {
-	//			Administrator administrator;
-	//			administrator = this.administratorService.findOne(12);
-	//			Assert.notNull(administrator);
-	//		}
+	@Test
+	public void testFindOne() {
+
+		Collection<Administrator> administrators;
+		Administrator administrator;
+
+		administrators = this.administratorService.findAll();
+		Assert.notNull(administrators);
+		Assert.notEmpty(administrators);
+
+		administrator = this.administratorService.findOne(administrators.iterator().next().getId());
+
+		Assert.notNull(administrator);
+	}
 }
