@@ -1,7 +1,9 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.SurvivalClassRepository;
+import domain.Explorer;
 import domain.Manager;
 import domain.SurvivalClass;
 
@@ -36,12 +39,20 @@ public class SurvivalClassService {
 
 	// Simple CRUD methods------------------------------------------------
 
-	public SurvivalClass create(Manager manager) {
+	public SurvivalClass create() {
+
+		Manager manager;
+		SurvivalClass result;
+		Collection<Explorer> explorers;
+		Date organisedMoment = new Date();
 
 		manager = this.managerService.findByPrincipal();
-		SurvivalClass result;
+		explorers = new ArrayList<>();
 
 		result = new SurvivalClass();
+		result.setManager(manager);
+		result.setExplorers(explorers);
+		result.setOrganisedMoment(organisedMoment);
 
 		return result;
 	}
@@ -62,6 +73,8 @@ public class SurvivalClassService {
 
 		result = this.survivalClassRecordRepository.findOne(survivalClassId);
 
+		Assert.notNull(result);
+
 		return result;
 	}
 
@@ -70,6 +83,11 @@ public class SurvivalClassService {
 		Assert.notNull(survivalClass);
 
 		SurvivalClass result;
+
+		if (survivalClass.getId() == 0) {
+			Date organisedMoment = new Date();
+			survivalClass.setOrganisedMoment(organisedMoment);
+		}
 
 		result = this.survivalClassRecordRepository.save(survivalClass);
 
