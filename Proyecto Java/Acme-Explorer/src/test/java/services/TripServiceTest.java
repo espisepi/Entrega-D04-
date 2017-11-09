@@ -21,6 +21,7 @@ import domain.Ranger;
 import domain.Sponsorship;
 import domain.Stage;
 import domain.Story;
+import domain.SurvivalClass;
 import domain.Tag;
 import domain.Trip;
 
@@ -49,37 +50,35 @@ public class TripServiceTest {
 
 
 	@Test
-	public void testCreatePositive() {
+	public void testCreatePositive(Manager manager) {
 		Trip trip;
-		trip = this.tripService.create();
+		trip = this.tripService.create(manager);
 		Assert.notNull(trip);
 	}
 
 	@Test
-	public void testSavePositive() {
-		Trip trip = this.tripService.create();
+	public void testSave() {
+
+		Manager manager = this.managerService.create();
+		Trip trip = this.tripService.create(manager);
 		trip.setTicker("170112-WWWW");
 		trip.setTitle("title 1");
 		trip.setDescription("description 1");
 		List<String> requeriments = new ArrayList<>();
 		trip.setRequirementsExplorers(requeriments);
+
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy/MM/dd HH:ii");
 		String stringPublicationDate = "2017/09/15 22:45";
-		//Date publicationDate = sdf1.parse(stringPublicationDate);
-		//trip.setPublicationDate(publicationDate);
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM/dd");
 		String stringStartDate = "2017/02/03";
-		//Date startDate = sdf2.parse(stringStartDate);
-		//trip.setStartDate(startDate);
 		String stringFinishtDate = "2017/02/04";
-		//Date finishDate = sdf2.parse(stringFinishtDate);
-		//trip.setFinishDate(finishDate);
+
 		trip.setReasonWhy("reasonWhy 1");
 		trip.setCancelled(false);
 
 		Ranger ranger = this.rangerService.create();
-		Manager manager = this.managerService.create();
-		//SurvivalClass classes = this.survivalClassService.create();
+
+		SurvivalClass classes = this.survivalClassService.create();
 		Story stories = this.storyService.create();
 		ApplicationFor applicationFors = this.applicationForService.create();
 		AuditRecord auditRecords = this.auditRecordService.create();
@@ -88,6 +87,7 @@ public class TripServiceTest {
 		Sponsorship sponsorships = this.sponsorshipService.create();
 		Stage stages = this.stageService.create();
 		Tag tags = this.tagService.create();
+
 	}
 
 }
