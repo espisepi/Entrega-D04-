@@ -15,6 +15,7 @@ import security.Authority;
 import domain.ApplicationFor;
 import domain.AuditRecord;
 import domain.Category;
+import domain.Explorer;
 import domain.LegalText;
 import domain.Manager;
 import domain.Note;
@@ -41,18 +42,14 @@ public class TripService {
 	private ActorService	actorService;
 
 
-	//private LegalText		legalTextService;
-
 	// Constructors------------------------------------------------------------
 	public TripService() {
 		super();
 	}
 
 	// Simple CRUD methods-----------------------------------------------------
-	public Trip create() {
-		//Comprobamos que solo el manager sea el que puede crear Trip
-		//Assert.isTrue(!this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.MANAGER));
-		this.managerService.checkPrincipal();
+	public Trip create(Manager manager) {
+
 		final Collection<SurvivalClass> classes = new ArrayList<SurvivalClass>();
 		final Collection<Story> stories = new ArrayList<Story>();
 		final Collection<ApplicationFor> applicationsFor = new ArrayList<ApplicationFor>();
@@ -66,7 +63,6 @@ public class TripService {
 		Ranger ranger = new Ranger();
 		Trip trip;
 		trip = new Trip();
-		Manager manager = this.managerService.findByPrincipal();
 		trip.setManager(manager);
 		trip.setRanger(ranger);
 		trip.setRanger(ranger);
@@ -80,39 +76,50 @@ public class TripService {
 		trip.setStages(stages);
 		trip.setTags(tags);
 		trip.setLegalText(legalText);
+		manager.getTrips().add(trip);
 
 		return trip;
 	}
 
-	public Trip update(Trip trip) {
+	public Trip save(final Trip trip) {
 		assert trip != null;
-		Date currentDate = new Date();
-		//Si no tiene fecha de publicación podemos continuar editando
-		Assert.isTrue(trip.getPublicationDate() == null);
-		//Comprobamos que el trip aun no ha empezado
-		Assert.isTrue(trip.getStartDate().after(currentDate));
-		boolean isManager = this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.MANAGER);
-		boolean isExplorer = this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.EXPLORER);
-
-		if (isManager) {
-			//Saco los trips del manager
-			Collection<Trip> trips = this.findAllTripsByManagerId(this.managerService.findByPrincipal().getId());
-			//Compruebo que ese trip que quiera editar lo creó él
-			Assert.isTrue(trips.contains(trip));
-			trip.setCancelled(true);
-		} else if (isExplorer) {
-			//Saco los trips del explorer con estado ACCEPTED
-			Collection<Trip> trips = this.findAllTripsByExplorerIdWithStatusAccepted(this.explorerService.findByPrincipal().getId());
-			//Compruebo que ese trip que quiera editar lo organizó él
-			Assert.isTrue(trips.contains(trip));
-			trip.setCancelled(true);
-		}
 		Trip result;
 		result = this.tripRepository.save(trip);
 		return result;
 	}
+
+	/*
+	 * public Trip update(Trip trip) {
+	 * assert trip != null;
+	 * Date currentDate = new Date();
+	 * //Si no tiene fecha de publicación podemos continuar editando
+	 * Assert.isTrue(trip.getPublicationDate() == null);
+	 * //Comprobamos que el trip aun no ha empezado
+	 * Assert.isTrue(trip.getStartDate().after(currentDate));
+	 * boolean isManager = this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.MANAGER);
+	 * boolean isExplorer = this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.EXPLORER);
+	 * 
+	 * if (isManager) {
+	 * //Saco los trips del manager
+	 * Collection<Trip> trips = this.findAllTripsByManagerId(this.managerService.findByPrincipal().getId());
+	 * //Compruebo que ese trip que quiera editar lo creó él
+	 * Assert.isTrue(trips.contains(trip));
+	 * trip.setCancelled(true);
+	 * } else if (isExplorer) {
+	 * //Saco los trips del explorer con estado ACCEPTED
+	 * Collection<Trip> trips = this.findAllTripsByExplorerIdWithStatusAccepted(this.explorerService.findByPrincipal().getId());
+	 * //Compruebo que ese trip que quiera editar lo organizó él
+	 * Assert.isTrue(trips.contains(trip));
+	 * trip.setCancelled(true);
+	 * }
+	 * Trip result;
+	 * result = this.tripRepository.save(trip);
+	 * return result;
+	 * }
+	 */
+
 	public Collection<Trip> findAll() {
-		Collection<Trip> result;
+		Collection<Trip> result = new ArrayList<Trip>();
 		Assert.notNull(this.tripRepository);
 		result = this.tripRepository.findAll();
 		Assert.notNull(result);
@@ -121,36 +128,18 @@ public class TripService {
 
 	public Trip findOne(final int tripId) {
 		Trip result;
-		Date publicationDate;
-		//TODO: ¿Quien lo crea?-> Manager
-
 		result = this.tripRepository.findOne(tripId);
-		publicationDate = new Date(System.currentTimeMillis() - 1000);
-
-		result.setPublicationDate(publicationDate);
-		return result;
-	}
-
-	public Trip save(final Trip trip) {
-		assert trip != null;
-
-		Trip result;
-
-		result = this.tripRepository.save(trip);
-
 		return result;
 	}
 
 	public void delete(final Trip trip) {
 		assert trip != null;
 		assert trip.getId() != 0;
-		//Assert.isTrue(!this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.MANAGER));
-		this.managerService.checkPrincipal();
+		//Comprobamos que ese trip no tenga fecha de publicación
 		Assert.isTrue(trip.getPublicationDate() == null);
-		//Saco los trips del manager
-		Collection<Trip> trips = this.findAllTripsByManagerId(this.managerService.findByPrincipal().getId());
-		Assert.isTrue(trips.contains(trip));
-
+		//Comprobams que ese Trip sea de ese manager
+		this.checkPrincipalManager(this.tripRepository.findOne(trip.getId()));
+		//Borramos el trip
 		this.tripRepository.delete(trip);
 	}
 
@@ -165,7 +154,7 @@ public class TripService {
 	public Collection<Trip> findAllTripsByManagerId(int managerId) {
 		//Assert.notNull(managerId);
 		Collection<Trip> res = new ArrayList<Trip>();
-		res.addAll(this.tripRepository.findAllTripsByManagerId(managerId));
+		res = this.tripRepository.findAllTripsByManagerId(managerId);
 		Assert.notNull(res);
 		return res;
 	}
@@ -173,11 +162,10 @@ public class TripService {
 	public Collection<Trip> findAllTripsByExplorerIdWithStatusAccepted(int explorerId) {
 		//Assert.notNull(explorerId);
 		Collection<Trip> res = new ArrayList<Trip>();
-		res.addAll(this.tripRepository.findAllTripsByExplorerIdWithStatusAccepted(explorerId));
+		res = this.tripRepository.findAllTripsByExplorerIdWithStatusAccepted(explorerId);
 		Assert.notNull(res);
 		return res;
 	}
-
 	public Collection<Trip> findAllTripsPublishedNotStarted() {
 		Collection<Trip> trips = new ArrayList<>();
 		Collection<Trip> res = new ArrayList<>();
@@ -193,6 +181,7 @@ public class TripService {
 		return res;
 	}
 
+	//Para sacar los trips con estado ACCEPTED para a laz hora de borrarlos un explorer
 	public Collection<Trip> findTripsWhitStatusAccepted() {
 		Collection<Trip> trips = new ArrayList<>();
 		Collection<Trip> res = new ArrayList<>();
@@ -206,43 +195,96 @@ public class TripService {
 		return res;
 	}
 
-	//Metodo cancelar
-	//llamar a findall... para conseguir los que no se han publicad
-	//contemplar que es manager
-	//cancelar
-
-	public void cancelTripByManager(Trip trip) {
-		Assert.notNull(trip);
-		Collection<Trip> trips = new ArrayList<Trip>();
-		trips.addAll(this.tripRepository.findAllTripsPublishedNotStarted());
-		if (trips.contains(trip))
-			trip.setCancelled(true);
-	}
-
-	public void cancelTripByExplorer(Trip trip) {
-		Assert.notNull(trip);
-		Collection<Trip> trips = new ArrayList<Trip>();
-		trips.addAll(this.tripRepository.findTripsWhitStatusAccepted());
-		if (trips.contains(trip))
-			trip.setCancelled(true);
-	}
+	//Requisito 12.2
 	public Trip findTripWithStatusPendingById(int tripId) {
 		Trip result = this.tripRepository.findTripWithStatusPendingById(tripId);
 		Assert.notNull(result);
 		return result;
 	}
 
+	//Editar un Trip para un Manager
+	public Trip findOneToEditManager(final int tripId) {
+		Trip trip;
+		Trip tripEdit;
+		//Trip a editar
+		trip = this.tripRepository.findOne(tripId);
+		//Para que un manager edite un trip NO puede tener publicationDate
+		assert trip.getPublicationDate() != null;
+		//Comprobamos que sea de ese Manager
+		this.checkPrincipalManager(this.tripRepository.findOne(tripId));
+		tripEdit = this.tripRepository.save(trip);
+		return tripEdit;
+	}
+
+	//Editar un Trip para un Explorer
+	public Trip findOneToEditExplorer(final int tripId) {
+		Trip trip;
+		Trip tripEdit;
+		Collection<Trip> tripsAccepted = new ArrayList<Trip>();
+		tripsAccepted = this.findTripsWhitStatusAccepted();
+		//Trip a editar
+		trip = this.tripRepository.findOne(tripId);
+		//Para que un explorer edite un trip NO puede tener publicationDate
+		assert trip.getPublicationDate() != null;
+		//Para que un explorer edite un trip debe de tener el estatus ACCEPTED
+		Assert.isTrue(!tripsAccepted.contains(trip));
+		//Comprobamos que sea de ese Manager
+		this.checkPrincipalExplorer(this.tripRepository.findOne(tripId));
+		tripEdit = this.tripRepository.save(trip);
+		return tripEdit;
+	}
+
+	//Todos los Trips que apply un explorer
 	public Collection<Trip> findAllTripsApplyByExplorerId(int explorerId) {
 		Collection<Trip> trips = new ArrayList<Trip>();
 		trips.addAll(this.tripRepository.findAllTripsApplyByExplorerId(explorerId));
 		Assert.notNull(trips);
 		return trips;
 	}
-	public Collection<Trip> finAllTripsAuditByAuditorId(int auditorId) {
+
+	//Trips auditados por el auditorId
+	public Collection<Trip> findByAuditorId(int auditorId) {
 		Collection<Trip> trips = new ArrayList<Trip>();
-		trips.addAll(this.tripRepository.findAllTripsByExplorerIdWithStatusAccepted(auditorId));
+		trips.addAll(this.tripRepository.findByAuditorId(auditorId));
 		Assert.notNull(trips);
 		return trips;
 
+	}
+
+	//Para el checkPrincipalManager obtenemos el explorer.
+	public Explorer findExplorerByTripId(int tripId) {
+		Explorer explorer;
+		explorer = this.tripRepository.findExplorerByTripId(tripId);
+		Assert.notNull(explorer);
+		return explorer;
+	}
+
+	//**********************************************************************
+	//SACAMOS LOS TRIPS DEL MANAGER QUE ESTÉ CONECTADO
+	public Collection<Trip> findByPrincipal() {
+
+		final Manager manager = this.managerService.findByPrincipal();
+
+		Collection<Trip> result;
+
+		result = this.tripRepository.findAllTripsByManagerId(manager.getId());
+
+		return result;
+	}
+
+	//COMPROBAMOS QUE ESE TRIP SEA DEL MANAGER QUE ESTÁ CONECTADO
+	public void checkPrincipalManager(final Trip trip) {
+		Assert.notNull(trip);
+		final Manager m = trip.getManager();
+		final Manager first = this.managerService.findByPrincipal();
+		Assert.isTrue(m.equals(first));
+	}
+
+	//COMPROBAMOS QUE ESE TRIP SEA DEL EXPLORER QUE ESTÁ CONECTADO
+	public void checkPrincipalExplorer(final Trip trip) {
+		Assert.notNull(trip);
+		final Explorer e = this.findExplorerByTripId(trip.getId());
+		final Explorer first = this.explorerService.findByPrincipal();
+		Assert.isTrue(e.equals(first));
 	}
 }

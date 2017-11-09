@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import domain.Explorer;
 import domain.Trip;
 
 @Repository
@@ -36,5 +37,8 @@ public interface TripRepository extends JpaRepository<Trip, Integer> {
 	Collection<Trip> findAllTripsApplyByExplorerId(int explorerId);
 
 	@Query("select t from Trip t join t.auditRecords a where a.auditor.id=?1")
-	Collection<Trip> finAllTripsAuditByAuditorId(int auditorId);
+	Collection<Trip> findByAuditorId(int auditorId);
+
+	@Query("select e from Explorer e join e.applicationsFor a where a.trip.id=?1")
+	Explorer findExplorerByTripId(int tripId);
 }
