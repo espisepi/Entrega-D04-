@@ -1373,6 +1373,26 @@
 		<property name="url" value ="http://www.driver.com"/>
 	</bean>
 	
+	<bean id="attachment3" class="domain.Attachment">
+		<property name="url" value ="http://www.story1.com"/>
+	</bean>
+	
+	<bean id="attachment4" class="domain.Attachment">
+		<property name="url" value ="http://www.story2.com"/>
+	</bean>
+	
+	<bean id="attachment5" class="domain.Attachment">
+		<property name="url" value ="http://www.story3.com"/>
+	</bean>
+	
+	<bean id="attachment6" class="domain.Attachment">
+		<property name="url" value ="http://www.story4.com"/>
+	</bean>
+	
+	<bean id="attachment7" class="domain.Attachment">
+		<property name="url" value ="http://www.story5.com"/>
+	</bean>
+	
 	<!-- CreditCard -->
 
 	<bean id="creditCard1" class="domain.CreditCard">
@@ -2462,9 +2482,7 @@
 		<property name="text" value="text Story 1" />
 		<property name="attachments">
 			<list>
-				<value>https://www.attachments1Story1.es</value>
-				<value>https://www.attachments2Story1.es</value>
-				<value>https://www.attachments3Story1.es</value>
+				<ref bean="attachment3" />
 			</list>
 		</property>
 		<property name="trip" ref="trip1" />
@@ -2475,9 +2493,7 @@
 		<property name="text" value="text Story 2" />
 		<property name="attachments">
 			<list>
-				<value>https://www.attachments1Story2.es</value>
-				<value>https://www.attachments2Story2.es</value>
-				<value>https://www.attachments3Story2.es</value>
+				<ref bean="attachment4" />
 			</list>
 		</property>
 		<property name="trip" ref="trip2" />
@@ -2490,9 +2506,7 @@
 		<property name="text" value="text Story 3" />
 		<property name="attachments">
 			<list>
-				<value>https://www.attachments1Story3.es</value>
-				<value>https://www.attachments2Story3.es</value>
-				<value>https://www.attachments3Story3.es</value>
+				<ref bean="attachment5" />
 			</list>
 		</property>
 		<property name="trip" ref="trip3" />
@@ -2504,9 +2518,7 @@
 		<property name="text" value="text Story 4" />
 		<property name="attachments">
 			<list>
-				<value>https://www.attachments1Story4.es</value>
-				<value>https://www.attachments2Story4.es</value>
-				<value>https://www.attachments3Story4.es</value>
+				<ref bean="attachment6" />
 			</list>
 		</property>
 		<property name="trip" ref="trip4" />
@@ -2517,9 +2529,7 @@
 		<property name="text" value="text Story 5" />
 		<property name="attachments">
 			<list>
-				<value>https://www.attachments1Story5.es</value>
-				<value>https://www.attachments2Story5.es</value>
-				<value>https://www.attachments3Story5.es</value>
+				<ref bean="attachment7" />
 			</list>
 		</property>
 		<property name="trip" ref="trip5" />

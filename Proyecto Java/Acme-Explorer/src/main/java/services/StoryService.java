@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.StoryRepository;
+import domain.Attachment;
+import domain.Explorer;
 import domain.Story;
 
 @Service
@@ -21,8 +23,10 @@ public class StoryService {
 	@Autowired
 	private StoryRepository	storyRepository;
 
-
 	// Supporting services ----------------------------------------------------
+	@Autowired
+	private ExplorerService	explorerService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -34,10 +38,15 @@ public class StoryService {
 
 	public Story create() {
 		Story result;
-		Collection<String> attachments;
-		attachments = new ArrayList<String>();
+		Explorer explorerPrincipal;
+		Collection<Attachment> attachments;
+
+		explorerPrincipal = this.explorerService.findByPrincipal();
+		Assert.notNull(explorerPrincipal);
+		attachments = new ArrayList<Attachment>();
 
 		result = new Story();
+		result.setExplorer(explorerPrincipal);
 		result.setAttachments(attachments);
 
 		return result;

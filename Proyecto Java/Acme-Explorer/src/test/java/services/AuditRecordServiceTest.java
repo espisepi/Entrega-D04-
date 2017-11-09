@@ -14,6 +14,8 @@ import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.AuditRecord;
+import domain.Auditor;
+import domain.Trip;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -25,6 +27,12 @@ public class AuditRecordServiceTest extends AbstractTest {
 	// Service under test ---------------------------------
 	@Autowired
 	private AuditRecordService	auditRecordService;
+
+	@Autowired
+	private AuditorService		auditorService;
+
+	@Autowired
+	private TripService			tripService;
 
 
 	// Tests ----------------------------------------------
@@ -42,14 +50,79 @@ public class AuditRecordServiceTest extends AbstractTest {
 		Assert.notEmpty(result);
 	}
 
-	//	@Test
-	//	public void testDeletePositive() {
-	//		AuditRecord auditRecord;
-	//		auditRecord = this.auditRecordService.findOne(6163);
-	//
-	//		this.auditRecordService.delete(auditRecord);
-	//	}
-	//
+	@Test
+	public void testSave() {
+		AuditRecord auditRecord;
+		Auditor auditor;
+		Trip trip;
+
+		auditRecord = this.auditRecordService.create();
+		auditor = this.auditorService.findAll().iterator().next();
+		trip = this.tripService.findAll().iterator().next();
+
+		auditRecord.setAuditor(auditor);
+		auditRecord.setTrip(trip);
+		auditRecord.setTitle("title1");
+		auditRecord.setDescription("description1");
+		auditRecord.setDraftMode(true);
+
+		auditRecord = this.auditRecordService.save(auditRecord);
+	}
+	@Test(expected = IllegalArgumentException.class)
+	public void testDeleleNegative() {
+		Auditor auditor;
+		AuditRecord auditRecord;
+		Trip trip;
+
+		auditRecord = this.auditRecordService.create();
+		auditor = this.auditorService.findAll().iterator().next();
+		trip = this.tripService.findAll().iterator().next();
+
+		auditRecord.setAuditor(auditor);
+		auditRecord.setTrip(trip);
+		auditRecord.setTitle("title1");
+		auditRecord.setDescription("description1");
+		auditRecord.setDraftMode(false);
+
+		auditRecord = this.auditRecordService.save(auditRecord);
+		this.auditRecordService.delete(auditRecord);
+
+	}
+
+	@Test
+	public void testDelelePositive() {
+		Auditor auditor;
+		AuditRecord auditRecord;
+		Trip trip;
+
+		auditRecord = this.auditRecordService.create();
+		auditor = this.auditorService.findAll().iterator().next();
+		trip = this.tripService.findAll().iterator().next();
+
+		auditRecord.setAuditor(auditor);
+		auditRecord.setTrip(trip);
+		auditRecord.setTitle("title1");
+		auditRecord.setDescription("description1");
+		auditRecord.setDraftMode(true);
+
+		auditRecord = this.auditRecordService.save(auditRecord);
+		this.auditRecordService.delete(auditRecord);
+
+	}
+
+	@Test
+	public void testfindOne() {
+		Collection<AuditRecord> auditrecords;
+		AuditRecord auditrecord;
+
+		auditrecords = this.auditRecordService.findAll();
+		Assert.notNull(auditrecords);
+		Assert.notEmpty(auditrecords);
+
+		auditrecord = this.auditRecordService.findOne(auditrecords.iterator().next().getId());
+		Assert.notNull(auditrecord);
+	}
+
 	//	@Test(expected = IllegalArgumentException.class)
 	//	public void testDeleteNegative() {
 	//		AuditRecord auditRecord;
@@ -58,4 +131,13 @@ public class AuditRecordServiceTest extends AbstractTest {
 	//		this.auditRecordService.delete(auditRecord);
 	//	}
 
+	//	@Test
+	//	public void testDeletePositive() {
+	//		Collection<AuditRecord> auditRecords;
+	//		auditRecords = this.auditRecordService.findAll();
+	//		Assert.notNull(auditRecords);
+	//		Assert.notEmpty(auditRecords);
+	//
+	//		this.auditRecordService.findOne(auditRecords.iterator().next().getId());
+	//	}
 }

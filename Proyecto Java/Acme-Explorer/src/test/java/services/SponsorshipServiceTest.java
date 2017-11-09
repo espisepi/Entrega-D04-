@@ -41,6 +41,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 
 	@Test
 	public void testCreate() {
+		this.authenticate("sponsor2");
 		Sponsorship res;
 		res = this.sponsorshipService.create();
 		Assert.notNull(res);
@@ -54,6 +55,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 
 	@Test
 	public void testSave() {
+		this.authenticate("sponsor2");
 		Sponsorship sponsorship;
 		CreditCard creditcard;
 		Sponsor sponsor;

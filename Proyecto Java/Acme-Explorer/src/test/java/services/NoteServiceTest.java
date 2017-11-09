@@ -39,6 +39,7 @@ public class NoteServiceTest extends AbstractTest {
 
 	@Test
 	public void testCreate() {
+		this.authenticate("auditor4");
 		Note result;
 		result = this.noteService.create();
 		Assert.notNull(result);
@@ -52,6 +53,7 @@ public class NoteServiceTest extends AbstractTest {
 
 	@Test
 	public void testSave() {
+		this.authenticate("auditor4");
 		Note note;
 		Auditor auditor;
 		Trip trip;
