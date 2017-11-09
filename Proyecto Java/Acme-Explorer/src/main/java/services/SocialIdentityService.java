@@ -40,6 +40,7 @@ public class SocialIdentityService {
 		Assert.isTrue(IdsocialIdentity != 0);
 		SocialIdentity result;
 		result = this.socialIdentityRepository.findOne(IdsocialIdentity);
+		Assert.notNull(result);
 		return result;
 	}
 	public Collection<SocialIdentity> findAll() {
@@ -50,14 +51,17 @@ public class SocialIdentityService {
 
 	}
 	public SocialIdentity save(SocialIdentity socialIdentity) {
-		Assert.isTrue(socialIdentity != null);
+		Assert.notNull(socialIdentity);
 		SocialIdentity result;
 		result = this.socialIdentityRepository.save(socialIdentity);
+		Assert.notNull(result);
+		Assert.isTrue(result.getId() != 0);
 		return result;
 
 	}
 	public void delete(SocialIdentity socialIdentity) {
-		Assert.isTrue(this.socialIdentityRepository.findAll().contains(socialIdentity), "no existe ");
+		Assert.notNull(socialIdentity);
+		Assert.notNull(this.socialIdentityRepository.findOne(socialIdentity.getId()));
 		this.socialIdentityRepository.delete(socialIdentity);
 
 	}
