@@ -86,4 +86,23 @@ public class ManagerServiceTest extends AbstractTest {
 
 	}
 
+	@Test
+	public void testDelete() {
+
+		Manager manager;
+		manager = this.managerService.create();
+
+		manager.setName("manager1");
+		manager.setSurname("surname");
+		manager.setEmail("email@gmail.com");
+		manager.setPhone("31333");
+		manager.setAddress("address");
+
+		manager = this.managerService.save(manager);
+		Assert.notNull(manager.getId());
+
+		this.managerService.delete(manager);
+
+	}
+
 }

@@ -12,8 +12,10 @@ import org.springframework.util.Assert;
 
 import repositories.SurvivalClassRepository;
 import domain.Explorer;
+import domain.GPS;
 import domain.Manager;
 import domain.SurvivalClass;
+import domain.Trip;
 
 @Service
 @Transactional
@@ -41,18 +43,34 @@ public class SurvivalClassService {
 
 	public SurvivalClass create() {
 
-		Manager manager;
-		SurvivalClass result;
-		Collection<Explorer> explorers;
-		Date organisedMoment = new Date();
+		this.managerService.checkPrincipal();
 
-		manager = this.managerService.findByPrincipal();
+		Manager manager;
+		Collection<Explorer> explorers;
+		Date organisedMoment;
+		Trip trip;
+		GPS location;
+		String title;
+		String description;
+
+		SurvivalClass result;
+
+		manager = new Manager();
 		explorers = new ArrayList<>();
+		organisedMoment = new Date();
+		trip = new Trip();
+		location = new GPS();
+		title = new String();
+		description = new String();
 
 		result = new SurvivalClass();
 		result.setManager(manager);
 		result.setExplorers(explorers);
 		result.setOrganisedMoment(organisedMoment);
+		result.setTrip(trip);
+		result.setLocation(location);
+		result.setTitle(title);
+		result.setDescription(description);
 
 		return result;
 	}

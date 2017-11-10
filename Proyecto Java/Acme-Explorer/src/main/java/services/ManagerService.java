@@ -132,7 +132,7 @@ public class ManagerService {
 		Assert.notNull(authorities);
 
 		Authority auth = new Authority();
-		auth.setAuthority("MANAGER");
+		auth.setAuthority(Authority.MANAGER);
 
 		Assert.isTrue(authorities.contains(auth));
 	}

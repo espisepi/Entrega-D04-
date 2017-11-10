@@ -64,23 +64,6 @@ public class RangerServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testDelete() {
-
-		Collection<Ranger> rangers;
-		Ranger ranger;
-		int id;
-
-		rangers = this.rangerService.findAll();
-		id = rangers.iterator().next().getId();
-		ranger = this.rangerService.findOne(id);
-
-		this.rangerService.delete(ranger);
-
-		Assert.isNull(this.rangerService.findOne(id));
-
-	}
-
-	@Test
 	public void testSave() {
 
 		Ranger ranger;
@@ -94,6 +77,25 @@ public class RangerServiceTest extends AbstractTest {
 
 		rangerSaved = this.rangerService.save(ranger);
 		Assert.notNull(rangerSaved);
+
+	}
+
+	@Test
+	public void testDelete() {
+
+		Ranger ranger;
+		ranger = this.rangerService.create();
+
+		ranger.setName("ranger 1");
+		ranger.setSurname("surname");
+		ranger.setEmail("email@gmail.com");
+		ranger.setPhone("31333");
+		ranger.setAddress("address");
+
+		ranger = this.rangerService.save(ranger);
+		Assert.notNull(ranger.getId());
+
+		this.rangerService.delete(ranger);
 
 	}
 
