@@ -140,38 +140,15 @@ public class TripServiceTest extends AbstractTest {
 
 		//Assert.notNull(tripSaved);
 	}
-	//	@Test
-	//	public void testSave() {
-	//
-	//		final Manager manager = this.managerService.create();
-	//		final Trip trip = this.tripService.create(manager);
-	//		trip.setTicker("170112-WWWW");
-	//		trip.setTitle("title 1");
-	//		trip.setDescription("description 1");
-	//		final List<String> requeriments = new ArrayList<>();
-	//		trip.setRequirementsExplorers(requeriments);
-	//
-	//		final SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy/MM/dd HH:ii");
-	//		final String stringPublicationDate = "2017/09/15 22:45";
-	//		final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy/MM/dd");
-	//		final String stringStartDate = "2017/02/03";
-	//		final String stringFinishtDate = "2017/02/04";
-	//
-	//		trip.setReasonWhy("reasonWhy 1");
-	//		trip.setCancelled(false);
-	//
-	//		final Ranger ranger = this.rangerService.create();
-	//
-	//		final SurvivalClass classes = this.survivalClassService.create();
-	//		final Story stories = this.storyService.create();
-	//		final ApplicationFor applicationFors = this.applicationForService.create();
-	//		final AuditRecord auditRecords = this.auditRecordService.create();
-	//		final Note notes = this.noteService.create();
-	//		final Category categories = this.categoryService.create();
-	//		final Sponsorship sponsorships = this.sponsorshipService.create();
-	//		final Stage stages = this.stageService.create();
-	//		final Tag tags = this.tagService.create();
-	//
-	//	}
+
+	@Test
+	@Rollback(false)
+	public void testSaveWithoutCheckCreate() {
+		this.authenticate("manager1");
+		Trip trip;
+		trip = this.tripService.findOne(super.getEntityId("trip1"));
+		trip.setTitle("maria");
+		trip = this.tripService.save(trip);
+	}
 
 }
