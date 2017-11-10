@@ -38,7 +38,9 @@ public class TripService {
 	// Supporting services ----------------------------------------------------
 	@Autowired
 	private ManagerService	managerService;
+	@Autowired
 	private ExplorerService	explorerService;
+	@Autowired
 	private ActorService	actorService;
 
 
@@ -49,7 +51,7 @@ public class TripService {
 
 	// Simple CRUD methods-----------------------------------------------------
 	public Trip create(Manager manager) {
-
+		this.managerService.checkPrincipal();
 		final Collection<SurvivalClass> classes = new ArrayList<SurvivalClass>();
 		final Collection<Story> stories = new ArrayList<Story>();
 		final Collection<ApplicationFor> applicationsFor = new ArrayList<ApplicationFor>();
@@ -64,7 +66,6 @@ public class TripService {
 		Trip trip;
 		trip = new Trip();
 		trip.setManager(manager);
-		trip.setRanger(ranger);
 		trip.setRanger(ranger);
 		trip.setClasses(classes);
 		trip.setStories(stories);
