@@ -71,7 +71,6 @@ public class MessageServiceTest extends AbstractTest {
 
 	}
 	@Test
-	//@Rollback(false)
 	public void testSave() {
 
 		Administrator administratorSen, adminRecip;
@@ -109,7 +108,7 @@ public class MessageServiceTest extends AbstractTest {
 		message1.setRecipient(adminRecip);
 		message1.setPriority("NEUTRAL");
 		message1.setSubject("hola");
-		this.messageService.Save(message1);
+		this.messageService.save(message1);
 
 	}
 

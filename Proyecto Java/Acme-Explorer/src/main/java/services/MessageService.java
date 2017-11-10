@@ -65,20 +65,19 @@ public class MessageService {
 
 	}
 
-	public Message Save(final Message message) {
+	public Message save(final Message message) {
 		//Guarda el mensaje en la carpeta outbox del que lo envia
 		MessageFolder folder;
+		Date current;
+
 		Actor senderAct = message.getSender();
 		folder = this.messageFolderService.returnOutboxFolder(senderAct);
 		Message result;
 		result = message;
-		Date current;
 		current = new Date(System.currentTimeMillis() - 1000);
 		result.setMoment(current);
 		message.setMessageFolder(folder);
-		this.messageRepository.save(message);
-		folder.getMessages().add(result);
-
+		result = this.messageRepository.save(message);
 		return result;
 	}
 	public void delete(final Message message) {
