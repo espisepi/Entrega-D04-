@@ -1,14 +1,13 @@
 
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,8 +15,7 @@ import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.ApplicationFor;
-import domain.Explorer;
-import domain.Trip;
+import domain.Manager;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -37,35 +35,58 @@ public class ApplicationForServiceTest extends AbstractTest {
 	private ExplorerService			explorerService;
 	@Autowired
 	private TripService				tripService;
+	@Autowired
+	private ManagerService			managerService;
 
 
 	@Test
 	public void testCreatePositive() {
+		super.authenticate("explorer1");
 		ApplicationFor applicationFor;
 		applicationFor = this.applicationForService.create();
 		Assert.notNull(applicationFor);
 		Assert.isTrue(applicationFor.getStatus() == "PENDING");
+		super.unauthenticate();
 	}
 
 	@Test
+	@Rollback(false)
 	public void testSavePositive() {
+		super.authenticate("explorer1");
 		ApplicationFor applicationFor;
 
 		applicationFor = this.applicationForService.create();
 
-		final List<Explorer> explorers = new ArrayList<Explorer>(this.explorerService.findAll());
-		final List<Trip> trips = new ArrayList<Trip>(this.tripService.findAll());
-		final List<ApplicationFor> applicationsFor = new ArrayList<ApplicationFor>(this.applicationForService.findAll());
-
 		applicationFor.setMoment(new Date());
-		applicationFor.setExplorer(explorers.get(0));
-		applicationFor.setCreditCard(applicationsFor.get(0).getCreditCard());
-		applicationFor.setTrip(trips.get(0));
+		applicationFor.setStatus("DUE");
+		applicationFor.setCreditCard(this.applicationForService.findOne(super.getEntityId("applicationFor1")).getCreditCard());
+		applicationFor.setTrip(this.tripService.findOne(super.getEntityId("trip1")));
+
+		Assert.notNull(applicationFor.getId());
+		Assert.notNull(applicationFor.getExplorer());
+		Assert.notNull(applicationFor.getTrip());
+		Assert.notNull(applicationFor.getCreditCard());
 
 		applicationFor = this.applicationForService.save(applicationFor);
-		Assert.notNull(applicationFor.getId());
+		super.unauthenticate();
 
 	}
+
+	@Test
+	public void testChangeStatus() {
+		super.authenticate("manager1");
+		ApplicationFor applicationFor1;
+
+		applicationFor1 = this.applicationForService.findOne(super.getEntityId("applicationFor1"));
+		Assert.notNull(applicationFor1);
+		Assert.isTrue(applicationFor1.getStatus().equals("PENDING"));
+		this.applicationForService.changeStatus(applicationFor1, "DUE");
+		applicationFor1 = this.applicationForService.findOne(super.getEntityId("applicationFor1"));
+		Assert.isTrue(applicationFor1.getStatus().equals("DUE"));
+
+		super.unauthenticate();
+	}
+
 	@Test
 	public void testFindAllPositive() {
 		Collection<ApplicationFor> applicationFors;
@@ -73,10 +94,17 @@ public class ApplicationForServiceTest extends AbstractTest {
 		Assert.notEmpty(applicationFors);
 	}
 
-	//	@Test
-	//	public void testFindOnePositive() {
-	//		ApplicationFor applicationFor;
-	//		applicationFor = this.applicationForService.findOne(6248);
-	//		Assert.notNull(applicationFor);
-	//	}
+	@Test
+	public void testFindAllByManagerId() {
+		super.authenticate("manager1");
+		Manager managerPrincipal;
+		Collection<ApplicationFor> result;
+
+		managerPrincipal = this.managerService.findByPrincipal();
+		result = this.applicationForService.findAllByManagerId(managerPrincipal.getId());
+		Assert.notNull(result);
+
+		super.unauthenticate();
+
+	}
 }

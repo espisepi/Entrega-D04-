@@ -10,6 +10,7 @@ import org.springframework.util.Assert;
 
 import repositories.StageRepository;
 import domain.Stage;
+import domain.Trip;
 
 @Service
 @Transactional
@@ -19,8 +20,10 @@ public class StageService {
 	@Autowired
 	private StageRepository	stageRepository;
 
-
 	// Supporting services ----------------------------------------------------
+	@Autowired
+	private TripService		tripService;
+
 
 	// Constructors------------------------------------------------------------
 	public StageService() {
@@ -49,10 +52,17 @@ public class StageService {
 
 	public Stage save(final Stage stage) {
 		assert stage != null;
-
+		Trip trip;
 		Stage result;
 
+		trip = stage.getTrip();
+		Assert.isTrue(trip.getId() != 0);
+		trip = this.tripService.findOne(trip.getId());
+
 		result = this.stageRepository.save(stage);
+		//Si se añade stage (objeto no instrumentado) en vez de result (objeto instrumentado) daria un error de transient
+		//Se añade el result al Trip manualmente porque es unidireccional la relacion
+		trip.getStages().add(result);
 
 		return result;
 	}

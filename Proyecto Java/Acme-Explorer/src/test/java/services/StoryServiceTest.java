@@ -32,8 +32,6 @@ public class StoryServiceTest extends AbstractTest {
 	// Supporting services ----------------------------------------------------
 
 	@Autowired
-	private ExplorerService	explorerService;
-	@Autowired
 	private TripService		tripService;
 
 
@@ -44,6 +42,7 @@ public class StoryServiceTest extends AbstractTest {
 		story = this.storyService.create();
 		Assert.notNull(story);
 		Assert.notNull(story.getExplorer());
+		super.unauthenticate();
 	}
 
 	@Test
@@ -70,12 +69,14 @@ public class StoryServiceTest extends AbstractTest {
 		Assert.notNull(story.getId());
 		//Compruebo que tiene esta Story el explorerPrincipal y la trip1 desde la bd
 		//Para que funcione el siguiente codigo cambiar el metodo save a saveAndFlush de storyRepository en storyService
+		//El codigo solo se comenta en las relaciones bidireccionales porque tiene que guardarse en la bd primero para que se actualice sus objetos relacionados
 		//		final Explorer explorerPrincipal;
 		//		explorerPrincipal = this.explorerService.findByPrincipal();
 		//		trip1 = this.tripService.findOne(super.getEntityId("trip1"));
 		//		Assert.isTrue(explorerPrincipal.getStories().contains(story));
 		//		Assert.isTrue(trip1.getStories().contains(story));
 
+		super.unauthenticate();
 	}
 
 	@Test
@@ -84,11 +85,4 @@ public class StoryServiceTest extends AbstractTest {
 		storys = this.storyService.findAll();
 		Assert.notEmpty(storys);
 	}
-
-	//	@Test
-	//	public void testFindOnePositive() {
-	//		Story story;
-	//		story = this.storyService.findOne(6248);
-	//		Assert.notNull(story);
-	//	}
 }

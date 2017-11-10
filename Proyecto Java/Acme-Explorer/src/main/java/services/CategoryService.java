@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,9 @@ public class CategoryService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private CategoryRepository	categoryRepository;
+	private CategoryRepository		categoryRepository;
+	@Autowired
+	private AdministratorService	administratorService;
 
 
 	// Supporting services ----------------------------------------------------
@@ -30,7 +33,13 @@ public class CategoryService {
 	// Simple CRUD methods-----------------------------------------------------
 	public Category create() {
 		Category result;
+		Collection<Category> subCategories;
+
+		Assert.notNull(this.administratorService.findByPrincipal());
 		result = new Category();
+		subCategories = new ArrayList<Category>();
+		result.setSubCategories(subCategories);
+
 		return result;
 	}
 
@@ -50,10 +59,12 @@ public class CategoryService {
 
 	public Category save(final Category category) {
 		assert category != null;
+		Assert.notNull(this.administratorService.findByPrincipal());
 
 		Category result;
 
 		result = this.categoryRepository.save(category);
+		//No se añade ninguna Trip al crearse una category porque asi lo dice en los requisitos
 
 		return result;
 	}
