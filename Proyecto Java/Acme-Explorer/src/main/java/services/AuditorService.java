@@ -61,7 +61,7 @@ public class AuditorService {
 
 		messagesFolders = this.messageFolderService.createDefaultFolders();
 
-		authority.setAuthority(Authority.ADMINISTRATOR);
+		authority.setAuthority(Authority.AUDITOR);
 		useraccount.addAuthority(authority);
 		result.setUserAccount(useraccount);
 		result.setMessagesFolders(messagesFolders);

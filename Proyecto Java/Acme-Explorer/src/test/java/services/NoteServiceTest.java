@@ -57,20 +57,23 @@ public class NoteServiceTest extends AbstractTest {
 		Note note;
 		Auditor auditor;
 		Trip trip;
+		String body;
 
 		note = this.noteService.create();
 		trip = this.tripService.findAll().iterator().next();
 		auditor = this.auditorService.findAll().iterator().next();
+		body = "h";
 
 		note.setAuditor(auditor);
 		note.setTrip(trip);
 		note.setRemark(5);
+		note.setBody(body);
 
 		note = this.noteService.save(note);
 	}
 
 	@Test
-	public void findOne() {
+	public void testfindOne() {
 		Collection<Note> notes;
 		Note note;
 
@@ -80,6 +83,32 @@ public class NoteServiceTest extends AbstractTest {
 
 		note = this.noteService.findOne(notes.iterator().next().getId());
 		Assert.notNull(note);
+	}
+
+	@Test
+	public void testReplyANote() {
+		this.authenticate("auditor4");
+		Note note;
+		String reply;
+		Auditor auditor;
+		Trip trip;
+
+		note = this.noteService.create();
+		auditor = this.auditorService.findAll().iterator().next();
+		trip = this.tripService.findAll().iterator().next();
+
+		note.setTrip(trip);
+		note.setRemark(6);
+		note.setAuditor(auditor);
+		note.setBody("este es el body");
+
+		note = this.noteService.save(note);
+		this.unauthenticate();
+		this.authenticate("manager1");
+
+		reply = "reply";
+		this.noteService.replyANote(note, reply);
+
 	}
 
 }

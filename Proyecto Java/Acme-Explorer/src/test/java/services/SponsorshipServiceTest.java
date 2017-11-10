@@ -80,6 +80,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 
 		sponsorship = this.sponsorshipService.save(sponsorship);
 	}
+
 	@Test
 	public void testDelete() {
 		Collection<Sponsorship> sponsorships;

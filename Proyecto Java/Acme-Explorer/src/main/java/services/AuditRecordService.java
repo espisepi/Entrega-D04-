@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.AuditRecordRepository;
+import security.Authority;
+import security.LoginService;
+import security.UserAccount;
 import domain.AuditRecord;
 
 @Service
@@ -32,6 +35,7 @@ public class AuditRecordService {
 	// Simple CRUD methods------------------------------------------------
 
 	public AuditRecord create() {
+		this.checkPrincipalAuditor();
 		AuditRecord result;
 		result = new AuditRecord();
 		result.setDraftMode(true); // Una vez que se crea está en modo borrador
@@ -57,9 +61,10 @@ public class AuditRecordService {
 	public AuditRecord save(AuditRecord auditrecord) {
 		Assert.notNull(auditrecord);
 		AuditRecord result;
-		result = this.auditRecordRepository.save(auditrecord);
+
 		Date realisedMoment;
 		realisedMoment = new Date(System.currentTimeMillis() - 1000);
+		result = new AuditRecord();
 		result.setRealisedMoment(realisedMoment);
 		Assert.notNull(result);
 		result = this.auditRecordRepository.save(auditrecord);
@@ -78,5 +83,19 @@ public class AuditRecordService {
 		Collection<AuditRecord> result;
 		result = this.auditRecordRepository.findAllAuditRecordInDraftMode();
 		return result;
+	}
+
+	public void checkPrincipalAuditor() {
+
+		UserAccount userAccount = LoginService.getPrincipal();
+		Assert.notNull(userAccount);
+
+		Collection<Authority> authorities = userAccount.getAuthorities();
+		Assert.notNull(authorities);
+
+		Authority auth = new Authority();
+		auth.setAuthority("AUDITOR");
+
+		Assert.isTrue(authorities.contains(auth));
 	}
 }

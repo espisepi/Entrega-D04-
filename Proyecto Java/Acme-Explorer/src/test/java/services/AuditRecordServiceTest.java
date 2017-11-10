@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.transaction.Transactional;
@@ -8,11 +9,13 @@ import javax.transaction.Transactional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
+import domain.Attachment;
 import domain.AuditRecord;
 import domain.Auditor;
 import domain.Trip;
@@ -39,6 +42,7 @@ public class AuditRecordServiceTest extends AbstractTest {
 
 	@Test
 	public void testCreate() {
+		this.authenticate("auditor4");
 		AuditRecord result;
 		result = this.auditRecordService.create();
 		Assert.notNull(result);
@@ -52,19 +56,23 @@ public class AuditRecordServiceTest extends AbstractTest {
 
 	@Test
 	public void testSave() {
+		this.authenticate("auditor4");
 		AuditRecord auditRecord;
 		Auditor auditor;
 		Trip trip;
+		Collection<Attachment> attachments;
 
 		auditRecord = this.auditRecordService.create();
 		auditor = this.auditorService.findAll().iterator().next();
 		trip = this.tripService.findAll().iterator().next();
+		attachments = new ArrayList<Attachment>();
 
 		auditRecord.setAuditor(auditor);
 		auditRecord.setTrip(trip);
 		auditRecord.setTitle("title1");
 		auditRecord.setDescription("description1");
 		auditRecord.setDraftMode(true);
+		auditRecord.setAttachments(attachments);
 
 		auditRecord = this.auditRecordService.save(auditRecord);
 	}
@@ -80,8 +88,8 @@ public class AuditRecordServiceTest extends AbstractTest {
 
 		auditRecord.setAuditor(auditor);
 		auditRecord.setTrip(trip);
-		auditRecord.setTitle("title1");
-		auditRecord.setDescription("description1");
+		auditRecord.setTitle("title2");
+		auditRecord.setDescription("description2");
 		auditRecord.setDraftMode(false);
 
 		auditRecord = this.auditRecordService.save(auditRecord);
@@ -90,20 +98,24 @@ public class AuditRecordServiceTest extends AbstractTest {
 	}
 
 	@Test
+	@Rollback(false)
 	public void testDelelePositive() {
 		Auditor auditor;
 		AuditRecord auditRecord;
 		Trip trip;
+		Collection<Attachment> attachments;
 
 		auditRecord = this.auditRecordService.create();
 		auditor = this.auditorService.findAll().iterator().next();
 		trip = this.tripService.findAll().iterator().next();
+		attachments = new ArrayList<Attachment>();
 
 		auditRecord.setAuditor(auditor);
 		auditRecord.setTrip(trip);
-		auditRecord.setTitle("title1");
-		auditRecord.setDescription("description1");
+		auditRecord.setTitle("title3");
+		auditRecord.setDescription("description3");
 		auditRecord.setDraftMode(true);
+		auditRecord.setAttachments(attachments);
 
 		auditRecord = this.auditRecordService.save(auditRecord);
 		this.auditRecordService.delete(auditRecord);
