@@ -58,7 +58,7 @@ public class Stage extends DomainEntity {
 
 	@Transient
 	public double getTotalPrice() {
-		return this.price + (this.price);
+		return this.price * 1.21;
 	}
 
 

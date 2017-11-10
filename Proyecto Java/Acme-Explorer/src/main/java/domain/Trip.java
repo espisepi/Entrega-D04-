@@ -69,11 +69,14 @@ public class Trip extends DomainEntity {
 	}
 
 	public double getPrice() {
-		return this.price;
+		double price = 0.0;
+		for (Stage stage : this.stages)
+			price = price + stage.getTotalPrice();
+		return price;
 	}
 
-	public void setPrice(final double price) {
-		this.price = price;
+	public void setPrice(double price) {
+
 	}
 
 	@NotNull
