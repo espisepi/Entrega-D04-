@@ -115,7 +115,7 @@ public class SponsorService {
 		Assert.notNull(authorities);
 
 		Authority auth = new Authority();
-		auth.setAuthority("Sponsor");
+		auth.setAuthority(Authority.SPONSOR);
 
 		Assert.isTrue(authorities.contains(auth));
 	}

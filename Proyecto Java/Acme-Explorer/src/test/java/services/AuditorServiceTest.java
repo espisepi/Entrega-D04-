@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
@@ -29,17 +30,19 @@ public class AuditorServiceTest extends AbstractTest {
 
 	// Tests ----------------------------------------------
 
-	//	@Test
-	//	public void testCreate() {
-	//
-	//		Auditor auditor;
-	//		auditor = this.auditorService.create();
-	//		Assert.notNull(auditor);
-	//	}
-	//
 	@Test
+	public void testCreate() {
+
+		Auditor auditor;
+		auditor = this.auditorService.create();
+		Assert.notNull(auditor);
+	}
+
+	@Test
+	@Rollback(false)
 	public void testSave() {
 		Auditor auditor;
+
 		auditor = this.auditorService.create();
 
 		auditor.setName("name");
@@ -74,21 +77,20 @@ public class AuditorServiceTest extends AbstractTest {
 
 		auditor = this.auditorService.save(auditor);
 		Assert.notNull(auditor.getId());
-
 		this.auditorService.delete(auditor);
 
 	}
 
-	//	@Test
-	//	public void testFindOne() {
-	//		Collection<Auditor> auditors;
-	//		Auditor auditor;
-	//
-	//		auditors = this.auditorService.findAll();
-	//		Assert.notNull(auditors);
-	//		Assert.notEmpty(auditors);
-	//
-	//		auditor = this.auditorService.findOne(auditors.iterator().next().getId());
-	//		Assert.notNull(auditor);
-	//	}
+	@Test
+	public void testFindOne() {
+		Collection<Auditor> auditors;
+		Auditor auditor;
+
+		auditors = this.auditorService.findAll();
+		Assert.notNull(auditors);
+		Assert.notEmpty(auditors);
+
+		auditor = this.auditorService.findOne(auditors.iterator().next().getId());
+		Assert.notNull(auditor);
+	}
 }

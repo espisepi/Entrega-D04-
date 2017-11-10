@@ -12,7 +12,6 @@ import org.springframework.util.Assert;
 import repositories.NoteRepository;
 import domain.Auditor;
 import domain.Note;
-import domain.Trip;
 
 @Service
 @Transactional
@@ -40,23 +39,19 @@ public class NoteService {
 	// Simple CRUD methods------------------------------------------------
 
 	public Note create() {
-		this.auditorService.checkPrincipal();
-
 		Note result;
-		Auditor auditor;
-		Trip trip;
+		Auditor auditorPrincipal;
 		Date createdMoment;
 		String body;
 
 		result = new Note();
-		auditor = new Auditor();
-		trip = new Trip();
+		auditorPrincipal = this.auditorService.findByPrincipal();
+		Assert.notNull(auditorPrincipal);
 		createdMoment = new Date();
 		body = new String();
 
 		result.setCreatedMoment(createdMoment);
-		result.setAuditor(auditor);
-		result.setTrip(trip);
+		result.setAuditor(auditorPrincipal);
 		result.setBody(body);
 		return result;
 	}

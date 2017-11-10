@@ -9,7 +9,6 @@ import javax.transaction.Transactional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
@@ -59,23 +58,27 @@ public class AuditRecordServiceTest extends AbstractTest {
 		this.authenticate("auditor4");
 		AuditRecord auditRecord;
 		Auditor auditor;
-		Trip trip;
+		Trip trip1;
 		Collection<Attachment> attachments;
 
 		auditRecord = this.auditRecordService.create();
-		auditor = this.auditorService.findAll().iterator().next();
-		trip = this.tripService.findAll().iterator().next();
+
+		trip1 = this.tripService.findOne(super.getEntityId("trip1"));
 		attachments = new ArrayList<Attachment>();
 
-		auditRecord.setAuditor(auditor);
-		auditRecord.setTrip(trip);
+		auditRecord.setTrip(trip1);
 		auditRecord.setTitle("title1");
 		auditRecord.setDescription("description1");
 		auditRecord.setDraftMode(true);
 		auditRecord.setAttachments(attachments);
 
 		auditRecord = this.auditRecordService.save(auditRecord);
+		auditor = this.auditorService.findByPrincipal();
+		Assert.notNull(auditor);
+		//Assert.isTrue(trip1.getAuditRecords().contains(auditRecord));
+		//Assert.isTrue(auditor.getAuditRecords().contains(auditRecord));
 	}
+
 	@Test(expected = IllegalArgumentException.class)
 	public void testDeleleNegative() {
 		Auditor auditor;
@@ -98,26 +101,9 @@ public class AuditRecordServiceTest extends AbstractTest {
 	}
 
 	@Test
-	@Rollback(false)
 	public void testDelelePositive() {
-		Auditor auditor;
 		AuditRecord auditRecord;
-		Trip trip;
-		Collection<Attachment> attachments;
-
-		auditRecord = this.auditRecordService.create();
-		auditor = this.auditorService.findAll().iterator().next();
-		trip = this.tripService.findAll().iterator().next();
-		attachments = new ArrayList<Attachment>();
-
-		auditRecord.setAuditor(auditor);
-		auditRecord.setTrip(trip);
-		auditRecord.setTitle("title3");
-		auditRecord.setDescription("description3");
-		auditRecord.setDraftMode(true);
-		auditRecord.setAttachments(attachments);
-
-		auditRecord = this.auditRecordService.save(auditRecord);
+		auditRecord = this.auditRecordService.findOne(super.getEntityId("auditrecord1"));
 		this.auditRecordService.delete(auditRecord);
 
 	}
@@ -135,21 +121,4 @@ public class AuditRecordServiceTest extends AbstractTest {
 		Assert.notNull(auditrecord);
 	}
 
-	//	@Test(expected = IllegalArgumentException.class)
-	//	public void testDeleteNegative() {
-	//		AuditRecord auditRecord;
-	//		auditRecord = this.auditRecordService.findOne(6164);
-	//
-	//		this.auditRecordService.delete(auditRecord);
-	//	}
-
-	//	@Test
-	//	public void testDeletePositive() {
-	//		Collection<AuditRecord> auditRecords;
-	//		auditRecords = this.auditRecordService.findAll();
-	//		Assert.notNull(auditRecords);
-	//		Assert.notEmpty(auditRecords);
-	//
-	//		this.auditRecordService.findOne(auditRecords.iterator().next().getId());
-	//	}
 }

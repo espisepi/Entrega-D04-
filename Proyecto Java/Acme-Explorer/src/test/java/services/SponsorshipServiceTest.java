@@ -2,7 +2,6 @@
 package services;
 
 import java.util.Collection;
-import java.util.Iterator;
 
 import javax.transaction.Transactional;
 
@@ -59,11 +58,11 @@ public class SponsorshipServiceTest extends AbstractTest {
 		Sponsorship sponsorship;
 		CreditCard creditcard;
 		Sponsor sponsor;
+		Trip trip1;
 
 		sponsorship = this.sponsorshipService.create();
 		creditcard = new CreditCard();
-		Trip trip = this.tripService.findAll().iterator().next();
-		sponsor = this.sponsorService.findAll().iterator().next();
+		trip1 = this.tripService.findOne(super.getEntityId("trip1"));
 
 		creditcard.setBrandName("brandName");
 		creditcard.setHolderName("holderName");
@@ -75,23 +74,23 @@ public class SponsorshipServiceTest extends AbstractTest {
 		sponsorship.setLink("http://www.link-banner.com");
 		sponsorship.setBannerURL("http://www.banner.com");
 		sponsorship.setCreditCard(creditcard);
-		sponsorship.setTrip(trip);
-		sponsorship.setSponsor(sponsor);
+		sponsorship.setTrip(trip1);
 
 		sponsorship = this.sponsorshipService.save(sponsorship);
+
+		sponsor = this.sponsorService.findByPrincipal();
+		Assert.notNull(sponsor);
+		//Assert.isTrue(sponsor.getSponsorships().contains(sponsorship));
+		//Assert.isTrue(trip1.getSponsorships().contains(sponsorship));
+
+		super.unauthenticate();
 	}
 
 	@Test
 	public void testDelete() {
-		Collection<Sponsorship> sponsorships;
-		Iterator<Sponsorship> sponsorship; // para poder recorrer la colección
-
-		sponsorships = this.sponsorshipService.findAll();
-		System.out.println(this.sponsorshipService.findAll());
-		sponsorship = sponsorships.iterator();
-
-		this.sponsorshipService.delete(sponsorship.next());
-		System.out.println(this.sponsorshipService.findAll());
+		Sponsorship sponsorship;
+		sponsorship = this.sponsorshipService.findOne(super.getEntityId("sponsorship1"));
+		this.sponsorshipService.delete(sponsorship);
 
 	}
 	@Test

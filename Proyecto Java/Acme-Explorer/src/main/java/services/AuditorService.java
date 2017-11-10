@@ -90,7 +90,7 @@ public class AuditorService {
 	public Auditor save(Auditor auditor) {
 		Assert.notNull(auditor);
 		Auditor result;
-		result = this.auditorRepository.save(auditor);
+		result = this.auditorRepository.saveAndFlush(auditor);
 		return result;
 	}
 

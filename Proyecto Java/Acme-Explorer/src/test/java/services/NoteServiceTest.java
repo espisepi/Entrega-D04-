@@ -56,20 +56,24 @@ public class NoteServiceTest extends AbstractTest {
 		this.authenticate("auditor4");
 		Note note;
 		Auditor auditor;
-		Trip trip;
+		Trip trip1;
 		String body;
 
 		note = this.noteService.create();
-		trip = this.tripService.findAll().iterator().next();
-		auditor = this.auditorService.findAll().iterator().next();
+		trip1 = this.tripService.findOne(super.getEntityId("trip1"));
+
 		body = "h";
 
-		note.setAuditor(auditor);
-		note.setTrip(trip);
+		note.setTrip(trip1);
 		note.setRemark(5);
 		note.setBody(body);
 
+		auditor = this.auditorService.findByPrincipal();
+		Assert.notNull(auditor);
 		note = this.noteService.save(note);
+
+		//	Assert.isTrue(auditor.getNotes().contains(note));
+		//	Assert.isTrue(trip1.getNotes().contains(note));
 	}
 
 	@Test

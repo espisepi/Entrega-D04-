@@ -11,7 +11,6 @@ import org.springframework.util.Assert;
 import repositories.SponsorshipRepository;
 import domain.Sponsor;
 import domain.Sponsorship;
-import domain.Trip;
 
 @Service
 @Transactional
@@ -36,17 +35,15 @@ public class SponsorshipService {
 	// Simple CRUD methods------------------------------------------------
 
 	public Sponsorship create() {
-		this.sponsorService.checkPrincipal();
+
 		Sponsorship result;
-		Sponsor sponsor;
-		Trip trip;
+		Sponsor sponsorPrincipal;
 
 		result = new Sponsorship();
-		sponsor = new Sponsor();
-		trip = new Trip();
+		sponsorPrincipal = this.sponsorService.findByPrincipal();
+		Assert.notNull(sponsorPrincipal);
 
-		result.setSponsor(sponsor);
-		result.setTrip(trip);
+		result.setSponsor(sponsorPrincipal);
 		return result;
 	}
 

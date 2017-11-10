@@ -1,6 +1,7 @@
 
 package services;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
@@ -10,7 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.AuditRecordRepository;
+import domain.Attachment;
 import domain.AuditRecord;
+import domain.Auditor;
 
 @Service
 @Transactional
@@ -35,13 +38,20 @@ public class AuditRecordService {
 	// Simple CRUD methods------------------------------------------------
 
 	public AuditRecord create() {
-		this.auditorService.checkPrincipal();
+		Auditor auditorPrincipal;
 		AuditRecord result;
+		Collection<Attachment> attachments;
+
+		attachments = new ArrayList<>();
 		result = new AuditRecord();
+		auditorPrincipal = this.auditorService.findByPrincipal();
+
 		result.setDraftMode(true); // Una vez que se crea está en modo borrador
 		Date realisedMoment;
 		realisedMoment = new Date();
 		result.setRealisedMoment(realisedMoment);
+		result.setAttachments(attachments);
+		result.setAuditor(auditorPrincipal);
 		return result;
 	}
 
@@ -70,7 +80,6 @@ public class AuditRecordService {
 		result = this.auditRecordRepository.save(auditrecord);
 		return result;
 	}
-
 	public void delete(final AuditRecord auditrecord) {
 		//se puede borrar o modificar si está en modo borrador
 		Assert.isTrue(auditrecord.isDraftMode() == true);
