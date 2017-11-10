@@ -10,9 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.NoteRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 import domain.Auditor;
 import domain.Note;
 import domain.Trip;
@@ -25,8 +22,14 @@ public class NoteService {
 	@Autowired
 	private NoteRepository	noteRepository;
 
-
 	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private ManagerService	managerService;
+
+	@Autowired
+	private AuditorService	auditorService;
+
 
 	// Constructors-------------------------------------------------------
 
@@ -37,7 +40,7 @@ public class NoteService {
 	// Simple CRUD methods------------------------------------------------
 
 	public Note create() {
-		this.checkPrincipalAuditor();
+		this.auditorService.checkPrincipal();
 
 		Note result;
 		Auditor auditor;
@@ -84,39 +87,12 @@ public class NoteService {
 	}
 
 	// Other business methods------------------------------------------------------
-	public void checkPrincipalAuditor() {
-
-		UserAccount userAccount = LoginService.getPrincipal();
-		Assert.notNull(userAccount);
-
-		Collection<Authority> authorities = userAccount.getAuthorities();
-		Assert.notNull(authorities);
-
-		Authority auth = new Authority();
-		auth.setAuthority("AUDITOR");
-
-		Assert.isTrue(authorities.contains(auth));
-	}
-
-	public void checkPrincipalManager() {
-
-		UserAccount userAccount = LoginService.getPrincipal();
-		Assert.notNull(userAccount);
-
-		Collection<Authority> authorities = userAccount.getAuthorities();
-		Assert.notNull(authorities);
-
-		Authority auth = new Authority();
-		auth.setAuthority("MANAGER");
-
-		Assert.isTrue(authorities.contains(auth));
-	}
 
 	//Yo le paso una nota instrumentada y le hago un set reply y un setreplymoment
 	// y ya se me modifica automáticamente y devuelvo la nota con los valores 
 	//anteriores y los nuevos 
 	public Note replyANote(Note note, String reply) {
-		this.checkPrincipalManager();
+		this.managerService.checkPrincipal();
 
 		Date replyMoment;
 		replyMoment = new Date(System.currentTimeMillis() - 1000);

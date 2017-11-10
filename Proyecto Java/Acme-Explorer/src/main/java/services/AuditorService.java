@@ -109,4 +109,18 @@ public class AuditorService {
 		result = this.auditorRepository.findByUserAccountId(userAccount.getId());
 		return result;
 	}
+
+	public void checkPrincipal() {
+
+		UserAccount userAccount = LoginService.getPrincipal();
+		Assert.notNull(userAccount);
+
+		Collection<Authority> authorities = userAccount.getAuthorities();
+		Assert.notNull(authorities);
+
+		Authority auth = new Authority();
+		auth.setAuthority("AUDITOR");
+
+		Assert.isTrue(authorities.contains(auth));
+	}
 }

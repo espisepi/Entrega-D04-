@@ -9,9 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.SponsorshipRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 import domain.Sponsor;
 import domain.Sponsorship;
 import domain.Trip;
@@ -24,8 +21,11 @@ public class SponsorshipService {
 	@Autowired
 	private SponsorshipRepository	sponsorshipRepository;
 
-
 	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private SponsorService			sponsorService;
+
 
 	// Constructors-------------------------------------------------------
 
@@ -36,7 +36,7 @@ public class SponsorshipService {
 	// Simple CRUD methods------------------------------------------------
 
 	public Sponsorship create() {
-		this.checkPrincipal();
+		this.sponsorService.checkPrincipal();
 		Sponsorship result;
 		Sponsor sponsor;
 		Trip trip;
@@ -80,19 +80,5 @@ public class SponsorshipService {
 	}
 
 	//Other business methods------------------------------------------------
-
-	public void checkPrincipal() {
-
-		UserAccount userAccount = LoginService.getPrincipal();
-		Assert.notNull(userAccount);
-
-		Collection<Authority> authorities = userAccount.getAuthorities();
-		Assert.notNull(authorities);
-
-		Authority auth = new Authority();
-		auth.setAuthority("SPONSOR");
-
-		Assert.isTrue(authorities.contains(auth));
-	}
 
 }
