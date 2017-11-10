@@ -22,12 +22,14 @@ public class MessageService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private MessageRepository	messageRepository;
+	private MessageRepository		messageRepository;
 
 	// Supporting services ----------------------------------------------------
 
 	@Autowired
-	private ActorService		actorService;
+	private ActorService			actorService;
+	@Autowired
+	private MessageFolderService	messageFolderService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -64,22 +66,18 @@ public class MessageService {
 	}
 
 	public Message Save(final Message message) {
-		//Guarda el mensaje en la carpeta outbox
-		Collection<MessageFolder> m;
-		final Actor sender;
+		//Guarda el mensaje en la carpeta outbox del que lo envia
+		MessageFolder folder;
+		Actor senderAct = message.getSender();
+		folder = this.messageFolderService.returnOutboxFolder(senderAct);
 		Message result;
 		result = message;
 		Date current;
 		current = new Date(System.currentTimeMillis() - 1000);
 		result.setMoment(current);
-		m = message.getSender().getMessagesFolders();
-		for (final MessageFolder folder : m)
-			if (folder.getName().equals("out box")) {
-				message.setMessageFolder(folder);
-				folder.getMessages().add(result);
-				this.messageRepository.save(message);
-				break;
-			}
+		message.setMessageFolder(folder);
+		this.messageRepository.save(message);
+		folder.getMessages().add(result);
 
 		return result;
 	}
@@ -135,6 +133,16 @@ public class MessageService {
 
 		if (!message.getMessageFolder().equals(folder))
 			message.setMessageFolder(folder);
+	}
+
+	public String recivemessage(Message message) {
+		//Comprueba si el mensaje es spam y devuelve el nombre de la carpeta a la que debe ir
+		String folderName = "in box";
+		if (this.MessageisSpam(message) == true)
+			folderName = "spam box";
+
+		return folderName;
+
 	}
 
 }

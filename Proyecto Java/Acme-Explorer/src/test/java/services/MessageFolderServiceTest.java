@@ -1,11 +1,14 @@
 
 package services;
 
+import java.util.Collection;
+
 import javax.transaction.Transactional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
@@ -19,7 +22,7 @@ import domain.MessageFolder;
 	"classpath:spring/datasource.xml", "classpath:spring/config/packages.xml"
 })
 @Transactional
-public class MessageFolderTest extends AbstractTest {
+public class MessageFolderServiceTest extends AbstractTest {
 
 	//Service under test----------------------------------------------------------
 	@Autowired
@@ -32,7 +35,7 @@ public class MessageFolderTest extends AbstractTest {
 
 	@Test
 	public void testCreate() {
-		this.authenticate("Explorer 5");
+		this.authenticate("explorer5");
 		MessageFolder messageFolder;
 		messageFolder = this.messageFolderService.create();
 		Assert.notNull(messageFolder);
@@ -58,15 +61,18 @@ public class MessageFolderTest extends AbstractTest {
 	}
 
 	@Test
+	@Rollback(false)
 	public void testCreateDefaultChapter() {
 		Administrator administrator;
 		administrator = this.administratorService.create();
+		Collection<MessageFolder> folders = this.messageFolderService.createDefaultFolders();
 
 		administrator.setName("name");
 		administrator.setSurname("surname");
 		administrator.setEmail("email@gmail.com");
 		administrator.setPhone("31333");
 		administrator.setAddress("address");
+		administrator.getMessagesFolders().addAll(folders);
 
 		administrator = this.administratorService.save(administrator);
 

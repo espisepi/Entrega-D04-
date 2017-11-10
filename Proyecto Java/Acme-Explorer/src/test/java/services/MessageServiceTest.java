@@ -1,14 +1,16 @@
 
 package services;
 
+import java.util.Collection;
+
 import javax.transaction.Transactional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.Administrator;
@@ -33,43 +35,43 @@ public class MessageServiceTest extends AbstractTest {
 	private AdministratorService	administratorService;
 
 
-	//	@Test
-	//	public void testCreate() {
-	//		this.authenticate("Explorer 5");
-	//		Message message;
-	//		message = this.messageService.create();
-	//		Assert.notNull(message);
-	//		this.unauthenticate();
-	//	}
-	//
-	//	@Test
-	//	public void testFindOneAndFindAllPositive() {
-	//		Collection<Message> messages;
-	//		Message message;
-	//		int id;
-	//		messages = this.messageService.findAll();
-	//		id = messages.iterator().next().getId();
-	//		message = this.messageService.findOne(id);
-	//		Assert.notNull(message);
-	//
-	//	}
-	//	@Test
-	//	public void testAdmin() {
-	//		Administrator administratorSen;
-	//		administratorSen = this.administratorService.create();
-	//		administratorSen.setName("enviador");
-	//		administratorSen.setSurname("surname");
-	//		administratorSen.setEmail("email@gmail.com");
-	//		administratorSen.setPhone("31333");
-	//		administratorSen.setAddress("address");
-	//		administratorSen.getUserAccount().setPassword("enviador");
-	//		administratorSen.getUserAccount().setUsername("enviador");
-	//		administratorSen.getMessagesFolders().addAll(this.messageFolderService.createDefaultFolders());
-	//		this.administratorService.save(administratorSen);
-	//
-	//	}
 	@Test
-	@Rollback(false)
+	public void testCreate() {
+		this.authenticate("administrator1");
+		Message message;
+		message = this.messageService.create();
+		Assert.notNull(message);
+		this.unauthenticate();
+	}
+
+	@Test
+	public void testFindOneAndFindAllPositive() {
+		Collection<Message> messages;
+		Message message;
+		int id;
+		messages = this.messageService.findAll();
+		id = messages.iterator().next().getId();
+		message = this.messageService.findOne(id);
+		Assert.notNull(message);
+
+	}
+	@Test
+	public void testAdmin() {
+		Administrator administratorSen;
+		administratorSen = this.administratorService.create();
+		administratorSen.setName("enviador");
+		administratorSen.setSurname("surname");
+		administratorSen.setEmail("email@gmail.com");
+		administratorSen.setPhone("31333");
+		administratorSen.setAddress("address");
+		administratorSen.getUserAccount().setPassword("enviador");
+		administratorSen.getUserAccount().setUsername("enviador");
+		administratorSen.getMessagesFolders().addAll(this.messageFolderService.createDefaultFolders());
+		this.administratorService.save(administratorSen);
+
+	}
+	@Test
+	//@Rollback(false)
 	public void testSave() {
 
 		Administrator administratorSen, adminRecip;
@@ -107,9 +109,8 @@ public class MessageServiceTest extends AbstractTest {
 		message1.setRecipient(adminRecip);
 		message1.setPriority("NEUTRAL");
 		message1.setSubject("hola");
-
 		this.messageService.Save(message1);
-		//Assert.isTrue(this.messageService.findAll().contains(message1));
 
 	}
+
 }

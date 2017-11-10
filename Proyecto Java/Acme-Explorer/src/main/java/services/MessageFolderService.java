@@ -136,4 +136,17 @@ public class MessageFolderService {
 
 	}
 
+	public MessageFolder returnOutboxFolder(Actor actor) {
+		MessageFolder res = null;
+		Collection<MessageFolder> messagefolders;
+		messagefolders = actor.getMessagesFolders();
+		for (final MessageFolder folder : messagefolders)
+			if (folder.getName().equals("out box")) {
+				res = folder;
+				break;
+			}
+
+		return res;
+	}
+
 }
