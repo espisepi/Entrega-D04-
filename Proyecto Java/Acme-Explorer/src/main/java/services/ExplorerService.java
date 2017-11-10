@@ -47,12 +47,12 @@ public class ExplorerService {
 		Explorer result;
 		UserAccount userAccount;
 		Authority authority;
-		final Collection<SocialIdentity> socialIdentities;
-		final Collection<MessageFolder> messagesFolders;
-		final Collection<Story> stories;
-		final Collection<ApplicationFor> applicationsFor;
-		final Collection<ContactEmergency> contactsEmergency;
-		final Collection<MessageFolder> defaultFolders;
+		Collection<SocialIdentity> socialIdentities;
+		Collection<MessageFolder> messagesFolders;
+		Collection<Story> stories;
+		Collection<ApplicationFor> applicationsFor;
+		Collection<ContactEmergency> contactsEmergency;
+		Collection<MessageFolder> defaultFolders;
 
 		result = new Explorer();
 		userAccount = new UserAccount();
@@ -67,11 +67,9 @@ public class ExplorerService {
 		defaultFolders = this.messageFolderService.createDefaultFolders();
 		messagesFolders.addAll(defaultFolders);
 		result.setMessagesFolders(messagesFolders);
-
 		authority.setAuthority(Authority.EXPLORER);
 		userAccount.addAuthority(authority);
 		result.setUserAccount(userAccount);
-
 		result.setStories(stories);
 		result.setApplicationsFor(applicationsFor);
 		result.setContactsEmergency(contactsEmergency);
@@ -131,7 +129,7 @@ public class ExplorerService {
 		Assert.notNull(authorities);
 
 		final Authority auth = new Authority();
-		auth.setAuthority("Explorer");
+		auth.setAuthority(Authority.EXPLORER);
 
 		Assert.isTrue(authorities.contains(auth));
 	}

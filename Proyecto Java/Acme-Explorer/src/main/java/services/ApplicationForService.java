@@ -112,11 +112,16 @@ public class ApplicationForService {
 	private boolean checkCreditCard(final CreditCard creditCard) {
 		boolean res;
 		Calendar calendar;
+		int actualYear;
 
 		res = false;
 		calendar = new GregorianCalendar();
+		actualYear = calendar.get(Calendar.YEAR);
+		actualYear = actualYear % 100;
 
-		if (creditCard.getExpirationMonth() >= calendar.get(Calendar.MONTH) && creditCard.getExpirationYear() >= calendar.get(Calendar.YEAR))
+		if (creditCard.getExpirationYear() > actualYear)
+			res = true;
+		else if (creditCard.getExpirationYear() == actualYear && creditCard.getExpirationMonth() >= calendar.get(Calendar.MONTH))
 			res = true;
 
 		return res;
