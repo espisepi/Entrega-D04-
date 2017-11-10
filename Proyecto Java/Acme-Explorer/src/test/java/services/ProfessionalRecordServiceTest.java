@@ -55,7 +55,7 @@ public class ProfessionalRecordServiceTest extends AbstractTest {
 	@Test
 	public void testFindOne() {
 
-		ProfessionalRecord professionalRecord = this.professionalRecordService.findOne(6131);
+		ProfessionalRecord professionalRecord = this.professionalRecordService.findOne(super.getEntityId("professionalRecord1"));
 		Assert.notNull(professionalRecord);
 
 	}
@@ -77,7 +77,7 @@ public class ProfessionalRecordServiceTest extends AbstractTest {
 
 	@Test
 	public void testUpdate() {
-		ProfessionalRecord professionalRecord = this.professionalRecordService.findOne(6131);
+		ProfessionalRecord professionalRecord = this.professionalRecordService.findOne(super.getEntityId("professionalRecord2"));
 		professionalRecord.setCompanyName("modificado");
 
 		this.professionalRecordService.update(professionalRecord);

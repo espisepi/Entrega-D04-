@@ -47,11 +47,12 @@ public class CurriculaService {
 	// Simple CRUD methods------------------------------------------------
 
 	public Curricula create() {
+
 		this.checkPrincipal();
 
 		Curricula curricula;
-		curricula = new Curricula();
 
+		curricula = new Curricula();
 		List<ProfessionalRecord> professionalRecords = new ArrayList<>();
 		List<MiscellaneousRecord> miscellaneousRecords = new ArrayList<>();
 		List<EndorserRecord> endorserRecords = new ArrayList<>();
@@ -68,6 +69,9 @@ public class CurriculaService {
 
 	public Curricula save(Curricula curricula) {
 
+		Ranger ranger;
+		ranger = this.rangerService.findByPrincipal();
+
 		Assert.isTrue(curricula.getId() == 0);
 		Curricula newCurricula;
 		Assert.notNull(curricula);
@@ -75,6 +79,7 @@ public class CurriculaService {
 		Assert.notNull(curricula.getPersonalRecord());
 
 		newCurricula = this.curriculaRepository.saveAndFlush(curricula);
+		ranger.setCurricula(newCurricula);
 
 		Assert.notNull(newCurricula);
 

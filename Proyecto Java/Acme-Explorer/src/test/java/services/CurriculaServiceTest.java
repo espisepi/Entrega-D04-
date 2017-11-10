@@ -49,7 +49,6 @@ public class CurriculaServiceTest extends AbstractTest {
 		Assert.notNull(curricula);
 		this.authenticate(null);
 	}
-
 	@Test
 	public void testSave() {
 		this.authenticate("ranger1");
@@ -83,14 +82,14 @@ public class CurriculaServiceTest extends AbstractTest {
 	public void testFindOne() {
 		Curricula curricula;
 
-		curricula = this.curriculaService.findOne(6190);
+		curricula = this.curriculaService.findOne(super.getEntityId("curricula4"));
 		Assert.notNull(curricula);
 	}
 
 	@Test
 	public void testDelete() {
 		Curricula curricula;
-		curricula = this.curriculaService.findOne(6190);
+		curricula = this.curriculaService.findOne(super.getEntityId("curricula4"));
 
 		this.curriculaService.delete(curricula);
 	}
@@ -109,7 +108,7 @@ public class CurriculaServiceTest extends AbstractTest {
 		List<EndorserRecord> endorserRecords = new ArrayList<EndorserRecord>();
 		List<MiscellaneousRecord> miscellaneousRecords = new ArrayList<MiscellaneousRecord>();
 
-		this.curriculaService.update(6191, personalRecord1, professionalRecords, educationRecords, endorserRecords, miscellaneousRecords);
+		this.curriculaService.update(super.getEntityId("curricula2"), personalRecord1, professionalRecords, educationRecords, endorserRecords, miscellaneousRecords);
 		this.authenticate(null);
 	}
 }
