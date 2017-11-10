@@ -42,20 +42,26 @@ public class AuditRecordServiceTest extends AbstractTest {
 	@Test
 	public void testCreate() {
 		this.authenticate("auditor4");
+
 		AuditRecord result;
 		result = this.auditRecordService.create();
 		Assert.notNull(result);
+
+		super.unauthenticate();
 	}
 
 	@Test
 	public void testFindAll() {
-		Collection<AuditRecord> result = this.auditRecordService.findAll();
+		Collection<AuditRecord> result;
+
+		result = this.auditRecordService.findAll();
 		Assert.notEmpty(result);
 	}
 
 	@Test
 	public void testSave() {
 		this.authenticate("auditor4");
+
 		AuditRecord auditRecord;
 		Auditor auditor;
 		Trip trip1;
@@ -67,8 +73,8 @@ public class AuditRecordServiceTest extends AbstractTest {
 		attachments = new ArrayList<Attachment>();
 
 		auditRecord.setTrip(trip1);
-		auditRecord.setTitle("title1");
-		auditRecord.setDescription("description1");
+		auditRecord.setTitle("titletest");
+		auditRecord.setDescription("descriptiontest");
 		auditRecord.setDraftMode(true);
 		auditRecord.setAttachments(attachments);
 
@@ -77,6 +83,8 @@ public class AuditRecordServiceTest extends AbstractTest {
 		Assert.notNull(auditor);
 		//Assert.isTrue(trip1.getAuditRecords().contains(auditRecord));
 		//Assert.isTrue(auditor.getAuditRecords().contains(auditRecord));
+
+		super.unauthenticate();
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -102,6 +110,7 @@ public class AuditRecordServiceTest extends AbstractTest {
 
 	@Test
 	public void testDelelePositive() {
+		// Porque sé que la auditrecord que le estoy pasando tiene el modo borrador a true
 		AuditRecord auditRecord;
 		auditRecord = this.auditRecordService.findOne(super.getEntityId("auditrecord1"));
 		this.auditRecordService.delete(auditRecord);
@@ -110,15 +119,9 @@ public class AuditRecordServiceTest extends AbstractTest {
 
 	@Test
 	public void testfindOne() {
-		Collection<AuditRecord> auditrecords;
-		AuditRecord auditrecord;
-
-		auditrecords = this.auditRecordService.findAll();
-		Assert.notNull(auditrecords);
-		Assert.notEmpty(auditrecords);
-
-		auditrecord = this.auditRecordService.findOne(auditrecords.iterator().next().getId());
-		Assert.notNull(auditrecord);
+		AuditRecord auditRecord;
+		auditRecord = this.auditRecordService.findOne(super.getEntityId("auditrecord2"));
+		Assert.notNull(auditRecord);
 	}
 
 }

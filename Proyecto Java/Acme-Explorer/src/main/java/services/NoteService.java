@@ -42,17 +42,14 @@ public class NoteService {
 		Note result;
 		Auditor auditorPrincipal;
 		Date createdMoment;
-		String body;
 
 		result = new Note();
 		auditorPrincipal = this.auditorService.findByPrincipal();
 		Assert.notNull(auditorPrincipal);
 		createdMoment = new Date();
-		body = new String();
 
 		result.setCreatedMoment(createdMoment);
 		result.setAuditor(auditorPrincipal);
-		result.setBody(body);
 		return result;
 	}
 

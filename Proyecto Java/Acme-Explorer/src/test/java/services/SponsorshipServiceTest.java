@@ -41,20 +41,26 @@ public class SponsorshipServiceTest extends AbstractTest {
 	@Test
 	public void testCreate() {
 		this.authenticate("sponsor2");
+
 		Sponsorship res;
 		res = this.sponsorshipService.create();
 		Assert.notNull(res);
+
+		super.unauthenticate();
 	}
 
 	@Test
 	public void testFindAll() {
-		Collection<Sponsorship> res = this.sponsorshipService.findAll();
+		Collection<Sponsorship> res;
+
+		res = this.sponsorshipService.findAll();
 		Assert.notEmpty(res);
 	}
 
 	@Test
 	public void testSave() {
 		this.authenticate("sponsor2");
+
 		Sponsorship sponsorship;
 		CreditCard creditcard;
 		Sponsor sponsor;
@@ -64,8 +70,8 @@ public class SponsorshipServiceTest extends AbstractTest {
 		creditcard = new CreditCard();
 		trip1 = this.tripService.findOne(super.getEntityId("trip1"));
 
-		creditcard.setBrandName("brandName");
-		creditcard.setHolderName("holderName");
+		creditcard.setBrandName("brandNametest");
+		creditcard.setHolderName("holderNametest");
 		creditcard.setNumber("4388576018410707");
 		creditcard.setExpirationMonth(2);
 		creditcard.setExpirationYear(2019);
@@ -95,13 +101,8 @@ public class SponsorshipServiceTest extends AbstractTest {
 	}
 	@Test
 	public void testFindOne() {
-		Collection<Sponsorship> sponsorships;
 		Sponsorship sponsorship;
-		sponsorships = this.sponsorshipService.findAll();
-		Assert.notNull(sponsorships);
-		Assert.notEmpty(sponsorships);
-
-		sponsorship = this.sponsorshipService.findOne(sponsorships.iterator().next().getId());
+		sponsorship = this.sponsorshipService.findOne(super.getEntityId("sponsorship2"));
 		Assert.notNull(sponsorship);
 	}
 }

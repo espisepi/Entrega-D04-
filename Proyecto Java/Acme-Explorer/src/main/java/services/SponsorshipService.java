@@ -35,7 +35,6 @@ public class SponsorshipService {
 	// Simple CRUD methods------------------------------------------------
 
 	public Sponsorship create() {
-
 		Sponsorship result;
 		Sponsor sponsorPrincipal;
 

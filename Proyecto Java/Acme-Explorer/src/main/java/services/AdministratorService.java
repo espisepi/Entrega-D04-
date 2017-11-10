@@ -87,7 +87,6 @@ public class AdministratorService {
 	}
 
 	public void delete(Administrator administrator) {
-
 		Assert.notNull(administrator);
 		Assert.isTrue(administrator.getId() != 0);
 		this.administratorRepository.delete(administrator);

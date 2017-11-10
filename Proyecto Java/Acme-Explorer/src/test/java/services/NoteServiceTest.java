@@ -40,9 +40,12 @@ public class NoteServiceTest extends AbstractTest {
 	@Test
 	public void testCreate() {
 		this.authenticate("auditor4");
+
 		Note result;
 		result = this.noteService.create();
 		Assert.notNull(result);
+
+		super.unauthenticate();
 	}
 
 	@Test
@@ -62,7 +65,7 @@ public class NoteServiceTest extends AbstractTest {
 		note = this.noteService.create();
 		trip1 = this.tripService.findOne(super.getEntityId("trip1"));
 
-		body = "h";
+		body = "note's test body";
 
 		note.setTrip(trip1);
 		note.setRemark(5);
@@ -74,18 +77,13 @@ public class NoteServiceTest extends AbstractTest {
 
 		//	Assert.isTrue(auditor.getNotes().contains(note));
 		//	Assert.isTrue(trip1.getNotes().contains(note));
+		super.unauthenticate();
 	}
 
 	@Test
 	public void testfindOne() {
-		Collection<Note> notes;
 		Note note;
-
-		notes = this.noteService.findAll();
-		Assert.notNull(notes);
-		Assert.notEmpty(notes);
-
-		note = this.noteService.findOne(notes.iterator().next().getId());
+		note = this.noteService.findOne(super.getEntityId("note1"));
 		Assert.notNull(note);
 	}
 
@@ -98,19 +96,19 @@ public class NoteServiceTest extends AbstractTest {
 		Trip trip;
 
 		note = this.noteService.create();
-		auditor = this.auditorService.findAll().iterator().next();
-		trip = this.tripService.findAll().iterator().next();
+		auditor = this.auditorService.findOne(super.getEntityId("auditor1"));
+		trip = this.tripService.findOne(super.getEntityId("trip1"));
 
 		note.setTrip(trip);
 		note.setRemark(6);
 		note.setAuditor(auditor);
-		note.setBody("este es el body");
+		note.setBody("this is the body");
 
 		note = this.noteService.save(note);
 		this.unauthenticate();
 		this.authenticate("manager1");
 
-		reply = "reply";
+		reply = "I am the manager and I am writing this reply";
 		this.noteService.replyANote(note, reply);
 
 	}

@@ -2,7 +2,6 @@
 package services;
 
 import java.util.Collection;
-import java.util.Iterator;
 
 import javax.transaction.Transactional;
 
@@ -55,16 +54,9 @@ public class AdministratorServiceTest extends AbstractTest {
 
 	@Test
 	public void testDelete() {
-		this.authenticate("administrator1");
-		Collection<Administrator> administrators;
-		Iterator<Administrator> administrator; // para poder recorrer la colección
-
-		administrators = this.administratorService.findAll();
-		System.out.println(this.administratorService.findAll());
-		administrator = administrators.iterator();
-
-		this.administratorService.delete(administrator.next());
-		System.out.println(this.administratorService.findAll());
+		Administrator administrator;
+		administrator = this.administratorService.findOne(super.getEntityId("administrator1"));
+		this.administratorService.delete(administrator);
 
 	}
 
@@ -78,16 +70,8 @@ public class AdministratorServiceTest extends AbstractTest {
 
 	@Test
 	public void testFindOne() {
-
-		Collection<Administrator> administrators;
 		Administrator administrator;
-
-		administrators = this.administratorService.findAll();
-		Assert.notNull(administrators);
-		Assert.notEmpty(administrators);
-
-		administrator = this.administratorService.findOne(administrators.iterator().next().getId());
-
+		administrator = this.administratorService.findOne(super.getEntityId("administrator1"));
 		Assert.notNull(administrator);
 	}
 }
