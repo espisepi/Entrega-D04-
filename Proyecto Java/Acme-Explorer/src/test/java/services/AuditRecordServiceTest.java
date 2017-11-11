@@ -123,5 +123,15 @@ public class AuditRecordServiceTest extends AbstractTest {
 		auditRecord = this.auditRecordService.findOne(super.getEntityId("auditrecord2"));
 		Assert.notNull(auditRecord);
 	}
+	@Test
+	public void testOneToModified() {
+		this.authenticate("auditor4");
+
+		AuditRecord auditRecord;
+		auditRecord = this.auditRecordService.findOne(super.getEntityId("auditrecord1"));
+		auditRecord.setTitle("gola");
+		this.auditRecordService.OneToModified(auditRecord);
+
+	}
 
 }
