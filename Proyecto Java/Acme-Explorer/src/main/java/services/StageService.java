@@ -47,11 +47,12 @@ public class StageService {
 	public Stage findOne(final int stageId) {
 		Stage result;
 		result = this.stageRepository.findOne(stageId);
+		Assert.notNull(result);
 		return result;
 	}
 
 	public Stage save(final Stage stage) {
-		assert stage != null;
+		Assert.notNull(stage);
 		Trip trip;
 		Stage result;
 
@@ -68,10 +69,15 @@ public class StageService {
 	}
 
 	public void delete(final Stage stage) {
-		assert stage != null;
-		assert stage.getId() != 0;
-
+		Assert.notNull(stage);
+		Assert.isTrue(stage.getId() != 0);
 		Assert.isTrue(this.stageRepository.exists(stage.getId()));
+		Trip trip;
+
+		//La quito de Trip porque es unidireccional y no se actualiza ambas partes al eliminar el stage de la BD
+		trip = stage.getTrip();
+		Assert.isTrue(trip.getStages().contains(stage));
+		trip.getStages().remove(stage);
 
 		this.stageRepository.delete(stage);
 	}

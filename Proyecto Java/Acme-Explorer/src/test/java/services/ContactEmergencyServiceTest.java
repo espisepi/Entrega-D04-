@@ -55,10 +55,26 @@ public class ContactEmergencyServiceTest extends AbstractTest {
 		Assert.notEmpty(contactEmergencys);
 	}
 
-	//	@Test
-	//	public void testFindOnePositive() {
-	//		ContactEmergency contactEmergency;
-	//		contactEmergency = this.contactEmergencyService.findOne(6248);
-	//		Assert.notNull(contactEmergency);
-	//	}
+	@Test
+	public void testFindOnePositive() {
+		ContactEmergency contactEmergency;
+		contactEmergency = this.contactEmergencyService.findOne(super.getEntityId("contactEmergency1"));
+		Assert.notNull(contactEmergency);
+	}
+
+	@Test
+	public void testDelete() {
+		//Solo se puede borrar si no tiene ningun explorer asociado
+
+		ContactEmergency contactEmergency;
+
+		contactEmergency = this.contactEmergencyService.create();
+
+		contactEmergency.setName("name contactEmergency test");
+		contactEmergency.setEmail("emailTest@email.com");
+
+		contactEmergency = this.contactEmergencyService.save(contactEmergency);
+		this.contactEmergencyService.delete(contactEmergency);
+
+	}
 }

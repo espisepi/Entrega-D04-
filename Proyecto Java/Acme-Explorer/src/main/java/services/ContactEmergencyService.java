@@ -53,12 +53,13 @@ public class ContactEmergencyService {
 		ContactEmergency result;
 
 		result = this.contactEmergencyRepository.findOne(contactEmergencyId);
+		Assert.notNull(result);
 
 		return result;
 	}
 
 	public ContactEmergency save(final ContactEmergency contactEmergency) {
-		assert contactEmergency != null;
+		Assert.notNull(contactEmergency);
 
 		ContactEmergency result;
 
@@ -68,8 +69,8 @@ public class ContactEmergencyService {
 	}
 
 	public void delete(final ContactEmergency contactEmergency) {
-		assert contactEmergency != null;
-		assert contactEmergency.getId() != 0;
+		Assert.notNull(contactEmergency);
+		Assert.isTrue(contactEmergency.getId() != 0);
 
 		Assert.isTrue(this.contactEmergencyRepository.exists(contactEmergency.getId()));
 

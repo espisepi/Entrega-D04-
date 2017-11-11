@@ -65,12 +65,13 @@ public class StoryService {
 		Story result;
 
 		result = this.storyRepository.findOne(storyId);
+		Assert.notNull(result);
 
 		return result;
 	}
 
 	public Story save(final Story story) {
-		assert story != null;
+		Assert.notNull(story);
 
 		Story result;
 
@@ -80,8 +81,8 @@ public class StoryService {
 	}
 
 	public void delete(final Story story) {
-		assert story != null;
-		assert story.getId() != 0;
+		Assert.notNull(story);
+		Assert.isTrue(story.getId() != 0);
 
 		Assert.isTrue(this.storyRepository.exists(story.getId()));
 

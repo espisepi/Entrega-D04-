@@ -32,8 +32,6 @@ public class ApplicationForServiceTest extends AbstractTest {
 	// Supporting services ----------------------------------------------------
 
 	@Autowired
-	private ExplorerService			explorerService;
-	@Autowired
 	private TripService				tripService;
 	@Autowired
 	private ManagerService			managerService;
@@ -95,6 +93,13 @@ public class ApplicationForServiceTest extends AbstractTest {
 	}
 
 	@Test
+	public void testFindOne() {
+		ApplicationFor applicationFor;
+		applicationFor = this.applicationForService.findOne(super.getEntityId("applicationFor1"));
+		Assert.notNull(applicationFor);
+	}
+
+	@Test
 	public void testFindAllByManagerId() {
 		super.authenticate("manager1");
 		Manager managerPrincipal;
@@ -105,6 +110,14 @@ public class ApplicationForServiceTest extends AbstractTest {
 		Assert.notNull(result);
 
 		super.unauthenticate();
+	}
 
+	@Test
+	public void testDelete() {
+		ApplicationFor applicationFor;
+
+		applicationFor = this.applicationForService.findOne(super.getEntityId("applicationFor1"));
+
+		this.applicationForService.delete(applicationFor);
 	}
 }

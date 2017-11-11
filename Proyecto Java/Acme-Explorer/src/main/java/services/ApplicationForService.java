@@ -77,6 +77,7 @@ public class ApplicationForService {
 		ApplicationFor result;
 
 		result = this.applicationForRepository.findOne(applicationForId);
+		Assert.notNull(result);
 
 		return result;
 	}

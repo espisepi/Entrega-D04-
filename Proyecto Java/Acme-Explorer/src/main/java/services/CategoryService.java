@@ -54,11 +54,12 @@ public class CategoryService {
 	public Category findOne(final int categoryId) {
 		Category result;
 		result = this.categoryRepository.findOne(categoryId);
+		Assert.notNull(result);
 		return result;
 	}
 
 	public Category save(final Category category) {
-		assert category != null;
+		Assert.notNull(category);
 		Assert.notNull(this.administratorService.findByPrincipal());
 
 		Category result;
@@ -70,10 +71,10 @@ public class CategoryService {
 	}
 
 	public void delete(final Category category) {
-		assert category != null;
-		assert category.getId() != 0;
-
+		Assert.notNull(category);
+		Assert.isTrue(category.getId() != 0);
 		Assert.isTrue(this.categoryRepository.exists(category.getId()));
+		this.administratorService.checkPrincipal();
 
 		this.categoryRepository.delete(category);
 	}

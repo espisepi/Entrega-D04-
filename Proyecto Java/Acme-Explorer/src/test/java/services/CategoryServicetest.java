@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.Collection;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +23,7 @@ public class CategoryServicetest extends AbstractTest {
 
 	//Service under test----------------------------------------------------------
 	@Autowired
-	private CategoryService	catergoryService;
+	private CategoryService	categoryService;
 
 
 	// Supporting services ----------------------------------------------------
@@ -31,7 +33,7 @@ public class CategoryServicetest extends AbstractTest {
 		super.authenticate("administrator1");
 		Category category;
 
-		category = this.catergoryService.create();
+		category = this.categoryService.create();
 		Assert.notNull(category.getSubCategories());
 
 		super.unauthenticate();
@@ -41,12 +43,37 @@ public class CategoryServicetest extends AbstractTest {
 		super.authenticate("administrator1");
 		Category result;
 
-		result = this.catergoryService.create();
+		result = this.categoryService.create();
 		result.setName("Name test");
-		result = this.catergoryService.save(result);
+		result = this.categoryService.save(result);
 		Assert.isTrue(result.getId() != 0);
 
 		super.unauthenticate();
 
+	}
+
+	@Test
+	public void testDelete() {
+		super.authenticate("administrator1");
+		Category category;
+
+		category = this.categoryService.findOne(super.getEntityId("climbing"));
+		this.categoryService.delete(category);
+
+		super.unauthenticate();
+	}
+
+	@Test
+	public void testFindAllPositive() {
+		Collection<Category> categorys;
+		categorys = this.categoryService.findAll();
+		Assert.notEmpty(categorys);
+	}
+
+	@Test
+	public void testFindOne() {
+		Category category;
+		category = this.categoryService.findOne(super.getEntityId("climbing"));
+		Assert.notNull(category);
 	}
 }

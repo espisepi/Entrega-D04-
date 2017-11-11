@@ -91,6 +91,7 @@ public class ExplorerService {
 		Explorer result;
 
 		result = this.explorerRepository.findOne(explorerId);
+		Assert.notNull(result);
 
 		return result;
 	}
@@ -110,9 +111,8 @@ public class ExplorerService {
 	}
 
 	public void delete(final Explorer explorer) {
-		assert explorer != null;
-		assert explorer.getId() != 0;
-
+		Assert.notNull(explorer);
+		Assert.isTrue(explorer.getId() != 0);
 		Assert.isTrue(this.explorerRepository.exists(explorer.getId()));
 
 		this.explorerRepository.delete(explorer);
