@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.LegalTextRepository;
+import domain.Administrator;
 import domain.LegalText;
 
 @Service
@@ -31,13 +32,15 @@ public class LegalTextService {
 	}
 
 	// Simple CRUD methods-----------------------------------------------------
-	public LegalText create() {
-		//TODO: ¿Sólo los ADMINISTRATOR puden crear un legalText?
+	public LegalText create(Administrator administrator) {
+
+		this.administratorService.checkPrincipal();
 		LegalText result;
 		Date moment;
 
 		result = new LegalText();
 		moment = new Date(System.currentTimeMillis() - 1000);
+		administrator = this.administratorService.findByPrincipal();
 
 		result.setMoment(moment);
 		return result;
@@ -52,6 +55,8 @@ public class LegalTextService {
 	}
 
 	public LegalText findOne(final int legalTextId) {
+		Assert.notNull(legalTextId);
+
 		LegalText result;
 		result = this.legalTextRepository.findOne(legalTextId);
 		return result;
@@ -74,7 +79,6 @@ public class LegalTextService {
 	public void delete(final LegalText legalText) {
 		Assert.isTrue(legalText.getId() != 0);
 		Assert.notNull(legalText);
-		Assert.isTrue(this.legalTextRepository.exists(legalText.getId()));
 		//Compruebo que no esté guardado en modo final y poder borrarlo
 		Assert.isTrue(legalText.isDraftMode() == true);
 

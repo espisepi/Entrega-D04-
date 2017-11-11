@@ -13,10 +13,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
-import domain.GPS;
-import domain.Manager;
+import domain.Explorer;
 import domain.SurvivalClass;
-import domain.Trip;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -33,97 +31,73 @@ public class SurvivalClassServiceTest extends AbstractTest {
 	@Autowired
 	private ManagerService			managerService;
 
+	@Autowired
+	private TripService				tripService;
+
+	@Autowired
+	private ExplorerService			explorerService;
+
 
 	// Tests ----------------------------------------------
 
-	@Test
-	public void createTest() {
-		this.authenticate("manager1");
-		SurvivalClass result;
-
-		result = this.survivalClassService.create();
-
-		Assert.notNull(result);
-	}
-
-	@Test
-	public void findAllTest() {
-
-		Collection<SurvivalClass> result;
-
-		result = this.survivalClassService.findAll();
-
-		Assert.notNull(result);
-		Assert.notEmpty(result);
-
-	}
-
-	@Test
-	public void findOneTest() {
-
-		Collection<SurvivalClass> survivalClasses;
-		SurvivalClass result;
-		int idSurvivalClass;
-
-		survivalClasses = this.survivalClassService.findAll();
-		idSurvivalClass = survivalClasses.iterator().next().getId();
-		result = this.survivalClassService.findOne(idSurvivalClass);
-
-		Assert.notNull(result);
-
-	}
-
-	@Test
-	public void saveTest() {
-
-		this.authenticate("manager1");
-
-		SurvivalClass result;
-		Manager manager;
-		Trip trip;
-		GPS location;
-		SurvivalClass resultSaved;
-
-		result = this.survivalClassService.create();
-
-		manager = this.managerService.findAll().iterator().next();
-		trip = manager.getTrips().iterator().next();
-
-		location = new GPS();
-		location.setLatitude(22.4);
-		location.setLongitude(45.7);
-
-		result.setTitle("title 1");
-		result.setDescription("description 1");
-		result.setLocation(location);
-		result.setManager(manager);
-		result.setTrip(trip);
-
-		resultSaved = this.survivalClassService.save(result);
-
-		Assert.notNull(resultSaved);
-
-	}
-
 	//	@Test
-	//	public void deleteTest() {
+	//	public void createTest() {
+	//		this.authenticate("manager1");
+	//		SurvivalClass result;
+	//
+	//		result = this.survivalClassService.create();
+	//
+	//		Assert.notNull(result);
+	//	}
+	//
+	//	@Test
+	//	public void findAllTest() {
+	//
+	//		Collection<SurvivalClass> result;
+	//
+	//		result = this.survivalClassService.findAll();
+	//
+	//		Assert.notNull(result);
+	//		Assert.notEmpty(result);
+	//
+	//	}
+	//
+	//	@Test
+	//	public void findOneTest() {
+	//
+	//		Collection<SurvivalClass> survivalClasses;
+	//		SurvivalClass result;
+	//		int idSurvivalClass;
+	//
+	//		survivalClasses = this.survivalClassService.findAll();
+	//		idSurvivalClass = survivalClasses.iterator().next().getId();
+	//		result = this.survivalClassService.findOne(idSurvivalClass);
+	//
+	//		Assert.notNull(result);
+	//
+	//	}
+	//
+	//	@Test
+	//	@Rollback(false)
+	//	public void saveTest() {
 	//
 	//		this.authenticate("manager1");
 	//
 	//		SurvivalClass result;
-	//		GPS location;
 	//		Manager manager;
 	//		Trip trip;
-	//		SurvivalClass resultSave;
+	//		GPS location;
+	//		SurvivalClass resultSaved;
 	//
 	//		result = this.survivalClassService.create();
+	//
+	//		manager = this.managerService.findByPrincipal();
+	//		trip = this.tripService.findOne(super.getEntityId("trip1"));
 	//
 	//		location = new GPS();
 	//		location.setLatitude(22.4);
 	//		location.setLongitude(45.7);
-	//
-	//		manager = this.managerService.findAll().iterator().next();
-	//		trip = manager.getTrips().iterator().next();
+	//		location.setName("coordinate test");
 	//
 	//		result.setTitle("title 1");
 	//		result.setDescription("description 1");
@@ -131,11 +105,28 @@ public class SurvivalClassServiceTest extends AbstractTest {
 	//		result.setManager(manager);
 	//		result.setTrip(trip);
 	//
-	//		resultSave = this.survivalClassService.save(result);
+	//		resultSaved = this.survivalClassService.save(result);
 	//
-	//		this.survivalClassService.delete(result);
-	//
-	//		Assert.isNull(this.survivalClassService.findOne(resultSave.getId()));
+	//		Assert.notNull(resultSaved);
 	//
 	//	}
+
+	@Test
+	public void deleteTest() {
+
+		SurvivalClass result;
+		int id;
+		Collection<Explorer> explorers;
+
+		result = this.survivalClassService.findOne(super.getEntityId("survivalClass1"));
+		id = result.getId();
+		explorers = result.getExplorers();
+
+		explorers.removeAll(explorers);
+
+		this.survivalClassService.delete(result);
+
+		Assert.isNull(this.survivalClassService.findOne(id));
+
+	}
 }
