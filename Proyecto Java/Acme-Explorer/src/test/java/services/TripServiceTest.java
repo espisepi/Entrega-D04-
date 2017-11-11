@@ -14,9 +14,12 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
+import domain.Auditor;
 import domain.Category;
+import domain.Explorer;
 import domain.LegalText;
 import domain.Manager;
 import domain.Ranger;
@@ -39,6 +42,10 @@ public class TripServiceTest extends AbstractTest {
 	private RangerService		rangerService;
 	@Autowired
 	private ManagerService		managerService;
+	@Autowired
+	private ExplorerService		explorerService;
+	@Autowired
+	private AuditorService		auditorService;
 
 	//	@Autowired
 	//	private SurvivalClassService	survivalClassService;
@@ -62,25 +69,24 @@ public class TripServiceTest extends AbstractTest {
 	//	@Autowired
 	//	private TagService				tagService;
 
-	//	@Test
-	//	public void testCreate() {
-	//		this.authenticate("manager1");
-	//		Trip result;
-	//		Manager manager;
-	//		//DEVUELVEME EL ACTOR QUE ESTÁ AUTENTICADO
-	//		manager = this.managerService.findByPrincipal();
-	//		result = this.tripService.create(manager);
-	//		Assert.notNull(result);
-	//	}
-	//
-	//	@Test
-	//	public void testFindAll() {
-	//		Collection<Trip> result = this.tripService.findAll();
-	//		Assert.notEmpty(result);
-	//	}
+	@Test
+	public void testCreate() {
+		this.authenticate("manager1");
+		Trip result;
+		Manager manager;
+		//DEVUELVEME EL ACTOR QUE ESTÁ AUTENTICADO
+		manager = this.managerService.findByPrincipal();
+		result = this.tripService.create(manager);
+		Assert.notNull(result);
+	}
 
 	@Test
-	@Rollback(false)
+	public void testFindAll() {
+		Collection<Trip> result = this.tripService.findAll();
+		Assert.notEmpty(result);
+	}
+
+	@Test
 	public void testSave() {
 		this.authenticate("manager1");
 		Trip tripSaved;
@@ -96,18 +102,21 @@ public class TripServiceTest extends AbstractTest {
 		Stage stage;
 		double price;
 		Category category;
+		Date startDate;
+		Date finishDate;
+		Calendar calendar1;
+		Calendar calendar2;
+
+		calendar1 = new GregorianCalendar();
+		calendar1.set(2018, 0, 31, 12, 5, 0);
+		startDate = calendar1.getTime();
+
+		calendar2 = new GregorianCalendar();
+		calendar2.set(2015, 0, 31, 12, 5, 0);
+		finishDate = calendar2.getTime();
 
 		category = this.categoryService.findOne(super.getEntityId("water"));
 		legalText = this.legalTextService.findOne(super.getEntityId("legalText1"));
-
-		Calendar calendar1 = new GregorianCalendar();
-		calendar1.set(2018, 0, 31, 12, 5, 0);
-		final Date fecha1 = calendar1.getTime();
-
-		final Calendar calendar2 = new GregorianCalendar();
-		calendar2.set(2015, 0, 31, 12, 5, 0);
-		final Date fecha2 = calendar2.getTime();
-
 		manager = this.managerService.findByPrincipal();
 		ranger = this.rangerService.findOne(super.getEntityId("ranger1"));
 		trip = this.tripService.create(manager);
@@ -123,13 +132,14 @@ public class TripServiceTest extends AbstractTest {
 		trip.setTitle(title);
 		trip.setDescription(description);
 		trip.setRequirementsExplorers(requerimentsExplorers);
-		trip.setStartDate(fecha2);
-		trip.setFinishDate(fecha1);
+		trip.setStartDate(startDate);
+		trip.setFinishDate(finishDate);
 		trip.setCancelled(cancelled);
 		trip.setPrice(price);
 		trip.setLegalText(legalText);
 		trip.getCategories().add(category);
 		tripSaved = this.tripService.save(trip);
+
 		stage = this.stageService.create();
 		stage.setTitle("title test");
 		stage.setDescription("description test");
@@ -138,17 +148,145 @@ public class TripServiceTest extends AbstractTest {
 		stage.setTrip(tripSaved);
 		stage = this.stageService.save(stage);
 
-		//Assert.notNull(tripSaved);
+		this.authenticate(null);
+	}
+	@Test
+	public void testFindOne() {
+		Trip trip;
+
+		trip = this.tripService.findOne(super.getEntityId("trip1"));
+		Assert.notNull(trip);
 	}
 
 	@Test
 	@Rollback(false)
-	public void testSaveWithoutCheckCreate() {
+	public void testDelete() {
 		this.authenticate("manager1");
+		Trip tripSaved;
 		Trip trip;
-		trip = this.tripService.findOne(super.getEntityId("trip1"));
-		trip.setTitle("maria");
-		trip = this.tripService.save(trip);
+		Manager manager;
+		Ranger ranger;
+		LegalText legalText;
+		String ticker;
+		String title;
+		String description;
+		Collection<String> requerimentsExplorers;
+		Boolean cancelled;
+		Stage stage;
+		double price;
+		Category category;
+		Date startDate;
+		Date finishDate;
+		Calendar calendar1;
+		Calendar calendar2;
+
+		calendar1 = new GregorianCalendar();
+		calendar1.set(2018, 0, 31, 12, 5, 0);
+		startDate = calendar1.getTime();
+
+		calendar2 = new GregorianCalendar();
+		calendar2.set(2015, 0, 31, 12, 5, 0);
+		finishDate = calendar2.getTime();
+
+		category = this.categoryService.findOne(super.getEntityId("water"));
+		legalText = this.legalTextService.findOne(super.getEntityId("legalText1"));
+		manager = this.managerService.findByPrincipal();
+		ranger = this.rangerService.findOne(super.getEntityId("ranger1"));
+		trip = this.tripService.create(manager);
+		ticker = "170412-WWWW";
+		title = "trip1";
+		description = "trip de test";
+		requerimentsExplorers = new ArrayList<String>();
+		cancelled = false;
+		price = 400.;
+
+		trip.setRanger(ranger);
+		trip.setTicker(ticker);
+		trip.setTitle(title);
+		trip.setDescription(description);
+		trip.setRequirementsExplorers(requerimentsExplorers);
+		trip.setStartDate(startDate);
+		trip.setFinishDate(finishDate);
+		trip.setCancelled(cancelled);
+		trip.setPrice(price);
+		trip.setLegalText(legalText);
+		trip.getCategories().add(category);
+		tripSaved = this.tripService.save(trip);
+
+		stage = this.stageService.create();
+		stage.setTitle("title test");
+		stage.setDescription("description test");
+		stage.setPrice(33.);
+		stage.setNumber(4);
+		stage.setTrip(tripSaved);
+		stage = this.stageService.save(stage);
+		manager.getTrips().add(trip);
+		this.tripService.delete(tripSaved);
+		Assert.isNull(tripSaved);
+		this.authenticate(null);
 	}
+
+	// Other business test methods -------------------------------------------------
+	@Test
+	public void testFindAllTripsNoAuthenticate() {
+		Collection<Trip> trips;
+		trips = new ArrayList<Trip>(this.tripService.findAllTripsNoAuthenticate());
+		Assert.notNull(trips);
+	}
+
+	public void testFindAllTripsByExplorerIdWithStatusAccepted() {
+
+	}
+
+	public void testFindAllTripsPublishedNotStarted() {
+
+	}
+
+	public void testFindTripsWhitStatusAccepted() {
+
+	}
+
+	public void testFindTripWithStatusPendingById() {
+
+	}
+
+	public void testFindOneToEditManager() {
+
+	}
+
+	public void testFindOneToEditExplorer() {
+
+	}
+
+	@Test
+	public void testFindAllTripsApplyByExplorerId() {
+		Collection<Trip> trips;
+		Explorer explorer;
+		explorer = this.explorerService.findOne(super.getEntityId("explorer1"));
+		trips = new ArrayList<Trip>(this.tripService.findAllTripsApplyByExplorerId(explorer.getId()));
+		Assert.notNull(trips);
+	}
+
+	@Test
+	public void testFindByAuditorId() {
+		Collection<Trip> trips;
+		Auditor auditor;
+		auditor = this.auditorService.findOne(super.getEntityId("auditor1"));
+		trips = new ArrayList<Trip>(this.tripService.findByAuditorId(auditor.getId()));
+		Assert.notNull(trips);
+	}
+
+	/*
+	 * @Test
+	 * 
+	 * @Rollback(false)
+	 * public void testSaveWithoutCheckCreate() {
+	 * this.authenticate("manager1");
+	 * Trip trip;
+	 * trip = this.tripService.findOne(super.getEntityId("trip1"));
+	 * trip.setTitle("maria");
+	 * trip = this.tripService.save(trip);
+	 * }
+	 */
 
 }

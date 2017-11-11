@@ -16,10 +16,7 @@ public interface TripRepository extends JpaRepository<Trip, Integer> {
 	//Devolvemos todos los viajes PARA CUALQUIERA que NO esté autenticado y
 	//que no estén cancelados y además tenga fecha de publicación.
 	@Query("select count(t) from Trip t where t.publicationDate!=null and t.cancelled=false")
-	Collection<Trip> findAllTrips();
-
-	@Query("select t from Trip t where t.manager.id= ?1")
-	Collection<Trip> findAllTripsByManagerId(int managerId);
+	Collection<Trip> findAllTripsNoAuthenticate();
 
 	@Query("select t from Trip t join t.applicationsFor a where a.explorer.id=?1 and a.status like 'ACCEPTED'")
 	Collection<Trip> findAllTripsByExplorerIdWithStatusAccepted(int explorerId);
@@ -40,5 +37,5 @@ public interface TripRepository extends JpaRepository<Trip, Integer> {
 	Collection<Trip> findByAuditorId(int auditorId);
 
 	@Query("select e from Explorer e join e.applicationsFor a where a.trip.id=?1")
-	Explorer findExplorerByTripId(int tripId);
+	Collection<Explorer> findExplorersByTripId(int tripId);
 }
