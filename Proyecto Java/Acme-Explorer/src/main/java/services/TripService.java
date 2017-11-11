@@ -92,6 +92,7 @@ public class TripService {
 	}
 
 	/*
+	 * !!!!!!! UPDATE HECHO CON SET !!!!!
 	 * public Trip update(Trip trip) {
 	 * assert trip != null;
 	 * Date currentDate = new Date();
@@ -202,35 +203,48 @@ public class TripService {
 		return result;
 	}
 
-	//Editar un Trip para un Manager
-	public Trip findOneToEditManager(final int tripId) {
+	//**********************************************************************************
+	//***********************  METODO EDITAR  ******************************************
+	//**********************************************************************************
+	public Trip findOneToEdit(final int tripId) {
 		Trip trip;
 		Trip tripEdit;
+		boolean isManager;
+		boolean isExplorer;
+		Manager manager;
+		Explorer explorer;
+		Collection<Trip> tripsAccepted;
+		Collection<Explorer> explorers;
 		//Trip a editar
 		trip = this.tripRepository.findOne(tripId);
-		//Para que un manager edite un trip NO puede tener publicationDate
-		assert trip.getPublicationDate() != null;
-		//Comprobamos que sea de ese Manager
-		Manager manager = this.managerService.findByPrincipal();
-		Assert.isTrue(manager.getTrips().contains(trip));
-		tripEdit = this.tripRepository.save(trip);
-		return tripEdit;
-	}
-
-	//Editar un Trip para un Explorer
-	public Trip findOneToEditExplorer(final int tripId) {
-		Trip trip;
-		Trip tripEdit;
-		Collection<Trip> tripsAccepted = new ArrayList<Trip>();
-		tripsAccepted = this.findTripsWhitStatusAccepted();
-		//Trip a editar
-		trip = this.tripRepository.findOne(tripId);
-		//Para que un explorer edite un trip NO puede tener publicationDate
-		assert trip.getPublicationDate() != null;
-		//Para que un explorer edite un trip debe de tener el estatus ACCEPTED
-		Assert.isTrue(!tripsAccepted.contains(trip));
-		//Comprobamos que sea de ese Manager
-		//this.checkPrincipalExplorer(this.tripRepository.findOne(tripId));
+		//No tenemos que restringir por roles pero para que un explorer edite un trip debe estar en accepted
+		//Requisito 12.3 para manager
+		//Requisito 13.4 para explorer
+		isManager = this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.MANAGER);
+		isExplorer = this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.EXPLORER);
+		if (isManager) {
+			//Para que un manager edite un trip NO puede tener publicationDate
+			assert trip.getPublicationDate() != null;
+			//Comprobamos que sea de ese Manager
+			manager = this.managerService.findByPrincipal();
+			Assert.isTrue(manager.getTrips().contains(trip));
+			tripEdit = this.tripRepository.save(trip);
+		} else if (isExplorer) {
+			tripsAccepted = new ArrayList<Trip>(this.findTripsWhitStatusAccepted());
+			//Para que un explorer edite un trip NO puede tener publicationDate
+			assert trip.getPublicationDate() != null;
+			//Para que un explorer edite un trip debe de tener el estatus ACCEPTED
+			Assert.isTrue(tripsAccepted.contains(trip));
+			//Comprobamos que sea de ese Explorer
+			//explorer conectado
+			explorer = this.explorerService.findByPrincipal();
+			//Lista de explorer con ese trip
+			explorers = new ArrayList<Explorer>(this.tripRepository.findExplorersByTripId(tripId));
+			//Vemos si el explorer conectado tiene ese trip
+			Assert.isTrue(explorers.contains(explorer));
+			//Lo editamos
+			tripEdit = this.tripRepository.save(trip);
+		}
 		tripEdit = this.tripRepository.save(trip);
 		return tripEdit;
 	}
@@ -263,15 +277,4 @@ public class TripService {
 		return explorers;
 	}
 
-	//**********************************************************************
-
-	//COMPROBAMOS QUE ESE TRIP SEA DEL EXPLORER QUE ESTÁ CONECTADO
-	/*
-	 * public void checkPrincipalExplorer(final Trip trip) {
-	 * Assert.notNull(trip);
-	 * final Explorer e = this.findExplorerByTripId(trip.getId());
-	 * final Explorer first = this.explorerService.findByPrincipal();
-	 * Assert.isTrue(e.equals(first));
-	 * }
-	 */
 }

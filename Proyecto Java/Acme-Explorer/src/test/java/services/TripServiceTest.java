@@ -190,7 +190,7 @@ public class TripServiceTest extends AbstractTest {
 
 		category = this.categoryService.findOne(super.getEntityId("water"));
 		legalText = this.legalTextService.findOne(super.getEntityId("legalText1"));
-		manager = this.managerService.findByPrincipal();
+		manager = this.managerService.findOne(super.getEntityId("manager1"));
 		ranger = this.rangerService.findOne(super.getEntityId("ranger1"));
 		trip = this.tripService.create(manager);
 		ticker = "170412-WWWW";
@@ -220,12 +220,12 @@ public class TripServiceTest extends AbstractTest {
 		stage.setNumber(4);
 		stage.setTrip(tripSaved);
 		stage = this.stageService.save(stage);
-		manager.getTrips().add(trip);
+		manager.getTrips().add(tripSaved);
+
 		this.tripService.delete(tripSaved);
-		Assert.isNull(tripSaved);
+		Assert.isNull(this.tripService.findOne(tripSaved.getId()));
 		this.authenticate(null);
 	}
-
 	// Other business test methods -------------------------------------------------
 	@Test
 	public void testFindAllTripsNoAuthenticate() {
