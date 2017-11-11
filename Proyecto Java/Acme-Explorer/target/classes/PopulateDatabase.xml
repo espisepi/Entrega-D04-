@@ -1872,7 +1872,7 @@
 		<property name="body" value="body 2" />
 		<property name="lawsNumber" value="1"></property>
 		<property name="moment" value="2017/11/02 23:59"></property>
-		<property name="draftMode" value="true"></property>
+		<property name="draftMode" value="false"></property>
 	</bean>
 
 

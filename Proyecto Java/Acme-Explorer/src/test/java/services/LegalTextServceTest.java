@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.Collection;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,34 +33,136 @@ public class LegalTextServceTest extends AbstractTest {
 	// Supporting services ----------------------------------------------------
 
 	@Test
-	public void testCreatePositive() {
+	public void testCreate() {
+
+		this.authenticate("administrator1");
+
 		LegalText legalText;
-		Administrator administrador;
+		Administrator administrator;
 
-		administrador = this.administradorService.findByPrincipal();
-
-		legalText = this.legalTextService.create(administrador);
+		administrator = this.administradorService.findByPrincipal();
+		legalText = this.legalTextService.create(administrator);
+		this.administradorService.checkPrincipal();
 		Assert.notNull(legalText);
 	}
+
+	@Test
+	public void testFindAll() {
+
+		Collection<LegalText> result;
+
+		result = this.legalTextService.findAll();
+
+		Assert.notNull(result);
+		Assert.notEmpty(result);
+
+	}
+
+	@Test
+	public void testFindOne() {
+
+		LegalText result;
+
+		result = this.legalTextService.findOne(super.getEntityId("legalText5"));
+
+		Assert.notNull(result);
+
+	}
+
+	@Test
+	public void testSave() {
+
+		LegalText resultSaved;
+		LegalText result;
+		Administrator administrator;
+
+		this.authenticate("administrator1");
+
+		administrator = this.administradorService.findByPrincipal();
+		result = this.legalTextService.create(administrator);
+		result.setTitle("title test");
+		result.setBody("body test");
+		result.setLawsNumber(4);
+		this.administradorService.checkPrincipal();
+		Assert.notNull(result);
+
+		resultSaved = this.legalTextService.save(result);
+
+		Assert.notNull(resultSaved);
+
+	}
+
+	@Test
+	public void testSavedUpdate() {
+
+		LegalText result;
+		LegalText resultSaved;
+
+		result = this.legalTextService.findOne(super.getEntityId("legalText1"));
+		result.setTitle("MIRAR FECHA");
+
+		resultSaved = this.legalTextService.save(result);
+
+		Assert.notNull(resultSaved);
+
+	}
+
 	//	@Test
-	//	public void testSavePositive() {
-	//		LegalText legalText;
-	//		legalText = this.legalTextService.create();
+	//	@Rollback(false)
+	//	public void testDeletePositive() {
 	//
-	//		legalText.setTitle("title 1");
-	//		legalText.setBody("body 1");
-	//		legalText.setLawsNumber(1);
-	//		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy/MM/dd HH:ii");
-	//		String stringMoment = "2017/09/15 22:45";
-	//		Date moment;
-	//		try {
-	//			moment = sdf1.parse(stringMoment);
-	//			legalText.setMoment(moment);
-	//		} catch (ParseException e) {
-	//			e.printStackTrace();
-	//		}
+	//		LegalText resultSaved;
+	//		LegalText result;
+	//		Administrator administrator;
+	//		int id;
 	//
-	//		legalText.setDraftMode(true);
+	//		this.authenticate("administrator1");
+	//
+	//		administrator = this.administradorService.findByPrincipal();
+	//		result = this.legalTextService.create(administrator);
+	//		result.setTitle("title test");
+	//		result.setBody("body test");
+	//		result.setLawsNumber(4);
+	//		this.administradorService.checkPrincipal();
+	//		Assert.notNull(result);
+	//
+	//		resultSaved = this.legalTextService.save(result);
+	//		id = resultSaved.getId();
+	//
+	//		Assert.notNull(resultSaved);
+	//
+	//		this.legalTextService.delete(resultSaved);
+	//
+	//		Assert.isNull(this.legalTextService.findOne(id));
+	//
+	//	}
+
+	@Test
+	public void testFindOneToEdit() {
+
+		this.authenticate("administrator1");
+
+		LegalText result;
+
+		result = this.legalTextService.findOneToEdit(super.getEntityId("legalText1"));
+
+		result.setLawsNumber(5);
+
+		Assert.notNull(result);
+
+	}
+
+	//	@Test
+	//	public void testFindOneToEditNegative() {
+	//
+	//		this.authenticate("administrator2");
+	//		LegalText result;
+	//
+	//		result = this.legalTextService.findOneToEdit(super.getEntityId("legalText2"));
+	//
+	//		result.setLawsNumber(5);
+	//
+	//		Assert.notNull(result);
 	//
 	//	}
 }

@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.SurvivalClassRepository;
+import domain.Administrator;
 import domain.Explorer;
 import domain.GPS;
 import domain.Manager;
@@ -41,7 +42,7 @@ public class SurvivalClassService {
 
 	// Simple CRUD methods------------------------------------------------
 
-	public SurvivalClass create() {
+	public SurvivalClass create(Administrator administrator) {
 
 		this.managerService.checkPrincipal();
 

@@ -34,7 +34,6 @@ public class LegalTextService {
 	// Simple CRUD methods-----------------------------------------------------
 	public LegalText create(Administrator administrator) {
 
-		this.administratorService.checkPrincipal();
 		LegalText result;
 		Date moment;
 
@@ -43,9 +42,10 @@ public class LegalTextService {
 		administrator = this.administratorService.findByPrincipal();
 
 		result.setMoment(moment);
+		result.setDraftMode(true);
+
 		return result;
 	}
-
 	public Collection<LegalText> findAll() {
 		Collection<LegalText> result;
 		Assert.notNull(this.legalTextRepository);
@@ -59,6 +59,8 @@ public class LegalTextService {
 
 		LegalText result;
 		result = this.legalTextRepository.findOne(legalTextId);
+
+		Assert.notNull(result);
 		return result;
 	}
 
@@ -69,13 +71,25 @@ public class LegalTextService {
 		//Compruebo legalText no sea nulo
 		Assert.notNull(legalText);
 		//Compruebo que no está guardado en modo final para poder editarlo
-		Assert.isTrue(legalText.isDraftMode() == true);
+		//Assert.isTrue(legalText.isDraftMode() == true);
 		LegalText result;
+		Date moment;
 
 		result = this.legalTextRepository.save(legalText);
+		result.setDraftMode(true);
+
+		if (result.getId() == 0)
+			moment = new Date();
+
+		else
+
+			moment = result.getMoment();
+
+		result.setMoment(moment);
 
 		return result;
 	}
+
 	public void delete(final LegalText legalText) {
 		Assert.isTrue(legalText.getId() != 0);
 		Assert.notNull(legalText);
@@ -83,5 +97,26 @@ public class LegalTextService {
 		Assert.isTrue(legalText.isDraftMode() == true);
 
 		this.legalTextRepository.delete(legalText);
+	}
+
+	//Other services-------------------------------
+
+	public LegalText findOneToEdit(int idLegalText) {
+
+		this.administratorService.checkPrincipal();
+
+		LegalText result;
+		LegalText resultSaved;
+
+		result = this.legalTextRepository.findOne(idLegalText);
+
+		Assert.isTrue(result.isDraftMode() == true);
+
+		resultSaved = this.legalTextRepository.save(result);
+
+		Assert.notNull(resultSaved);
+
+		return resultSaved;
+
 	}
 }

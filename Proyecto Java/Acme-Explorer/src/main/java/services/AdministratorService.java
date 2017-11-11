@@ -98,6 +98,7 @@ public class AdministratorService {
 		Administrator result;
 		UserAccount userAccount;
 		userAccount = LoginService.getPrincipal();
+		Assert.notNull(userAccount);
 		result = this.administratorRepository.findByUserAccountId(userAccount.getId());
 		return result;
 	}
@@ -111,7 +112,7 @@ public class AdministratorService {
 		Assert.notNull(authorities);
 
 		Authority auth = new Authority();
-		auth.setAuthority("ADMINISTRATOR");
+		auth.setAuthority(Authority.ADMINISTRATOR);
 
 		Assert.isTrue(authorities.contains(auth));
 	}
