@@ -150,6 +150,7 @@ public class TripService {
 	}
 
 	// Other business methods -------------------------------------------------
+	//***** TEST HECHO *******
 	//Para quien no esté autenticado devolvemos todos los trips con restricciones
 	public Collection<Trip> findAllTripsNoAuthenticate() {
 		Collection<Trip> res = new ArrayList<Trip>();
@@ -158,14 +159,7 @@ public class TripService {
 		return res;
 	}
 
-	public Collection<Trip> findAllTripsByExplorerIdWithStatusAccepted(int explorerId) {
-		//Assert.notNull(explorerId);
-		Collection<Trip> res = new ArrayList<Trip>();
-		res = this.tripRepository.findAllTripsByExplorerIdWithStatusAccepted(explorerId);
-		Assert.notNull(res);
-		return res;
-	}
-
+	//***** TEST HECHO *******
 	//Requisito 12.3
 	public Collection<Trip> findAllTripsPublishedNotStarted() {
 		Collection<Trip> trips = new ArrayList<>();
@@ -173,12 +167,12 @@ public class TripService {
 		Date currentDate = new Date();
 		this.managerService.checkPrincipal();
 		//Assert.isTrue(!this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.MANAGER));
-		res.addAll(this.tripRepository.findAllTripsPublishedNotStarted());
-		Assert.notNull(res);
+		trips.addAll(this.tripRepository.findAllTripsPublished());
 
 		for (Trip t : trips)
 			if (t.getStartDate().after(currentDate) == true)
 				res.add(t);
+		Assert.notNull(res);
 		return res;
 	}
 

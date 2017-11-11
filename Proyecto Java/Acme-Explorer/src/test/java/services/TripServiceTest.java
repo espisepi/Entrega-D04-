@@ -10,7 +10,6 @@ import java.util.GregorianCalendar;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -159,7 +158,6 @@ public class TripServiceTest extends AbstractTest {
 	}
 
 	@Test
-	@Rollback(false)
 	public void testDelete() {
 		this.authenticate("manager1");
 		Trip tripSaved;
@@ -226,6 +224,7 @@ public class TripServiceTest extends AbstractTest {
 		Assert.isNull(this.tripService.findOne(tripSaved.getId()));
 		this.authenticate(null);
 	}
+
 	// Other business test methods -------------------------------------------------
 	@Test
 	public void testFindAllTripsNoAuthenticate() {
@@ -234,12 +233,13 @@ public class TripServiceTest extends AbstractTest {
 		Assert.notNull(trips);
 	}
 
-	public void testFindAllTripsByExplorerIdWithStatusAccepted() {
-
-	}
-
+	@Test
 	public void testFindAllTripsPublishedNotStarted() {
-
+		this.authenticate("manager1");
+		Collection<Trip> trips;
+		trips = new ArrayList<Trip>(this.tripService.findAllTripsPublishedNotStarted());
+		Assert.notNull(trips);
+		this.authenticate(null);
 	}
 
 	public void testFindTripsWhitStatusAccepted() {
@@ -250,11 +250,7 @@ public class TripServiceTest extends AbstractTest {
 
 	}
 
-	public void testFindOneToEditManager() {
-
-	}
-
-	public void testFindOneToEditExplorer() {
+	public void testFindOneToEdit() {
 
 	}
 
