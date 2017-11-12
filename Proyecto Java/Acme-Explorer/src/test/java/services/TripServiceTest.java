@@ -273,14 +273,14 @@ public class TripServiceTest extends AbstractTest {
 		Trip tripEdit;
 		trip = this.tripService.findOne(super.getEntityId("trip2"));
 		trip.setCancelled(true);
-		trip.setReasonWhy("PORQUE SI");
-		tripEdit = this.tripService.findOneToCancel(trip.getId());
+		trip.setReasonWhy("Aforo sobrepasa el limite");
+		tripEdit = this.tripService.findOneToCancelManager(trip.getId());
 		Assert.notNull(tripEdit);
 		this.authenticate(null);
 	}
 
-	//@Test
-	//@Rollback(false)
+	@Test
+	@Rollback(false)
 	public void testFindOneToCancelExplorer() {
 		this.authenticate("explorer3");
 		Trip trip;
@@ -288,7 +288,7 @@ public class TripServiceTest extends AbstractTest {
 		trip = this.tripService.findOne(super.getEntityId("trip3"));
 		trip.setCancelled(true);
 		trip.setReasonWhy("No hay fondos");
-		tripEdit = this.tripService.findOneToCancel(trip.getId());
+		tripEdit = this.tripService.findOneToCancelExplorer(trip.getId());
 		Assert.notNull(tripEdit);
 		this.authenticate(null);
 	}

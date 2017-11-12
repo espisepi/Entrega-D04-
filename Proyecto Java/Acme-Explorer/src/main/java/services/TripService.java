@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.TripRepository;
-import security.Authority;
 import domain.ApplicationFor;
 import domain.AuditRecord;
 import domain.Category;
@@ -40,9 +39,10 @@ public class TripService {
 	private ManagerService	managerService;
 	@Autowired
 	private ExplorerService	explorerService;
-	@Autowired
-	private ActorService	actorService;
 
+
+	//@Autowired
+	//private ActorService	actorService;
 
 	// Constructors------------------------------------------------------------
 	public TripService() {
@@ -218,53 +218,54 @@ public class TripService {
 	//**********************************************************************************
 	//***********************  METODO CANCELAR  ****************************************
 	//**********************************************************************************
-	public Trip findOneToCancel(final int tripId) {
+	public Trip findOneToCancelManager(final int tripId) {
+		this.managerService.checkPrincipal();
 		Date date;
 		Trip trip;
 		Trip tripEdit;
-		boolean isManager;
-		boolean isExplorer;
 		Manager manager;
-		Explorer explorer;
-		Collection<Trip> tripsAccepted;
-		Collection<Explorer> explorers;
-
 		//Trip a editar
 		trip = this.tripRepository.findOne(tripId);
-		//No tenemos que restringir por roles pero para que un explorer edite un trip debe estar en accepted
-		//Requisito 12.3 para manager
-		//Requisito 13.4 para explorer
-
-		//isManager = this.managerService.findByPrincipal().getUserAccount().getAuthorities().contains(Authority.MANAGER);
-		isManager = this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.MANAGER);
-		isExplorer = this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.EXPLORER);
 		date = new Date();
 		//Para que un manager cancele un trip NO puede haber empezado
-		//Para que un explorer cancele un trip NO puede haber empezado
-		Assert.isTrue(trip.getStartDate().before(date));
-		if (isManager) {
-			//Comprobamos que sea de ese Manager
-			manager = this.managerService.findByPrincipal();
-			Assert.isTrue(manager.getTrips().contains(trip));
-			//Para que un manager edite un trip puede tener publicationDate
-			Assert.notNull(trip.getPublicationDate());
-
-		} else if (isExplorer) {
-			tripsAccepted = new ArrayList<Trip>(this.findTripsWhitStatusAccepted());
-			assert trip.getPublicationDate() != null;
-			//Para que un explorer edite un trip debe de tener el estatus ACCEPTED
-			Assert.isTrue(tripsAccepted.contains(trip));
-			//Comprobamos que sea de ese Explorer
-			//explorer conectado
-			explorer = this.explorerService.findByPrincipal();
-			//Lista de explorer con ese trip
-			explorers = new ArrayList<Explorer>(this.tripRepository.findExplorersByTripId(tripId));
-			//Vemos si el explorer conectado tiene ese trip
-			Assert.isTrue(explorers.contains(explorer));
-		}
+		Assert.isTrue(trip.getStartDate().after(date));
+		//Comprobamos que sea de ese Manager
+		manager = this.managerService.findByPrincipal();
+		Assert.isTrue(manager.getTrips().contains(trip));
+		//Para que un manager edite un trip puede tener publicationDate
+		Assert.notNull(trip.getPublicationDate());
 		tripEdit = this.tripRepository.save(trip);
 		return tripEdit;
 	}
+
+	public Trip findOneToCancelExplorer(final int tripId) {
+		this.explorerService.checkPrincipal();
+		Date date;
+		Trip trip;
+		Trip tripEdit;
+		Explorer explorer;
+		Collection<Trip> tripsAccepted;
+		Collection<Explorer> explorers;
+		date = new Date();
+
+		//Trip a editar
+		trip = this.tripRepository.findOne(tripId);
+		tripsAccepted = new ArrayList<Trip>(this.findTripsWhitStatusAccepted());
+		//Para que un explorer cancele un trip NO puede haber empezado
+		Assert.isTrue(trip.getStartDate().after(date));
+		//Para que un explorer edite un trip debe de tener el estatus ACCEPTED
+		Assert.isTrue(tripsAccepted.contains(trip));
+		//Comprobamos que sea de ese Explorer
+		//explorer conectado
+		explorer = this.explorerService.findByPrincipal();
+		//Lista de explorer con ese trip
+		explorers = new ArrayList<Explorer>(this.tripRepository.findExplorersByTripId(tripId));
+		//Vemos si el explorer conectado tiene ese trip
+		Assert.isTrue(explorers.contains(explorer));
+		tripEdit = this.tripRepository.save(trip);
+		return tripEdit;
+	}
+
 	//Todos los Trips que apply un explorer
 	//***** TEST HECHO *******
 	public Collection<Trip> findAllTripsApplyByExplorerId(int explorerId) {
