@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
@@ -35,7 +36,7 @@ public class SurvivalClassServiceTest extends AbstractTest {
 	private TripService				tripService;
 
 	@Autowired
-	private ExplorerService			explorerService;
+	private AdministratorService	adminsitratorService;
 
 
 	// Tests ----------------------------------------------
@@ -44,8 +45,11 @@ public class SurvivalClassServiceTest extends AbstractTest {
 	//	public void createTest() {
 	//		this.authenticate("manager1");
 	//		SurvivalClass result;
+	//		Administrator administrator;
 	//
-	//		result = this.survivalClassService.create();
+	//		administrator = this.adminsitratorService.findByPrincipal();
+	//
+	//		result = this.survivalClassService.create(administrator);
 	//
 	//		Assert.notNull(result);
 	//	}
@@ -88,8 +92,11 @@ public class SurvivalClassServiceTest extends AbstractTest {
 	//		Trip trip;
 	//		GPS location;
 	//		SurvivalClass resultSaved;
+	//		Administrator administrator;
 	//
-	//		result = this.survivalClassService.create();
+	//		administrator = this.adminsitratorService.findByPrincipal();
+	//
+	//		result = this.survivalClassService.create(administrator);
 	//
 	//		manager = this.managerService.findByPrincipal();
 	//		trip = this.tripService.findOne(super.getEntityId("trip1"));
@@ -112,21 +119,20 @@ public class SurvivalClassServiceTest extends AbstractTest {
 	//	}
 
 	@Test
+	@Rollback(false)
 	public void deleteTest() {
 
 		SurvivalClass result;
-		int id;
 		Collection<Explorer> explorers;
 
 		result = this.survivalClassService.findOne(super.getEntityId("survivalClass1"));
-		id = result.getId();
 		explorers = result.getExplorers();
 
 		explorers.removeAll(explorers);
 
 		this.survivalClassService.delete(result);
 
-		Assert.isNull(this.survivalClassService.findOne(id));
+		Assert.isTrue(!this.survivalClassService.findAll().contains(result));
 
 	}
 }

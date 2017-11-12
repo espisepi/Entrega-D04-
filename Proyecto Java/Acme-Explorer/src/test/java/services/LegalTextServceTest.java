@@ -6,6 +6,7 @@ import java.util.Collection;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -107,35 +108,33 @@ public class LegalTextServceTest extends AbstractTest {
 
 	}
 
-	//	@Test
-	//	@Rollback(false)
-	//	public void testDeletePositive() {
-	//
-	//		LegalText resultSaved;
-	//		LegalText result;
-	//		Administrator administrator;
-	//		int id;
-	//
-	//		this.authenticate("administrator1");
-	//
-	//		administrator = this.administradorService.findByPrincipal();
-	//		result = this.legalTextService.create(administrator);
-	//		result.setTitle("title test");
-	//		result.setBody("body test");
-	//		result.setLawsNumber(4);
-	//		this.administradorService.checkPrincipal();
-	//		Assert.notNull(result);
-	//
-	//		resultSaved = this.legalTextService.save(result);
-	//		id = resultSaved.getId();
-	//
-	//		Assert.notNull(resultSaved);
-	//
-	//		this.legalTextService.delete(resultSaved);
-	//
-	//		Assert.isNull(this.legalTextService.findOne(id));
-	//
-	//	}
+	@Test
+	@Rollback(false)
+	public void testDeletePositive() {
+
+		LegalText resultSaved;
+		LegalText result;
+		Administrator administrator;
+
+		this.authenticate("administrator1");
+
+		administrator = this.administradorService.findByPrincipal();
+		result = this.legalTextService.create(administrator);
+		result.setTitle("title test");
+		result.setBody("body test");
+		result.setLawsNumber(4);
+		this.administradorService.checkPrincipal();
+		Assert.notNull(result);
+
+		resultSaved = this.legalTextService.save(result);
+
+		Assert.notNull(resultSaved);
+
+		this.legalTextService.delete(resultSaved);
+
+		Assert.isTrue(!this.legalTextService.findAll().contains(resultSaved));
+
+	}
 
 	@Test
 	public void testFindOneToEdit() {
