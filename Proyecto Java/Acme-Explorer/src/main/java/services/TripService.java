@@ -89,6 +89,8 @@ public class TripService {
 		Trip result;
 		if (trip.isCancelled())
 			Assert.notNull(trip.getReasonWhy());
+		//Sólo los legalText que estén guardados como draftMode pueden ser referenciados a una Trip.
+		Assert.isTrue(trip.getLegalText().isDraftMode());
 		result = this.tripRepository.save(trip);
 		return result;
 	}
@@ -178,6 +180,7 @@ public class TripService {
 		return res;
 	}
 
+	//***** TEST HECHO *******
 	//Para sacar los trips con estado ACCEPTED para a laz hora de borrarlos un explorer
 	public Collection<Trip> findTripsWhitStatusAccepted() {
 		Collection<Trip> trips = new ArrayList<>();
@@ -192,17 +195,11 @@ public class TripService {
 		return res;
 	}
 
-	//Requisito 12.2
-	public Trip findTripWithStatusPendingById(int tripId) {
-		Trip result = this.tripRepository.findTripWithStatusPendingById(tripId);
-		Assert.notNull(result);
-		return result;
-	}
-
 	//**********************************************************************************
 	//***********************  METODO EDITAR  ******************************************
 	//**********************************************************************************
 	public Trip findOneToEdit(final int tripId) {
+		Date date;
 		Trip trip;
 		Trip tripEdit;
 		boolean isManager;
@@ -221,10 +218,13 @@ public class TripService {
 		//Requisito 13.4 para explorer
 		isManager = this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.MANAGER);
 		isExplorer = this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.EXPLORER);
+		date = new Date();
 		if (isManager) {
 			//Comprobamos que sea de ese Manager
 			manager = this.managerService.findByPrincipal();
 			Assert.isTrue(manager.getTrips().contains(trip));
+			//Comprobamos que aun no haya empezado
+			Assert.isTrue(trip.getStartDate().before(date));
 		} else if (isExplorer) {
 			tripsAccepted = new ArrayList<Trip>(this.findTripsWhitStatusAccepted());
 			assert trip.getPublicationDate() != null;
@@ -241,7 +241,6 @@ public class TripService {
 		tripEdit = this.tripRepository.save(trip);
 		return tripEdit;
 	}
-
 	//Todos los Trips que apply un explorer
 	//***** TEST HECHO *******
 	public Collection<Trip> findAllTripsApplyByExplorerId(int explorerId) {

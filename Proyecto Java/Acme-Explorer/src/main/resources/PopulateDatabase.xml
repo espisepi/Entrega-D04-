@@ -1145,7 +1145,7 @@
 				<value>requirementsExplorers 5</value>
 			</list>
 		</property>
-		<property name="publicationDate" value="2018/02/02 22:45"></property>
+		<property name="publicationDate"><null/></property>
 		<property name="startDate" value="2018/07/11"></property>
 		<property name="finishDate" value="2018/08/04"></property>
 		<property name="reasonWhy" value="reasonWhy 3"></property>

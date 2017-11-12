@@ -24,9 +24,6 @@ public interface TripRepository extends JpaRepository<Trip, Integer> {
 	@Query("select t from Trip t join t.applicationsFor a where a.status like 'ACCEPTED'")
 	Collection<Trip> findTripsWhitStatusAccepted();
 
-	@Query("select t from Trip t join t.applicationsFor a where a.status like 'PENDING' and t.id= ?1")
-	Trip findTripWithStatusPendingById(int tripId);
-
 	@Query("select t from Trip t join t.applicationsFor a where a.explorer.id=?1")
 	Collection<Trip> findAllTripsApplyByExplorerId(int explorerId);
 
