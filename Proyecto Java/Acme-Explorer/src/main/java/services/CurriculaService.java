@@ -88,9 +88,8 @@ public class CurriculaService {
 
 	public Curricula update(Integer curriculaId, PersonalRecord personalRecord, Collection<ProfessionalRecord> professionalRecords, Collection<EducationRecord> educationRecords, Collection<EndorserRecord> endorserRecords,
 		Collection<MiscellaneousRecord> miscellaneousRecords) {
-		Assert.notNull(curriculaId);
-		Assert.notNull(personalRecord);
 
+		Assert.notNull(personalRecord);
 		Assert.notNull(this.curriculaRepository.findOne(curriculaId));
 
 		//Tengo que comprobar que el que quiera modificar esa curricula es su propio ranger
@@ -99,19 +98,36 @@ public class CurriculaService {
 		Curricula curriculaFromRanger = this.findCurriculaFromRanger(ranger.getId());
 		Assert.isTrue(curriculaFromRanger.getId() == (curriculaId));
 
+		Curricula updateCurricula;
+		updateCurricula = new Curricula();
+
 		PersonalRecord newPersonalRecord = this.personalRecordService.save(personalRecord);
 
-		Curricula curriculaToModify = this.curriculaRepository.findOne(curriculaId);
-		curriculaToModify.setPersonalRecord(newPersonalRecord);
-		curriculaToModify.setProfessionalRecords(professionalRecords);
-		curriculaToModify.setEducationRecords(educationRecords);
-		curriculaToModify.setEndorserRecords(endorserRecords);
-		curriculaToModify.setMiscellaneousRecords(miscellaneousRecords);
+		updateCurricula.setEducationRecords(educationRecords);
+		updateCurricula.setEndorserRecords(endorserRecords);
+		updateCurricula.setMiscellaneousRecords(miscellaneousRecords);
+		updateCurricula.setPersonalRecord(newPersonalRecord);
+		updateCurricula.setProfessionalRecords(professionalRecords);
+		updateCurricula.setId(curriculaId);
+		updateCurricula.setTicker(this.curriculaRepository.findOne(curriculaId).getTicker());
 
+		//		Curricula curriculaToModify = this.curriculaRepository.findOne(curriculaId);
+		//		curriculaToModify.setPersonalRecord(newPersonalRecord);
+		//		curriculaToModify.setProfessionalRecords(professionalRecords);
+		//		curriculaToModify.setEducationRecords(educationRecords);
+		//		curriculaToModify.setEndorserRecords(endorserRecords);
+		//		curriculaToModify.setMiscellaneousRecords(miscellaneousRecords);
+
+		Assert.isTrue(updateCurricula.getTicker() == this.curriculaRepository.findOne(curriculaId).getTicker());
+		this.curriculaRepository.saveAndFlush(updateCurricula);
 		return this.curriculaRepository.findOne(curriculaId);
 
 	}
 	public void delete(Curricula curricula) {
+
+		Ranger rangerWithThisCurricula;
+		rangerWithThisCurricula = this.curriculaRepository.rangerWithThisCurricula(curricula.getId());
+		rangerWithThisCurricula.setCurricula(null);
 		Assert.notNull(curricula);
 		Assert.notNull(this.curriculaRepository.findOne(curricula.getId()));
 
@@ -132,7 +148,6 @@ public class CurriculaService {
 		Curricula curricula;
 
 		curricula = this.curriculaRepository.findOne(curriculaId);
-		Assert.notNull(curricula);
 
 		return curricula;
 	}

@@ -55,7 +55,6 @@ public class EducationRecordService {
 		EducationRecord educationRecord;
 
 		educationRecord = this.educationRecordRepository.findOne(educationRecordId);
-		Assert.notNull(educationRecord);
 
 		return educationRecord;
 	}

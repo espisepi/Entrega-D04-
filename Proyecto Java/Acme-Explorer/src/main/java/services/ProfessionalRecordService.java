@@ -56,7 +56,6 @@ public class ProfessionalRecordService {
 		ProfessionalRecord professionalRecord;
 
 		professionalRecord = this.professionalRecordRepository.findOne(professionalRecordId);
-		Assert.notNull(professionalRecord);
 
 		return professionalRecord;
 	}

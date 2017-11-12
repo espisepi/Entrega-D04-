@@ -53,7 +53,6 @@ public class PersonalRecordService {
 		PersonalRecord personalRecord;
 
 		personalRecord = this.personalRecordRepository.findOne(personalRecordId);
-		Assert.notNull(personalRecord);
 
 		return personalRecord;
 	}

@@ -53,7 +53,6 @@ public class TagService {
 
 		Tag result;
 		result = this.tagRepository.findOne(tagId);
-		Assert.notNull(result);
 
 		return result;
 	}
