@@ -10,6 +10,7 @@ import java.util.GregorianCalendar;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -250,8 +251,33 @@ public class TripServiceTest extends AbstractTest {
 
 	}
 
-	public void testFindOneToEdit() {
+	@Test
+	@Rollback(false)
+	public void testFindOneToEditManager() {
+		this.authenticate("manager1");
+		Trip trip;
+		Trip tripEdit;
+		trip = this.tripService.findOne(super.getEntityId("trip2"));
+		//trip.setDescription("ESTA");
+		trip.setCancelled(true);
+		trip.setReasonWhy("PORQUE SI");
+		tripEdit = this.tripService.findOneToEdit(trip.getId());
+		Assert.notNull(tripEdit);
+		this.authenticate(null);
+	}
 
+	@Test
+	@Rollback(false)
+	public void testFindOneToEditExplorer() {
+		this.authenticate("explorer3");
+		Trip trip;
+		Trip tripEdit;
+		trip = this.tripService.findOne(super.getEntityId("trip3"));
+		trip.setCancelled(true);
+		trip.setReasonWhy("No hay fondos");
+		tripEdit = this.tripService.findOneToEdit(trip.getId());
+		Assert.notNull(tripEdit);
+		this.authenticate(null);
 	}
 
 	@Test

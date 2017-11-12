@@ -87,6 +87,8 @@ public class TripService {
 	public Trip save(final Trip trip) {
 		assert trip != null;
 		Trip result;
+		if (trip.isCancelled())
+			Assert.notNull(trip.getReasonWhy());
 		result = this.tripRepository.save(trip);
 		return result;
 	}
@@ -143,7 +145,7 @@ public class TripService {
 		assert trip != null;
 		assert trip.getId() != 0;
 		//Comprobamos que ese trip no tenga fecha de publicación
-		Assert.isTrue(trip.getPublicationDate() == null);
+		Assert.isNull(trip.getPublicationDate());
 		Manager manager = this.managerService.findByPrincipal();
 		Assert.isTrue(manager.getTrips().contains(trip));
 		this.tripRepository.delete(trip);
@@ -211,21 +213,20 @@ public class TripService {
 		Collection<Explorer> explorers;
 		//Trip a editar
 		trip = this.tripRepository.findOne(tripId);
+		//Para que un manager edite un trip NO puede tener publicationDate
+		//Para que un explorer edite un trip NO puede tener publicationDate
+		Assert.isNull(trip.getPublicationDate());
 		//No tenemos que restringir por roles pero para que un explorer edite un trip debe estar en accepted
 		//Requisito 12.3 para manager
 		//Requisito 13.4 para explorer
 		isManager = this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.MANAGER);
 		isExplorer = this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.EXPLORER);
 		if (isManager) {
-			//Para que un manager edite un trip NO puede tener publicationDate
-			assert trip.getPublicationDate() != null;
 			//Comprobamos que sea de ese Manager
 			manager = this.managerService.findByPrincipal();
 			Assert.isTrue(manager.getTrips().contains(trip));
-			tripEdit = this.tripRepository.save(trip);
 		} else if (isExplorer) {
 			tripsAccepted = new ArrayList<Trip>(this.findTripsWhitStatusAccepted());
-			//Para que un explorer edite un trip NO puede tener publicationDate
 			assert trip.getPublicationDate() != null;
 			//Para que un explorer edite un trip debe de tener el estatus ACCEPTED
 			Assert.isTrue(tripsAccepted.contains(trip));
@@ -236,8 +237,6 @@ public class TripService {
 			explorers = new ArrayList<Explorer>(this.tripRepository.findExplorersByTripId(tripId));
 			//Vemos si el explorer conectado tiene ese trip
 			Assert.isTrue(explorers.contains(explorer));
-			//Lo editamos
-			tripEdit = this.tripRepository.save(trip);
 		}
 		tripEdit = this.tripRepository.save(trip);
 		return tripEdit;
