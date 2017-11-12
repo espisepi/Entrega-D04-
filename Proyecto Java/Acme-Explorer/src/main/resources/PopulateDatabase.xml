@@ -1009,7 +1009,7 @@
 				<value>requirementsExplorers 2</value>
 			</list>
 		</property>
-		<property name="publicationDate" value="2017/02/02 22:45"></property>
+		<property name="publicationDate" ><null/></property>
 		<property name="startDate" value="2018/02/03"></property>
 		<property name="finishDate" value="2018/02/04"></property>
 		<property name="reasonWhy" value="reasonWhy 1"></property>
@@ -1078,7 +1078,7 @@
 				<value>requirementsExplorers 4</value>
 			</list>
 		</property>
-		<property name="publicationDate"><null/></property>
+		<property name="publicationDate" value="2019/02/02 22:45"></property>
 		<property name="startDate" value="2019/07/11"></property>
 		<property name="finishDate" value="2019/08/04"></property>
 		<property name="reasonWhy"><null /></property>
@@ -1145,11 +1145,11 @@
 				<value>requirementsExplorers 5</value>
 			</list>
 		</property>
-		<property name="publicationDate"><null/></property>
+		<property name="publicationDate" value="2018/02/02 22:45"></property>
 		<property name="startDate" value="2018/07/11"></property>
 		<property name="finishDate" value="2018/08/04"></property>
-		<property name="reasonWhy" value="reasonWhy 3"></property>
-		<property name="cancelled" value="true"></property>
+		<property name="reasonWhy"><null/></property>
+		<property name="cancelled" value="false"></property>
 
 		<property name="ranger" ref="ranger2"></property>
 		<property name="manager" ref="manager2"></property>

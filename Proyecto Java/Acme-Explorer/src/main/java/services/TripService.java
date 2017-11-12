@@ -181,12 +181,12 @@ public class TripService {
 	}
 
 	//***** TEST HECHO *******
-	//Para sacar los trips con estado ACCEPTED para a laz hora de borrarlos un explorer
+	//Para sacar los trips con estado ACCEPTED para que un explorer pueda cancelarlo
 	public Collection<Trip> findTripsWhitStatusAccepted() {
 		Collection<Trip> trips = new ArrayList<>();
 		Collection<Trip> res = new ArrayList<>();
 		Date currentDate = new Date();
-		Assert.isTrue(this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.EXPLORER));
+		//Assert.isTrue(this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.EXPLORER));
 		trips.addAll(this.tripRepository.findTripsWhitStatusAccepted());
 		Assert.notNull(res);
 		for (Trip t : trips)
@@ -199,6 +199,26 @@ public class TripService {
 	//***********************  METODO EDITAR  ******************************************
 	//**********************************************************************************
 	public Trip findOneToEdit(final int tripId) {
+		Trip trip;
+		Trip tripEdit;
+		Manager manager;
+		//Trip a editar
+		trip = this.tripRepository.findOne(tripId);
+		//Para que un manager edite un trip NO puede tener publicationDate
+		//salta si tiene fecha
+		Assert.isNull(trip.getPublicationDate());
+		//Comprobamos que sea de ese Manager
+		manager = this.managerService.findByPrincipal();
+		Assert.isTrue(manager.getTrips().contains(trip));
+		//Lo editamos
+		tripEdit = this.tripRepository.save(trip);
+		return tripEdit;
+	}
+
+	//**********************************************************************************
+	//***********************  METODO CANCELAR  ****************************************
+	//**********************************************************************************
+	public Trip findOneToCancel(final int tripId) {
 		Date date;
 		Trip trip;
 		Trip tripEdit;
@@ -208,23 +228,27 @@ public class TripService {
 		Explorer explorer;
 		Collection<Trip> tripsAccepted;
 		Collection<Explorer> explorers;
+
 		//Trip a editar
 		trip = this.tripRepository.findOne(tripId);
-		//Para que un manager edite un trip NO puede tener publicationDate
-		//Para que un explorer edite un trip NO puede tener publicationDate
-		Assert.isNull(trip.getPublicationDate());
 		//No tenemos que restringir por roles pero para que un explorer edite un trip debe estar en accepted
 		//Requisito 12.3 para manager
 		//Requisito 13.4 para explorer
+
+		//isManager = this.managerService.findByPrincipal().getUserAccount().getAuthorities().contains(Authority.MANAGER);
 		isManager = this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.MANAGER);
 		isExplorer = this.actorService.findPrincipal().getUserAccount().getAuthorities().contains(Authority.EXPLORER);
 		date = new Date();
+		//Para que un manager cancele un trip NO puede haber empezado
+		//Para que un explorer cancele un trip NO puede haber empezado
+		Assert.isTrue(trip.getStartDate().before(date));
 		if (isManager) {
 			//Comprobamos que sea de ese Manager
 			manager = this.managerService.findByPrincipal();
 			Assert.isTrue(manager.getTrips().contains(trip));
-			//Comprobamos que aun no haya empezado
-			Assert.isTrue(trip.getStartDate().before(date));
+			//Para que un manager edite un trip puede tener publicationDate
+			Assert.notNull(trip.getPublicationDate());
+
 		} else if (isExplorer) {
 			tripsAccepted = new ArrayList<Trip>(this.findTripsWhitStatusAccepted());
 			assert trip.getPublicationDate() != null;

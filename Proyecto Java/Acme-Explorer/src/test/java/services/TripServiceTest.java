@@ -245,21 +245,21 @@ public class TripServiceTest extends AbstractTest {
 
 	@Test
 	public void testFindTripsWhitStatusAccepted() {
+		this.authenticate("explorer1");
 		Collection<Trip> trips;
 		trips = new ArrayList<Trip>(this.tripService.findTripsWhitStatusAccepted());
 		Assert.notNull(trips);
+		this.authenticate(null);
 	}
 
 	@Test
 	@Rollback(false)
-	public void testFindOneToEditManager() {
+	public void testFindOneToEdit() {
 		this.authenticate("manager1");
 		Trip trip;
 		Trip tripEdit;
-		trip = this.tripService.findOne(super.getEntityId("trip2"));
-		//trip.setDescription("ESTA");
-		trip.setCancelled(true);
-		trip.setReasonWhy("PORQUE SI");
+		trip = this.tripService.findOne(super.getEntityId("trip1"));
+		trip.setDescription("Nueva descripción");
 		tripEdit = this.tripService.findOneToEdit(trip.getId());
 		Assert.notNull(tripEdit);
 		this.authenticate(null);
@@ -267,14 +267,28 @@ public class TripServiceTest extends AbstractTest {
 
 	@Test
 	@Rollback(false)
-	public void testFindOneToEditExplorer() {
+	public void testFindOneToCancelManager() {
+		this.authenticate("manager1");
+		Trip trip;
+		Trip tripEdit;
+		trip = this.tripService.findOne(super.getEntityId("trip2"));
+		trip.setCancelled(true);
+		trip.setReasonWhy("PORQUE SI");
+		tripEdit = this.tripService.findOneToCancel(trip.getId());
+		Assert.notNull(tripEdit);
+		this.authenticate(null);
+	}
+
+	//@Test
+	//@Rollback(false)
+	public void testFindOneToCancelExplorer() {
 		this.authenticate("explorer3");
 		Trip trip;
 		Trip tripEdit;
 		trip = this.tripService.findOne(super.getEntityId("trip3"));
 		trip.setCancelled(true);
 		trip.setReasonWhy("No hay fondos");
-		tripEdit = this.tripService.findOneToEdit(trip.getId());
+		tripEdit = this.tripService.findOneToCancel(trip.getId());
 		Assert.notNull(tripEdit);
 		this.authenticate(null);
 	}
