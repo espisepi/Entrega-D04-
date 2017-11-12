@@ -101,7 +101,7 @@ public class MiscellaneousRecordTest extends AbstractTest {
 		Assert.notEmpty(miscellaneousRecordsSaved);
 	}
 	@Test
-	public void testDeletePositive() {
+	public void testDelete() {
 		MiscellaneousRecord miscellaneousRecord;
 		Collection<MiscellaneousRecord> miscellaneousRecords;
 		int idMiscellaneousRecord;
@@ -114,4 +114,5 @@ public class MiscellaneousRecordTest extends AbstractTest {
 		this.miscellaneousRecordService.delete(miscellaneousRecord);
 		Assert.isNull(this.miscellaneousRecordService.findOne(idMiscellaneousRecord));
 	}
+
 }

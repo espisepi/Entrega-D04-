@@ -83,6 +83,8 @@ public class MiscellaneousRecordService {
 
 		this.miscellaneousRecordRepository.delete(miscellaneousRecord);
 
+		Assert.isNull(this.miscellaneousRecordRepository.findOne(miscellaneousRecord.getId()));
+
 	}
 
 	public Collection<MiscellaneousRecord> saveAll(Collection<MiscellaneousRecord> miscellaneousRecords) {

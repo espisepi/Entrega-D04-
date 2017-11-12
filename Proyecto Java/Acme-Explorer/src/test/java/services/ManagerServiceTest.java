@@ -32,13 +32,8 @@ public class ManagerServiceTest extends AbstractTest {
 	@Test
 	public void testCreate() {
 
-		this.authenticate("manager 1");
-
 		Manager manager;
 		manager = this.managerService.create();
-		manager.setName("name1");
-		manager.setSurname("surname1");
-		manager.setEmail("manager1@gmail.com");
 
 		Assert.notNull(manager);
 	}
