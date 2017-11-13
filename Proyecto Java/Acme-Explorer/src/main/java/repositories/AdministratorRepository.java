@@ -23,10 +23,10 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
 	Double[] findMaxMinAvgStddevOfTheNumOfTripsPerManager();
 
 	@Query("select min(t.price), max(t.price), avg(t.price), stddev(t.price) from Trip t")
-	Double[] findMaxMinAvgStddevOfThePriceOfTheTrips();
+	Double[] findMinMaxAvgStddevOfThePriceOfTheTrips();
 
 	@Query("select avg(r.trips.size),min(r.trips.size),max(r.trips.size), stddev(r.trips.size) from Ranger r")
-	Double[] findMaxMinAvgStddevOfTheNumTripsPerRanger();
+	Double[] findAvgMinMaxStddevOfTheNumTripsPerRanger();
 
 	@Query("select (select count(a) from ApplicationFor a where a.status='PENDING') *1.0 / count(a) from ApplicationFor a")
 	Double findRatioOfApplicationsPending();
