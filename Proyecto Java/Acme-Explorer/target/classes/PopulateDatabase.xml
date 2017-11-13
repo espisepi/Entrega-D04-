@@ -26,9 +26,11 @@
 		<property name="welcomeMessages">
 			<list>
 				<value>Tanzanika is an adven-ture company that makes your explorer’s
-					dreams true</value>
+					dreams true
+				</value>
 				<value>Tanzanika es la empresa de aven-turas que hará tus sueños de
-					explorador realidad</value>
+					explorador realidad
+				</value>
 			</list>
 		</property>
 	</bean>
@@ -989,7 +991,7 @@
 		<property name="number" value="5"></property>
 		<property name="trip" ref="trip5"></property>
 	</bean>
-	
+
 	<bean id="stage6" class="domain.Stage">
 		<property name="title" value="title 6" />
 		<property name="description" value="description 6" />
@@ -1002,14 +1004,16 @@
 		<property name="ticker" value="170112-WWWW"></property>
 		<property name="title" value="title 1"></property>
 		<property name="description" value="description 1"></property>
-		
+
 		<property name="requirementsExplorers">
 			<list>
 				<value>requirementsExplorers 1</value>
 				<value>requirementsExplorers 2</value>
 			</list>
 		</property>
-		<property name="publicationDate" ><null/></property>
+		<property name="publicationDate">
+			<null />
+		</property>
 		<property name="startDate" value="2018/02/03"></property>
 		<property name="finishDate" value="2018/02/04"></property>
 		<property name="reasonWhy" value="reasonWhy 1"></property>
@@ -1071,7 +1075,7 @@
 		<property name="ticker" value="160112-AAAA"></property>
 		<property name="title" value="title 2"></property>
 		<property name="description" value="description 2"></property>
-	
+
 		<property name="requirementsExplorers">
 			<list>
 				<value>requirementsExplorers 3</value>
@@ -1081,7 +1085,9 @@
 		<property name="publicationDate" value="2019/02/02 22:45"></property>
 		<property name="startDate" value="2019/07/11"></property>
 		<property name="finishDate" value="2019/08/04"></property>
-		<property name="reasonWhy"><null /></property>
+		<property name="reasonWhy">
+			<null />
+		</property>
 		<property name="cancelled" value="false"></property>
 
 		<property name="ranger" ref="ranger1"></property>
@@ -1138,7 +1144,7 @@
 		<property name="ticker" value="150112-BBBB"></property>
 		<property name="title" value="title 3"></property>
 		<property name="description" value="description 3"></property>
-		
+
 		<property name="requirementsExplorers">
 			<list>
 				<value>requirementsExplorers 4</value>
@@ -1148,7 +1154,9 @@
 		<property name="publicationDate" value="2018/02/02 22:45"></property>
 		<property name="startDate" value="2018/07/11"></property>
 		<property name="finishDate" value="2018/08/04"></property>
-		<property name="reasonWhy"><null/></property>
+		<property name="reasonWhy">
+			<null />
+		</property>
 		<property name="cancelled" value="false"></property>
 
 		<property name="ranger" ref="ranger2"></property>
@@ -1208,7 +1216,7 @@
 		<property name="ticker" value="150112-CCCC"></property>
 		<property name="title" value="title 4"></property>
 		<property name="description" value="description 4"></property>
-		
+
 		<property name="requirementsExplorers">
 			<list>
 				<value>requirementsExplorers 6</value>
@@ -1280,7 +1288,7 @@
 		<property name="ticker" value="150112-DDDD"></property>
 		<property name="title" value="title 5"></property>
 		<property name="description" value="description 5"></property>
-		
+
 		<property name="requirementsExplorers">
 			<list>
 				<value>requirementsExplorers 8</value>
@@ -1292,7 +1300,9 @@
 		</property>
 		<property name="startDate" value="2014/02/21"></property>
 		<property name="finishDate" value="2015/08/04"></property>
-		<property name="reasonWhy"><null /></property>
+		<property name="reasonWhy">
+			<null />
+		</property>
 		<property name="cancelled" value="false"></property>
 
 		<property name="ranger" ref="ranger3"></property>
@@ -1411,7 +1421,7 @@
 		<property name="holderName" value="Jose Angel Dominguez Espinaco" />
 		<property name="brandName" value="La caixa" />
 		<property name="number" value="4388576018410707" />
-		<property name="expirationMonth" value="3" />
+		<property name="expirationMonth" value="03" />
 		<property name="expirationYear" value="20" />
 		<property name="cvv" value="102" />
 	</bean>
@@ -1419,7 +1429,7 @@
 		<property name="holderName" value="Daniel Lozano" />
 		<property name="brandName" value="Santander" />
 		<property name="number" value="4388576018410707" />
-		<property name="expirationMonth" value="5" />
+		<property name="expirationMonth" value="05" />
 		<property name="expirationYear" value="21" />
 		<property name="cvv" value="103" />
 	</bean>
@@ -1427,7 +1437,7 @@
 		<property name="holderName" value="Maria Ruiz" />
 		<property name="brandName" value="Santander" />
 		<property name="number" value="4388576018410707" />
-		<property name="expirationMonth" value="6" />
+		<property name="expirationMonth" value="06" />
 		<property name="expirationYear" value="17" />
 		<property name="cvv" value="655" />
 	</bean>
@@ -1435,7 +1445,7 @@
 		<property name="holderName" value="Laura vera" />
 		<property name="brandName" value="Bankia" />
 		<property name="number" value="4388576018410707" />
-		<property name="expirationMonth" value="4" />
+		<property name="expirationMonth" value="04" />
 		<property name="expirationYear" value="16" />
 		<property name="cvv" value="876" />
 	</bean>
@@ -1443,7 +1453,7 @@
 		<property name="holderName" value="Joaquin rodriguez" />
 		<property name="brandName" value="La caixa" />
 		<property name="number" value="4388576018410707" />
-		<property name="expirationMonth" value="5" />
+		<property name="expirationMonth" value="05" />
 		<property name="expirationYear" value="18" />
 		<property name="cvv" value="724" />
 	</bean>
@@ -1452,7 +1462,7 @@
 		<property name="holderName" value="María rodriguez" />
 		<property name="brandName" value="La caixa" />
 		<property name="number" value="4388576018410707" />
-		<property name="expirationMonth" value="5" />
+		<property name="expirationMonth" value="05" />
 		<property name="expirationYear" value="18" />
 		<property name="cvv" value="724" />
 	</bean>
