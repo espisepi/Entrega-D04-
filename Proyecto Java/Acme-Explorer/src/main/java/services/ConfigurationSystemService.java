@@ -59,7 +59,7 @@ public class ConfigurationSystemService {
 	}
 
 	public ConfigurationSystem save(final ConfigurationSystem configurationSystem) {
-		assert configurationSystem != null;
+		Assert.notNull(configurationSystem);
 
 		ConfigurationSystem result;
 
@@ -69,8 +69,8 @@ public class ConfigurationSystemService {
 	}
 
 	public void delete(final ConfigurationSystem configurationSystem) {
-		assert configurationSystem != null;
-		assert configurationSystem.getId() != 0;
+		Assert.notNull(configurationSystem);
+		Assert.isTrue(configurationSystem.getId() != 0);
 
 		Assert.isTrue(this.configurationSystemRepository.exists(configurationSystem.getId()));
 
@@ -78,4 +78,13 @@ public class ConfigurationSystemService {
 	}
 
 	// Other business methods -------------------------------------------------
+
+	public Collection<String> spamWord() {
+		Collection<String> res;
+
+		res = this.configurationSystemRepository.spamWord();
+		Assert.notNull(res);
+
+		return res;
+	}
 }

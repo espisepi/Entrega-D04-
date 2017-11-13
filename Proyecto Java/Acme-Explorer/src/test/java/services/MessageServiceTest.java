@@ -28,8 +28,6 @@ public class MessageServiceTest extends AbstractTest {
 	private MessageService			messageService;
 	// Supporting services ----------------------------------------------------
 	@Autowired
-	private ActorService			actorService;
-	@Autowired
 	private MessageFolderService	messageFolderService;
 	@Autowired
 	private AdministratorService	administratorService;
@@ -55,61 +53,42 @@ public class MessageServiceTest extends AbstractTest {
 		Assert.notNull(message);
 
 	}
-	@Test
-	public void testAdmin() {
-		Administrator administratorSen;
-		administratorSen = this.administratorService.create();
-		administratorSen.setName("enviador");
-		administratorSen.setSurname("surname");
-		administratorSen.setEmail("email@gmail.com");
-		administratorSen.setPhone("31333");
-		administratorSen.setAddress("address");
-		administratorSen.getUserAccount().setPassword("enviador");
-		administratorSen.getUserAccount().setUsername("enviador");
-		administratorSen.getMessagesFolders().addAll(this.messageFolderService.createDefaultFolders());
-		this.administratorService.save(administratorSen);
 
-	}
 	@Test
 	public void testSave() {
-
-		Administrator administratorSen, adminRecip;
-		administratorSen = this.administratorService.create();
-		administratorSen.setName("enviador");
-		administratorSen.setSurname("surname");
-		administratorSen.setEmail("email@gmail.com");
-		administratorSen.setPhone("31333");
-		administratorSen.setAddress("address");
-		administratorSen.getUserAccount().setPassword("enviador");
-		administratorSen.getUserAccount().setUsername("enviador");
-		administratorSen.getMessagesFolders().addAll(this.messageFolderService.createDefaultFolders());
-		this.administratorService.save(administratorSen);
-		this.authenticate("enviador");
-		Message message1;
-		message1 = this.messageService.create();
-		adminRecip = this.administratorService.create();
-		adminRecip.setName("name");
-		adminRecip.setSurname("surname");
-		adminRecip.setEmail("email@gmail.com");
-		adminRecip.setPhone("31333");
-		adminRecip.setAddress("address");
+		super.authenticate("administrator1");
+		Administrator adminSend;
+		Administrator adminRecip;
+		Message message;
+		//Añado las carpetas por defecto a los dos administradores
+		adminSend = this.administratorService.findByPrincipal();
+		adminRecip = this.administratorService.findOne(super.getEntityId("administrator2"));
+		adminSend.getMessagesFolders().addAll(this.messageFolderService.createDefaultFolders());
 		adminRecip.getMessagesFolders().addAll(this.messageFolderService.createDefaultFolders());
+		adminSend = this.administratorService.save(adminSend);
+		adminRecip = this.administratorService.save(adminRecip);
+		//Creo el mensaje y lo guardo
+		message = this.messageService.create();
+		message.setBody("hola caracola");
+		message.setRecipient(adminRecip);
+		message.setPriority("NEUTRAL");
+		message.setSubject("hola");
+		message = this.messageService.save(message);
 
-		administratorSen.getUserAccount().setPassword("recibidor");
-		administratorSen.getUserAccount().setUsername("recibidor");
-		this.administratorService.save(adminRecip);
-		adminRecip = this.administratorService.findOne(super.getEntityId("administrator4"));
-
-		//administrator = this.administratorService.save(administrator);
-
-		//principal = this.administratorService.save(principal);
-
-		message1.setBody("hola caracola");
-		message1.setRecipient(adminRecip);
-		message1.setPriority("NEUTRAL");
-		message1.setSubject("hola");
-		this.messageService.save(message1);
-
+		super.unauthenticate();
 	}
 
+	@Test
+	public void testDelete() {
+		super.authenticate("administrator1");
+		Administrator adminPrincipal;
+		Message message;
+
+		adminPrincipal = this.administratorService.findByPrincipal();
+		message = adminPrincipal.getMessagesFolders().iterator().next().getMessages().iterator().next();
+		Assert.notNull(message);
+		this.messageService.delete(message);
+
+		super.unauthenticate();
+	}
 }

@@ -247,7 +247,7 @@ public class TripServiceTest extends AbstractTest {
 	public void testFindTripsWhitStatusAccepted() {
 		this.authenticate("explorer1");
 		Collection<Trip> trips;
-		trips = new ArrayList<Trip>(this.tripService.findTripsWhitStatusAccepted());
+		trips = new ArrayList<Trip>(this.tripService.findTripsWhitStatusAcceptedNotStarted());
 		Assert.notNull(trips);
 		this.authenticate(null);
 	}
@@ -308,6 +308,13 @@ public class TripServiceTest extends AbstractTest {
 		Auditor auditor;
 		auditor = this.auditorService.findOne(super.getEntityId("auditor1"));
 		trips = new ArrayList<Trip>(this.tripService.findByAuditorId(auditor.getId()));
+		Assert.notNull(trips);
+	}
+
+	@Test
+	public void testFindAllTripsNotPublished() {
+		Collection<Trip> trips;
+		trips = new ArrayList<>(this.tripService.findAllTripsNotPublished());
 		Assert.notNull(trips);
 	}
 

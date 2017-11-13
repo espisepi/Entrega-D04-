@@ -120,14 +120,13 @@ public class ApplicationForService {
 		actualYear = calendar.get(Calendar.YEAR);
 		actualYear = actualYear % 100;
 
-		if (creditCard.getExpirationYear() > actualYear)
+		if (Integer.parseInt(creditCard.getExpirationYear()) > actualYear)
 			res = true;
-		else if (creditCard.getExpirationYear() == actualYear && creditCard.getExpirationMonth() >= calendar.get(Calendar.MONTH))
+		else if (Integer.parseInt(creditCard.getExpirationYear()) == actualYear && Integer.parseInt(creditCard.getExpirationMonth()) >= calendar.get(Calendar.MONTH))
 			res = true;
 
 		return res;
 	}
-
 	public ApplicationFor changeStatus(final ApplicationFor applicationFor, final String newStatus) {
 		Manager managerPrincipal;
 
