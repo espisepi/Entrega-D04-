@@ -49,7 +49,7 @@ public class CreditCard {
 	public void setNumber(final String number) {
 		this.number = number;
 	}
-	@Pattern(regexp = "^[0-1]{1}\\d{1}?")
+	@Pattern(regexp = "^[0]{1}\\d{1}|[1]{1}[0-2]{1}?")
 	public String getExpirationMonth() {
 		return this.expirationMonth;
 	}
