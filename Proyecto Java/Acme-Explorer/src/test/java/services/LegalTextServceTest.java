@@ -6,7 +6,6 @@ import java.util.Collection;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -89,23 +88,7 @@ public class LegalTextServceTest extends AbstractTest {
 	}
 
 	@Test
-	public void testSavedUpdate() {
-
-		LegalText result;
-		LegalText resultSaved;
-
-		result = this.legalTextService.findOne(super.getEntityId("legalText1"));
-		result.setTitle("MIRAR FECHA");
-
-		resultSaved = this.legalTextService.save(result);
-
-		Assert.notNull(resultSaved);
-
-	}
-
-	@Test
-	@Rollback(false)
-	public void testDeletePositive() {
+	public void testDelete() {
 
 		LegalText resultSaved;
 		LegalText result;
@@ -130,7 +113,6 @@ public class LegalTextServceTest extends AbstractTest {
 	}
 
 	@Test
-	@Rollback(false)
 	public void testFindOneToEdit() {
 
 		this.authenticate("administrator1");
