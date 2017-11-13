@@ -13,7 +13,7 @@ Trtaer mucha información para procesarla es mucho más costoso.
 
 -Cúantas relacioens tiene TRIP? Cada vez que recupero un trip, uso todas las relaciones de alrededor? NO, tenemos demasiadas relaciones bidireccionales
 Repasar relaciones bidireccionales.
-SurvivalClass -> Repasar bidireccional.
+SurvivalClass -> Repasar bidireccional. cada vez que de una clase de supervivencia tengo que saber para que  trip es.
 LegalText -> Repasar bidireccional.
 Tarea -> Cómo estudiar todas las relaciones bidireccionales del modelo. Refactorizar la clase trip.
 
