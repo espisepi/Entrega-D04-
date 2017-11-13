@@ -39,7 +39,7 @@ public class CurriculaServiceTest extends AbstractTest {
 	private PersonalRecordService	personalRecordService;
 
 
-	//TODO
+	// Test -----------------------------------------------------------------------------
 
 	@Test
 	public void testCreate() {
@@ -51,7 +51,7 @@ public class CurriculaServiceTest extends AbstractTest {
 	}
 	@Test
 	public void testSave() {
-		this.authenticate("ranger1");
+		this.authenticate("ranger5");
 		Curricula curricula;
 		curricula = this.curriculaService.create();
 
