@@ -90,13 +90,8 @@ public class AuditRecordService {
 
 	public AuditRecord OneToModified(AuditRecord auditRecord) {
 		this.auditorService.checkPrincipal();
-
-		Date realisedMoment;
-		realisedMoment = new Date(System.currentTimeMillis() - 1000);
 		Assert.notNull(auditRecord);
 		Assert.isTrue(auditRecord.isDraftMode() == true);
-		auditRecord.setRealisedMoment(realisedMoment);
-		Assert.notNull(auditRecord);
 		return auditRecord;
 	}
 }
