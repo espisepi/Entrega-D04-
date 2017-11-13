@@ -35,13 +35,15 @@ public class ProfessionalRecordService {
 
 	public ProfessionalRecord create() {
 		ProfessionalRecord professionalRecord;
+		List<String> comments;
+
 		professionalRecord = new ProfessionalRecord();
-		List<String> comments = new ArrayList<String>();
+		comments = new ArrayList<String>();
 
 		professionalRecord.setComments(comments);
+
 		return professionalRecord;
 	}
-
 	public Collection<ProfessionalRecord> findAll() {
 		Collection<ProfessionalRecord> professionalRecords;
 
@@ -53,8 +55,8 @@ public class ProfessionalRecordService {
 
 	public ProfessionalRecord findOne(int professionalRecordId) {
 		Assert.isTrue(professionalRecordId != 0);
-		ProfessionalRecord professionalRecord;
 
+		ProfessionalRecord professionalRecord;
 		professionalRecord = this.professionalRecordRepository.findOne(professionalRecordId);
 
 		return professionalRecord;
@@ -62,23 +64,15 @@ public class ProfessionalRecordService {
 
 	public ProfessionalRecord save(ProfessionalRecord professionalRecord) {
 		Assert.notNull(professionalRecord);
-		Assert.isTrue(professionalRecord.getId() == 0);
 		ProfessionalRecord result;
 
-		result = this.professionalRecordRepository.saveAndFlush(professionalRecord);
+		result = this.professionalRecordRepository.save(professionalRecord);
+		Assert.notNull(result);
 		Assert.isTrue(result.getId() != 0);
 		return result;
 
 	}
 
-	public ProfessionalRecord update(ProfessionalRecord professionalRecord) {
-		Assert.notNull(professionalRecord);
-		Assert.notNull(this.professionalRecordRepository.findOne(professionalRecord.getId()));
-
-		ProfessionalRecord newProfessionalRecord = this.professionalRecordRepository.saveAndFlush(professionalRecord);
-
-		return newProfessionalRecord;
-	}
 	public void delete(ProfessionalRecord professionalRecord) {
 
 		Assert.notNull(professionalRecord);

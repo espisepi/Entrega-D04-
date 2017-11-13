@@ -75,11 +75,4 @@ public class ProfessionalRecordServiceTest extends AbstractTest {
 		this.professionalRecordService.delete(newProfessionalRecord);
 	}
 
-	@Test
-	public void testUpdate() {
-		ProfessionalRecord professionalRecord = this.professionalRecordService.findOne(super.getEntityId("professionalRecord2"));
-		professionalRecord.setCompanyName("modificado");
-
-		this.professionalRecordService.update(professionalRecord);
-	}
 }

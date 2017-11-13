@@ -33,6 +33,7 @@ public class PersonalRecordService {
 
 	public PersonalRecord create() {
 		PersonalRecord personalRecord;
+
 		personalRecord = new PersonalRecord();
 
 		return personalRecord;
@@ -59,9 +60,11 @@ public class PersonalRecordService {
 
 	public PersonalRecord save(PersonalRecord personalRecord) {
 		Assert.notNull(personalRecord);
+
 		PersonalRecord result;
 
 		result = this.personalRecordRepository.saveAndFlush(personalRecord);
+		Assert.notNull(result);
 
 		return result;
 
@@ -75,8 +78,8 @@ public class PersonalRecordService {
 
 	public void delete(PersonalRecord personalRecord) {
 
-		assert personalRecord != null;
-		assert personalRecord.getId() != 0;
+		Assert.notNull(personalRecord);
+		Assert.isTrue(personalRecord.getId() != 0);
 
 		Assert.isTrue(this.personalRecordRepository.exitsCurriculaWithThisPersonalRecord(personalRecord.getId()) == 0, "Debe de eliminar antes la curricula asociada a este PersonalRecord");
 
@@ -85,5 +88,4 @@ public class PersonalRecordService {
 		this.personalRecordRepository.delete(personalRecord);
 
 	}
-
 }

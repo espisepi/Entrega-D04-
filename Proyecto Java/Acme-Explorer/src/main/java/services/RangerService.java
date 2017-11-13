@@ -127,7 +127,7 @@ public class RangerService {
 		Assert.notNull(authorities);
 
 		Authority auth = new Authority();
-		auth.setAuthority("ADMIN");
+		auth.setAuthority("RANGER");
 
 		Assert.isTrue(authorities.contains(auth));
 	}
