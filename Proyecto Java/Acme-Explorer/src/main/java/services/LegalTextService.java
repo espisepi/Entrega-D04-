@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.LegalTextRepository;
-import domain.Administrator;
 import domain.LegalText;
 
 @Service
@@ -32,14 +31,15 @@ public class LegalTextService {
 	}
 
 	// Simple CRUD methods-----------------------------------------------------
-	public LegalText create(Administrator administrator) {
+	public LegalText create() {
+
+		this.administratorService.checkPrincipal();
 
 		LegalText result;
 		Date moment;
 
 		result = new LegalText();
 		moment = new Date(System.currentTimeMillis() - 1000);
-		administrator = this.administratorService.findByPrincipal();
 
 		result.setMoment(moment);
 		result.setDraftMode(true);
@@ -65,31 +65,28 @@ public class LegalTextService {
 	}
 
 	public LegalText save(final LegalText legalText) {
-		//TODO: Comprobar que solo sea el usuario autenticado como ADMINISTRATOR
-		//quien puede modificar.
 
-		//Compruebo legalText no sea nulo
 		Assert.notNull(legalText);
-		//Compruebo que no está guardado en modo final para poder editarlo
-		//Assert.isTrue(legalText.isDraftMode() == true);
+
+		this.administratorService.checkPrincipal();
+
 		LegalText result;
 		Date moment;
+
+		if (legalText.getId() == 0)
+			moment = new Date(System.currentTimeMillis() - 1000);
+
+		else
+
+			moment = legalText.getMoment();
+
+		legalText.setMoment(moment);
 
 		result = this.legalTextRepository.save(legalText);
 		result.setDraftMode(true);
 
-		if (result.getId() == 0)
-			moment = new Date();
-
-		else
-
-			moment = result.getMoment();
-
-		result.setMoment(moment);
-
 		return result;
 	}
-
 	public void delete(final LegalText legalText) {
 		Assert.isTrue(legalText.getId() != 0);
 		Assert.notNull(legalText);
@@ -112,11 +109,11 @@ public class LegalTextService {
 
 		Assert.isTrue(result.isDraftMode() == true);
 
-		resultSaved = this.legalTextRepository.save(result);
+		//resultSaved = this.legalTextRepository.save(result);
 
-		Assert.notNull(resultSaved);
+		Assert.notNull(result);
 
-		return resultSaved;
+		return result;
 
 	}
 }
