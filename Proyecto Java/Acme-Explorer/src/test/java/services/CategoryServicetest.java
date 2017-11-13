@@ -45,6 +45,7 @@ public class CategoryServicetest extends AbstractTest {
 
 		result = this.categoryService.create();
 		result.setName("Name test");
+		result.setFatherCategory(this.categoryService.findOne(super.getEntityId("climbing")));
 		result = this.categoryService.save(result);
 		Assert.isTrue(result.getId() != 0);
 
