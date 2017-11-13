@@ -88,7 +88,7 @@ public class ManagerService {
 		Assert.isTrue(managerId != 0);
 		Manager result;
 		result = this.managerRepository.findOne(managerId);
-		Assert.notNull(result);
+
 		return result;
 	}
 

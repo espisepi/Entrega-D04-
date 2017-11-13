@@ -60,7 +60,6 @@ public class LegalTextService {
 		LegalText result;
 		result = this.legalTextRepository.findOne(legalTextId);
 
-		Assert.notNull(result);
 		return result;
 	}
 
