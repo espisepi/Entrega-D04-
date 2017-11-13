@@ -13,6 +13,7 @@ import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
 import domain.Explorer;
+import domain.Trip;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -25,6 +26,8 @@ public class ExplorerServiceTest extends AbstractTest {
 
 	@Autowired
 	private ExplorerService	explorerService;
+	@Autowired
+	private TripService		tripService;
 
 
 	// Supporting services ----------------------------------------------------
@@ -82,6 +85,15 @@ public class ExplorerServiceTest extends AbstractTest {
 		Explorer explorer;
 		explorer = this.explorerService.findOne(super.getEntityId("explorer1"));
 		Assert.notNull(explorer);
+	}
+
+	@Test
+	public void testFindExplorersByTripId() {
+		Collection<Explorer> explorers;
+		Trip trip;
+		trip = this.tripService.findOne(super.getEntityId("trip1"));
+		explorers = this.explorerService.findExplorersByTripId(trip.getId());
+		Assert.notNull(explorers);
 	}
 
 }
