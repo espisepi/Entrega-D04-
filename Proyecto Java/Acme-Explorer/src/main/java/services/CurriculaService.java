@@ -11,9 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.CurriculaRepository;
-import security.Authority;
-import security.LoginService;
-import security.UserAccount;
 import domain.Curricula;
 import domain.EducationRecord;
 import domain.EndorserRecord;
@@ -48,7 +45,7 @@ public class CurriculaService {
 
 	public Curricula create() {
 
-		this.checkPrincipal();
+		this.rangerService.checkPrincipal();
 
 		Curricula curricula;
 		List<ProfessionalRecord> professionalRecords;
@@ -100,7 +97,7 @@ public class CurriculaService {
 		Assert.notNull(this.curriculaRepository.findOne(curriculaId));
 
 		//Tengo que comprobar que el que quiera modificar esa curricula es su propio ranger
-		this.checkPrincipal();
+		this.rangerService.checkPrincipal();
 
 		ranger = this.rangerService.findByPrincipal();
 		curriculaFromRanger = this.findCurriculaFromRanger(ranger.getId());
@@ -159,23 +156,6 @@ public class CurriculaService {
 	}
 
 	// Other methods Bussiness --------------------------------------------------------
-	public void checkPrincipal() {
-
-		UserAccount userAccount;
-		Collection<Authority> authorities;
-		Authority auth;
-
-		userAccount = LoginService.getPrincipal();
-		authorities = userAccount.getAuthorities();
-
-		Assert.notNull(userAccount);
-		Assert.notNull(authorities);
-
-		auth = new Authority();
-		auth.setAuthority("RANGER");
-
-		Assert.isTrue(authorities.contains(auth));
-	}
 
 	public Curricula findCurriculaFromRanger(int rangerId) {
 

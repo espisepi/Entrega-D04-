@@ -79,7 +79,7 @@ public class PersonalRecordService {
 	public void delete(PersonalRecord personalRecord) {
 
 		Assert.notNull(personalRecord);
-		Assert.isTrue()
+		Assert.isTrue(personalRecord.getId() != 0);
 
 		Assert.isTrue(this.personalRecordRepository.exitsCurriculaWithThisPersonalRecord(personalRecord.getId()) == 0, "Debe de eliminar antes la curricula asociada a este PersonalRecord");
 
