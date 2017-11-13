@@ -1,0 +1,40 @@
+REPOSITORIO TRIP
+-Cambiar query de explorer por trip al repositorio del Explorer.
+Si una consulta devuelve una entidad de tipo E debe de estar en el repositorio de tipo E.
+Trtaer mucha información para procesarla es mucho más costoso.
+
+-Estudiar diferencia stdev y la fórmula.(poblacional)
+
+-Ordenar parámetros de las querys en (ADMINISTRATOR).
+
+-Diferencia entre LIKE e igualdad, like es muy poco eficiente, hay que cambiarlo por el igual  (TRIP). (like para patrones)
+
+-Sacar un listado con el número de veces que es referenciado un legalText.
+
+-Cúantas relacioens tiene TRIP? Cada vez que recupero un trip, uso todas las relaciones de alrededor? NO, tenemos demasiadas relaciones bidireccionales
+Repasar relaciones bidireccionales.
+SurvivalClass -> Repasar bidireccional.
+LegalText -> Repasar bidireccional.
+Tarea -> Cómo estudiar todas las relaciones bidireccionales del modelo. Refactorizar la clase trip.
+
+-Documentar las consulta a las que hacen referencia.
+
+findALLTrIPublishedNotStarted -> consulta JPQL.
+No nos traemos todos los trips
+Revisar todos los for y cambiarlo por
+
+
+PREGUNTAS
+-¿Código comentado?
+Relacionada con autoflash, configurar un repositorio para que haga autoflash mediante algo que configuramos en el test.
+cada vez que se hace un save se hace un autoflash. (Estudiar autoflash en el repositorio) 
+Sí podemos dejar comentario para documentar nuestro código.
+
+-Borrar una categoria que no podemos borrar.
+Añadir nota con respecto al tema de category haciendo referencia a que ha sido comentado en el seguimiento.
+
+-No se puede implementar como un atributo derivado, se tiene que calcular en un servicio.
+Método en un servicio, le damos el trip y nos calcula el precio de las etapas recorriendolas una a una.
+Para saber cuanto acceco a la base de datos, si accedo a la base de datos l ohago a través de un repositorio, solo a través de los ervicios puedo hacerlo
+
+
