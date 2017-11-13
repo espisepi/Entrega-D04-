@@ -1998,6 +1998,9 @@
 	<!--Categoria Lake -->
 	<bean id="lake" class="domain.Category">
 		<property name="name" value="Lake" />
+		<property name="fatherCategory">
+		<ref bean="water"/>
+		</property>
 		<property name="subCategories">
 			<list>
 			</list>
@@ -2007,6 +2010,9 @@
 	<!--Categoria Savana -->
 	<bean id="savana" class="domain.Category">
 		<property name="name" value="Savana" />
+		<property name="fatherCategory">
+		<ref bean="ground"/>
+		</property>
 		<property name="subCategories">
 			<list>
 			</list>
@@ -2014,8 +2020,22 @@
 	</bean>
 
 	<!--Categoria River -->
-	<bean id="river" class="domain.Category">
+	<bean id="riverClimbing" class="domain.Category">
 		<property name="name" value="River" />
+		<property name="fatherCategory">
+		<ref bean="climbing"/>
+		</property>
+		<property name="subCategories">
+			<list>
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="riverWater" class="domain.Category">
+		<property name="name" value="River" />
+		<property name="fatherCategory">
+		<ref bean="water"/>
+		</property>
 		<property name="subCategories">
 			<list>
 			</list>
@@ -2025,6 +2045,9 @@
 	<!--Categoria Mountain -->
 	<bean id="mountain" class="domain.Category">
 		<property name="name" value="Mountain" />
+		<property name="fatherCategory">
+		<ref bean="climbing"/>
+		</property>
 		<property name="subCategories">
 			<list>
 			</list>
@@ -2034,10 +2057,13 @@
 	<!--Categoria Hija de Safari-> Water -->
 	<bean id="water" class="domain.Category">
 		<property name="name" value="Water" />
+		<property name="fatherCategory">
+		<ref bean="safari"/>
+		</property>
 		<property name="subCategories">
 			<list>
 				<ref bean="lake" />
-				<ref bean="river" />
+				<ref bean="riverWater" />
 			</list>
 		</property>
 	</bean>
@@ -2045,6 +2071,9 @@
 	<!--Categoria Hija de Safari -> Ground -->
 	<bean id="ground" class="domain.Category">
 		<property name="name" value="Ground" />
+		<property name="fatherCategory">
+		<ref bean="safari"/>
+		</property>
 		<property name="subCategories">
 			<list>
 				<ref bean="savana" />
@@ -2058,10 +2087,13 @@
 	<!--Categoria Climbing -->
 	<bean id="climbing" class="domain.Category">
 		<property name="name" value="Climbing" />
+		<property name="fatherCategory">
+		<ref bean="category"/>
+		</property>
 		<property name="subCategories">
 			<list>
 				<ref bean="mountain" />
-				<ref bean="river" />
+				<ref bean="riverClimbing" />
 			</list>
 		</property>
 	</bean>
@@ -2069,6 +2101,9 @@
 	<!--Categoria Safari -->
 	<bean id="safari" class="domain.Category">
 		<property name="name" value="Safari" />
+		<property name="fatherCategory">
+		<ref bean="category"/>
+		</property>
 		<property name="subCategories">
 			<list>
 				<ref bean="ground" />
