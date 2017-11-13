@@ -48,7 +48,7 @@ public class LegalTextService {
 	}
 	public Collection<LegalText> findAll() {
 		Collection<LegalText> result;
-		Assert.notNull(this.legalTextRepository);
+
 		result = this.legalTextRepository.findAll();
 		Assert.notNull(result);
 		return result;

@@ -7,12 +7,14 @@ import java.util.Collection;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import utilities.AbstractTest;
+import domain.Curricula;
 import domain.MiscellaneousRecord;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -26,6 +28,9 @@ public class MiscellaneousRecordTest extends AbstractTest {
 
 	@Autowired
 	private MiscellaneousRecordService	miscellaneousRecordService;
+
+	@Autowired
+	private CurriculaService			curriculaService;
 
 
 	//Test
@@ -100,19 +105,24 @@ public class MiscellaneousRecordTest extends AbstractTest {
 		Assert.notNull(miscellaneousRecordsSaved);
 		Assert.notEmpty(miscellaneousRecordsSaved);
 	}
+
 	@Test
+	@Rollback(false)
 	public void testDelete() {
+
+		Curricula curricula;
 		MiscellaneousRecord miscellaneousRecord;
-		Collection<MiscellaneousRecord> miscellaneousRecords;
-		int idMiscellaneousRecord;
 
-		miscellaneousRecords = this.miscellaneousRecordService.findAll();
-		idMiscellaneousRecord = miscellaneousRecords.iterator().next().getId();
+		curricula = this.curriculaService.findOne(super.getEntityId("curricula1"));
+		miscellaneousRecord = curricula.getMiscellaneousRecords().iterator().next();
 
-		miscellaneousRecord = this.miscellaneousRecordService.findOne(idMiscellaneousRecord);
+		Assert.notNull(miscellaneousRecord);
+
+		curricula.getMiscellaneousRecords().remove(miscellaneousRecord);
 
 		this.miscellaneousRecordService.delete(miscellaneousRecord);
-		Assert.isNull(this.miscellaneousRecordService.findOne(idMiscellaneousRecord));
-	}
 
+		Assert.isNull(this.miscellaneousRecordService.findOne(miscellaneousRecord.getId()));
+
+	}
 }

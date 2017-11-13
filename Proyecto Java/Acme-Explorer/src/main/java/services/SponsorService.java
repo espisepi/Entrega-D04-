@@ -82,6 +82,9 @@ public class SponsorService {
 		Assert.notNull(sponsor);
 		Sponsor result;
 		result = this.sponsorRepository.save(sponsor);
+
+		Assert.notNull(result);
+
 		return result;
 
 	}

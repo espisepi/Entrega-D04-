@@ -90,6 +90,9 @@ public class RangerService {
 		Assert.notNull(ranger);
 		Ranger result;
 		result = this.RangerRepository.save(ranger);
+
+		Assert.notNull(result);
+
 		return result;
 	}
 

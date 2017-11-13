@@ -77,6 +77,8 @@ public class SurvivalClassService {
 	}
 	public Collection<SurvivalClass> findAll() {
 
+		this.managerService.checkPrincipal();
+
 		Collection<SurvivalClass> result;
 
 		result = this.survivalClassRecordRepository.findAll();
@@ -99,6 +101,8 @@ public class SurvivalClassService {
 
 	public SurvivalClass save(SurvivalClass survivalClass) {
 
+		this.managerService.checkPrincipal();
+
 		Assert.notNull(survivalClass);
 
 		SurvivalClass result;
@@ -110,9 +114,13 @@ public class SurvivalClassService {
 
 		result = this.survivalClassRecordRepository.save(survivalClass);
 
+		Assert.notNull(result);
+
 		return result;
 	}
 	public void delete(SurvivalClass survivalClass) {
+
+		this.managerService.checkPrincipal();
 
 		Assert.notNull(survivalClass);
 		Assert.isTrue(survivalClass.getId() != 0);

@@ -8,7 +8,6 @@ import javax.transaction.Transactional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
@@ -46,7 +45,7 @@ public class SurvivalClassServiceTest extends AbstractTest {
 	// Tests ----------------------------------------------
 
 	@Test
-	public void createTest() {
+	public void testCreate() {
 		this.authenticate("manager1");
 		SurvivalClass result;
 		Administrator administrator;
@@ -59,7 +58,9 @@ public class SurvivalClassServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void findAllTest() {
+	public void testFindAll() {
+
+		this.authenticate("manager1");
 
 		Collection<SurvivalClass> result;
 
@@ -71,7 +72,7 @@ public class SurvivalClassServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void findOneTest() {
+	public void testFindOne() {
 
 		Collection<SurvivalClass> survivalClasses;
 		SurvivalClass result;
@@ -86,8 +87,7 @@ public class SurvivalClassServiceTest extends AbstractTest {
 	}
 
 	@Test
-	@Rollback(false)
-	public void saveTest() {
+	public void testSave() {
 
 		this.authenticate("manager1");
 
@@ -123,7 +123,9 @@ public class SurvivalClassServiceTest extends AbstractTest {
 	}
 
 	@Test
-	public void deleteTest() {
+	public void testDelete() {
+
+		this.authenticate("manager1");
 
 		SurvivalClass result;
 		Collection<Explorer> explorers;

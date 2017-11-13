@@ -59,6 +59,9 @@ public class MiscellaneousRecordService {
 
 	public MiscellaneousRecord findOne(int miscellaneousRecordId) {
 
+		Assert.notNull(miscellaneousRecordId);
+		Assert.isTrue(miscellaneousRecordId != 0);
+
 		MiscellaneousRecord result;
 
 		result = this.miscellaneousRecordRepository.findOne(miscellaneousRecordId);
@@ -72,6 +75,8 @@ public class MiscellaneousRecordService {
 		MiscellaneousRecord result;
 
 		result = this.miscellaneousRecordRepository.save(miscellaneousRecord);
+
+		Assert.notNull(result);
 
 		return result;
 	}

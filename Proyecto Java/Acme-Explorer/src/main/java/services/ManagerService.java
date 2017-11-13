@@ -97,6 +97,9 @@ public class ManagerService {
 		Assert.notNull(manager);
 		Manager result;
 		result = this.managerRepository.save(manager);
+
+		Assert.notNull(result);
+
 		return result;
 	}
 
