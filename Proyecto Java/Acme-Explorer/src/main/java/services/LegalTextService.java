@@ -98,22 +98,11 @@ public class LegalTextService {
 
 	//Other services-------------------------------
 
-	public LegalText findOneToEdit(int idLegalText) {
+	public LegalText findOneToEdit(LegalText legalText) {
 
 		this.administratorService.checkPrincipal();
-
-		LegalText result;
-		LegalText resultSaved;
-
-		result = this.legalTextRepository.findOne(idLegalText);
-
-		Assert.isTrue(result.isDraftMode() == true);
-
-		//resultSaved = this.legalTextRepository.save(result);
-
-		Assert.notNull(result);
-
-		return result;
+		Assert.isTrue(legalText.isDraftMode() == true);
+		return legalText;
 
 	}
 }
