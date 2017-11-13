@@ -98,6 +98,9 @@ public class MessageService {
 	public void delete(final Message message) {
 		Assert.notNull(message);
 		Assert.isTrue(message.getId() != 0);
+		Actor actorPrincipal;
+		actorPrincipal = this.actorService.findPrincipal();
+		Assert.isTrue(actorPrincipal.getMessagesFolders().contains(message.getMessageFolder()));
 
 		this.messageRepository.delete(message);
 	}
