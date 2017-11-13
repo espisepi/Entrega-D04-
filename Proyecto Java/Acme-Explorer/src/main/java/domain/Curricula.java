@@ -36,12 +36,23 @@ public class Curricula extends DomainEntity {
 
 	// Relationships ----------------------------------------------------------
 
+	private Ranger							ranger;
 	private PersonalRecord					personalRecord;
 	private Collection<EducationRecord>		educationRecords;
 	private Collection<ProfessionalRecord>	professionalRecords;
 	private Collection<EndorserRecord>		endorserRecords;
 	private Collection<MiscellaneousRecord>	miscellaneousRecords;
 
+
+	@Valid
+	@OneToOne(optional = false)
+	public Ranger getRanger() {
+		return this.ranger;
+	}
+
+	public void setRanger(Ranger ranger) {
+		this.ranger = ranger;
+	}
 
 	@Valid
 	@NotNull

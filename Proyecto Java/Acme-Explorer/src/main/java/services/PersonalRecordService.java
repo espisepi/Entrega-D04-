@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.PersonalRecordRepository;
+import domain.Curricula;
 import domain.PersonalRecord;
 
 @Service
@@ -20,8 +21,11 @@ public class PersonalRecordService {
 	@Autowired
 	private PersonalRecordRepository	personalRecordRepository;
 
-
 	// Supporting services ----------------------------------------------------
+
+	@Autowired
+	private CurriculaService			curriculaService;
+
 
 	// Constructors-------------------------------------------------------
 
@@ -70,10 +74,10 @@ public class PersonalRecordService {
 
 	}
 
-	public Integer exitsCurriculaWithThisPersonalRecord(int personalRecordId) {
+	public Curricula CurriculaWithThisPersonalRecord(int personalRecordId) {
 
 		Assert.isTrue(personalRecordId != 0);
-		return this.personalRecordRepository.exitsCurriculaWithThisPersonalRecord(personalRecordId);
+		return this.personalRecordRepository.CurriculaWithThisPersonalRecord(personalRecordId);
 	}
 
 	public void delete(PersonalRecord personalRecord) {
@@ -81,9 +85,10 @@ public class PersonalRecordService {
 		Assert.notNull(personalRecord);
 		Assert.isTrue(personalRecord.getId() != 0);
 
-		Assert.isTrue(this.personalRecordRepository.exitsCurriculaWithThisPersonalRecord(personalRecord.getId()) == 0, "Debe de eliminar antes la curricula asociada a este PersonalRecord");
-
-		Assert.isTrue(this.personalRecordRepository.exists(personalRecord.getId()));
+		Curricula curriculaWithThisPersonalRecord;
+		curriculaWithThisPersonalRecord = this.personalRecordRepository.CurriculaWithThisPersonalRecord(personalRecord.getId());
+		if (curriculaWithThisPersonalRecord != null && curriculaWithThisPersonalRecord.getId() != 0)
+			this.curriculaService.delete(curriculaWithThisPersonalRecord);
 
 		this.personalRecordRepository.delete(personalRecord);
 

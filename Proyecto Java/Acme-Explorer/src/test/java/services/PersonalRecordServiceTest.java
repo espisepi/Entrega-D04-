@@ -66,5 +66,12 @@ public class PersonalRecordServiceTest extends AbstractTest {
 		this.personalRecordService.delete(newPersonalRecord);
 
 	}
+	@Test
+	public void testDeletePersonalRecordWithCurricula() {
+		PersonalRecord personalRecordToDelete;
+
+		personalRecordToDelete = this.personalRecordService.findOne(super.getEntityId("personalRecord1"));
+		this.personalRecordService.delete(personalRecordToDelete);
+	}
 
 }

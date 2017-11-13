@@ -1474,9 +1474,6 @@
 			<list>
 			</list>
 		</property>
-		<property name="curricula">
-			<null />
-		</property>
 		<property name="trips">
 			<list>
 				<ref bean="trip1" />
@@ -1500,7 +1497,6 @@
 			<list>
 			</list>
 		</property>
-		<property name="curricula" ref="curricula2" />
 		<property name="trips">
 			<list>
 				<ref bean="trip3" />
@@ -1523,7 +1519,6 @@
 			<list>
 			</list>
 		</property>
-		<property name="curricula" ref="curricula3" />
 		<property name="trips">
 			<list>
 				<ref bean="trip5" />
@@ -1546,7 +1541,6 @@
 			<list>
 			</list>
 		</property>
-		<property name="curricula" ref="curricula4" />
 		<property name="trips">
 			<list>
 				<ref bean="trip4" />
@@ -1569,14 +1563,13 @@
 			<list>
 			</list>
 		</property>
-		<property name="curricula">
-			<null />
-		</property>
 		<property name="trips">
 			<list>
 			</list>
 		</property>
 	</bean>
+	
+
 
 
 	<!-- Auditor -->
@@ -2673,6 +2666,7 @@
 
 	<bean id="curricula1" class="domain.Curricula">
 		<property name="ticker" value="171023-ABCD" />
+		<property name="ranger" ref="ranger1"></property>
 		<property name="personalRecord" ref="personalRecord1" />
 
 		<property name="educationRecords">
@@ -2700,6 +2694,7 @@
 
 	<bean id="curricula2" class="domain.Curricula">
 		<property name="ticker" value="171023-ABCE" />
+			<property name="ranger" ref="ranger2"></property>
 		<property name="personalRecord" ref="personalRecord2" />
 
 		<property name="educationRecords">
@@ -2726,6 +2721,7 @@
 
 	<bean id="curricula3" class="domain.Curricula">
 		<property name="ticker" value="171023-ABCF" />
+			<property name="ranger" ref="ranger3"></property>
 		<property name="personalRecord" ref="personalRecord3" />
 
 		<property name="educationRecords">
@@ -2752,6 +2748,7 @@
 
 	<bean id="curricula4" class="domain.Curricula">
 		<property name="ticker" value="171023-ABCG" />
+			<property name="ranger" ref="ranger4"></property>
 		<property name="personalRecord" ref="personalRecord4" />
 
 		<property name="educationRecords">
@@ -2767,32 +2764,6 @@
 		<property name="endorserRecords">
 			<list>
 				<ref bean="endorserRecord4" />
-			</list>
-		</property>
-		<property name="miscellaneousRecords">
-			<list>
-
-			</list>
-		</property>
-	</bean>
-
-	<bean id="curricula5" class="domain.Curricula">
-		<property name="ticker" value="171023-ABCH" />
-		<property name="personalRecord" ref="personalRecord5" />
-
-		<property name="educationRecords">
-			<list>
-				<ref bean="educationRecord5" />
-			</list>
-		</property>
-		<property name="professionalRecords">
-			<list>
-
-			</list>
-		</property>
-		<property name="endorserRecords">
-			<list>
-				<ref bean="endorserRecord5" />
 			</list>
 		</property>
 		<property name="miscellaneousRecords">

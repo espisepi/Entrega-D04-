@@ -58,7 +58,7 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
 	@Query("select count(r)/(select count(t) from Trip t)*1.0 from Trip r where r.auditRecords.size>0")
 	Double findTheRatOfTripsWihoutAnAuditRecord();
 
-	@Query("select count(r)/(select count(s) from Ranger s)*1.0 from Ranger r where r.curricula!=null")
+	@Query("select count(c) / (select count(s) from Ranger s)*1.0 from Curricula c")
 	Double findTheRatOfRangersWhoHaveRegisteredCurricula();
 
 	@Query("select (select count(c) from Ranger r join r.curricula c where c.endorserRecords.size>0)*1.0/count(c) from Curricula c")
