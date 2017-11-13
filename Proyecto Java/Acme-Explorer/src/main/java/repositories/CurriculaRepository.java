@@ -11,9 +11,9 @@ import domain.Ranger;
 @Repository
 public interface CurriculaRepository extends JpaRepository<Curricula, Integer> {
 
-	@Query("select c.curricula from Ranger c where c.id=?1")
+	@Query("select c from Curricula c where c.ranger=?1")
 	Curricula findCurriculaFromRanger(int rangerId);
 
-	@Query("select c from Ranger c where c.curricula.id=?1")
+	@Query("select c.ranger from Curricula c where c.id=?1")
 	Ranger rangerWithThisCurricula(int curriculaID);
 }

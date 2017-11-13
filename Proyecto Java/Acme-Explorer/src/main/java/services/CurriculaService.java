@@ -52,13 +52,16 @@ public class CurriculaService {
 		List<MiscellaneousRecord> miscellaneousRecords;
 		List<EndorserRecord> endorserRecords;
 		List<EducationRecord> educationRecords;
+		Ranger ranger;
 
+		ranger = this.rangerService.findByPrincipal();
 		professionalRecords = new ArrayList<ProfessionalRecord>();
 		miscellaneousRecords = new ArrayList<MiscellaneousRecord>();
 		endorserRecords = new ArrayList<EndorserRecord>();
 		educationRecords = new ArrayList<EducationRecord>();
 		curricula = new Curricula();
 
+		curricula.setRanger(ranger);
 		curricula.setEducationRecords(educationRecords);
 		curricula.setEndorserRecords(endorserRecords);
 		curricula.setMiscellaneousRecords(miscellaneousRecords);
@@ -69,15 +72,12 @@ public class CurriculaService {
 	}
 	public Curricula save(Curricula curricula) {
 
-		Ranger ranger;
 		Curricula newCurricula;
 
 		Assert.notNull(curricula);
 		Assert.notNull(curricula.getPersonalRecord());
 
-		ranger = this.rangerService.findByPrincipal();
 		newCurricula = this.curriculaRepository.save(curricula);
-		ranger.setCurricula(newCurricula);
 
 		Assert.notNull(newCurricula);
 
@@ -88,7 +88,6 @@ public class CurriculaService {
 		Collection<MiscellaneousRecord> miscellaneousRecords) {
 
 		Ranger ranger;
-		Curricula curriculaFromRanger;
 		Curricula updateCurricula;
 		PersonalRecord newPersonalRecord;
 		Curricula curriculaBeforeUpdate;
@@ -98,11 +97,9 @@ public class CurriculaService {
 
 		//Tengo que comprobar que el que quiera modificar esa curricula es su propio ranger
 		this.rangerService.checkPrincipal();
-
 		ranger = this.rangerService.findByPrincipal();
-		curriculaFromRanger = this.findCurriculaFromRanger(ranger.getId());
 
-		Assert.isTrue(curriculaFromRanger.getId() == (curriculaId));
+		Assert.isTrue(this.curriculaRepository.findOne(curriculaId) == this.curriculaRepository.findCurriculaFromRanger(ranger.getId()));
 
 		updateCurricula = new Curricula();
 		newPersonalRecord = this.personalRecordService.save(personalRecord);
@@ -113,6 +110,7 @@ public class CurriculaService {
 		updateCurricula.setPersonalRecord(newPersonalRecord);
 		updateCurricula.setProfessionalRecords(professionalRecords);
 		updateCurricula.setId(curriculaId);
+		updateCurricula.setRanger(ranger);
 		updateCurricula.setTicker(this.curriculaRepository.findOne(curriculaId).getTicker());
 
 		Assert.isTrue(updateCurricula.getTicker() == this.curriculaRepository.findOne(curriculaId).getTicker());
@@ -125,9 +123,6 @@ public class CurriculaService {
 	}
 	public void delete(Curricula curricula) {
 
-		Ranger rangerWithThisCurricula;
-		rangerWithThisCurricula = this.curriculaRepository.rangerWithThisCurricula(curricula.getId());
-		rangerWithThisCurricula.setCurricula(null);
 		Assert.notNull(curricula);
 		Assert.notNull(this.curriculaRepository.findOne(curricula.getId()));
 
