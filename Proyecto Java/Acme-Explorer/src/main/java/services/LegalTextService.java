@@ -98,10 +98,15 @@ public class LegalTextService {
 
 	//Other services-------------------------------
 
-	public LegalText findOneToEdit(LegalText legalText) {
+	public LegalText findOneToEdit(int idlegalText) {
 
 		this.administratorService.checkPrincipal();
+
+		LegalText legalText;
+
+		legalText = this.findOne(idlegalText);
 		Assert.isTrue(legalText.isDraftMode() == true);
+
 		return legalText;
 
 	}

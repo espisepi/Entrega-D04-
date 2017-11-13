@@ -126,34 +126,34 @@ public class LegalTextServceTest extends AbstractTest {
 	//		Assert.isTrue(!this.legalTextService.findAll().contains(resultSaved));
 	//
 	//	}
+	//
+	//	@Test
+	//	@Rollback(false)
+	//	public void testFindOneToEdit() {
+	//
+	//		this.authenticate("administrator1");
+	//
+	//		LegalText result;
+	//		result = this.legalTextService.findOneToEdit(super.getEntityId("legalText1"));
+	//
+	//		result.setLawsNumber(8);
+	//
+	//		Assert.notNull(result);
+	//
+	//	}
 
 	@Test
 	@Rollback(false)
-	public void testFindOneToEdit() {
+	public void testFindOneToEditNegative() {
 
-		this.authenticate("administrator1");
-
+		this.authenticate("administrator2");
 		LegalText result;
-		result = this.legalTextService.findOne(super.getEntityId("legalText1"));
+
+		result = this.legalTextService.findOne(super.getEntityId("legalText2"));
 
 		result.setLawsNumber(3);
 
 		Assert.notNull(result);
 
 	}
-
-	//	@Test
-	//	@Rollback(false)
-	//	public void testFindOneToEditNegative() {
-	//
-	//		this.authenticate("administrator2");
-	//		LegalText result;
-	//
-	//		result = this.legalTextService.findOneToEdit(super.getEntityId("legalText2"));
-	//
-	//		result.setLawsNumber(3);
-	//
-	//		Assert.notNull(result);
-	//
-	//	}
 }
