@@ -72,6 +72,8 @@ public class CurriculaService {
 	}
 	public Curricula save(Curricula curricula) {
 
+		this.rangerService.checkPrincipal();
+
 		Curricula newCurricula;
 
 		Assert.notNull(curricula);
