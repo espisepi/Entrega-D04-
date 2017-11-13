@@ -131,16 +131,16 @@ public class AdministratorService {
 		return result;
 	}
 
-	public Double[] findMaxMinAvgStddevOfThePriceOfTheTrips() {
+	public Double[] findMinMaxAvgStddevOfThePriceOfTheTrips() {
 		Double[] result;
-		result = this.administratorRepository.findMaxMinAvgStddevOfThePriceOfTheTrips();
+		result = this.administratorRepository.findMinMaxAvgStddevOfThePriceOfTheTrips();
 		Assert.notNull(result);
 		return result;
 	}
 
-	public Double[] findMaxMinAvgStddevOfTheNumTripsPerRanger() {
+	public Double[] findAvgMinMaxStddevOfTheNumTripsPerRanger() {
 		Double[] result;
-		result = this.administratorRepository.findMaxMinAvgStddevOfTheNumTripsPerRanger();
+		result = this.administratorRepository.findAvgMinMaxStddevOfTheNumTripsPerRanger();
 		Assert.notNull(result);
 		return result;
 	}
@@ -187,16 +187,16 @@ public class AdministratorService {
 		return result;
 	}
 
-	public Double[] findMaxMinAvgStddevOfTheNumOfNotesPerTrip() {
+	public Double[] findMinMaxAvgStddevOfTheNumOfNotesPerTrip() {
 		Double[] result;
-		result = this.administratorRepository.findMaxMinAvgStddevOfTheNumOfNotesPerTrip();
+		result = this.administratorRepository.findMinMaxAvgStddevOfTheNumOfNotesPerTrip();
 		Assert.notNull(result);
 		return result;
 	}
 
-	public Double[] findMaxMinAvgStddevOfTheNumOfAuditRecordsPerTrip() {
+	public Double[] findMinMaxAvgStddevOfTheNumOfAuditRecordsPerTrip() {
 		Double[] result;
-		result = this.administratorRepository.findMaxMinAvgStddevOfTheNumOfAuditRecordsPerTrip();
+		result = this.administratorRepository.findMinMaxAvgStddevOfTheNumOfAuditRecordsPerTrip();
 		Assert.notNull(result);
 		return result;
 	}

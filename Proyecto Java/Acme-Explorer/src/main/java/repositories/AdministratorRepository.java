@@ -50,10 +50,10 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
 	Collection<Integer> findNumOfTimesALegalTextIsReferenced();
 
 	@Query("select min(t.notes.size), max(t.notes.size), avg(t.notes.size), stddev(t.notes.size) from Trip t")
-	Double[] findMaxMinAvgStddevOfTheNumOfNotesPerTrip();
+	Double[] findMinMaxAvgStddevOfTheNumOfNotesPerTrip();
 
 	@Query("select min(t.auditRecords.size),max(t.auditRecords.size),avg(t.auditRecords.size), stddev(t.auditRecords.size) from Trip t")
-	Double[] findMaxMinAvgStddevOfTheNumOfAuditRecordsPerTrip();
+	Double[] findMinMaxAvgStddevOfTheNumOfAuditRecordsPerTrip();
 
 	@Query("select count(r)/(select count(t) from Trip t)*1.0 from Trip r where r.auditRecords.size>0")
 	Double findTheRatOfTripsWihoutAnAuditRecord();
