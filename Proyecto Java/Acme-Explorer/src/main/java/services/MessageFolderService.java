@@ -27,6 +27,8 @@ public class MessageFolderService {
 
 	@Autowired
 	private ActorService			actorService;
+	@Autowired
+	private MessageService			messageService;
 
 
 	// Constructors -----------------------------------------------------------
@@ -36,9 +38,12 @@ public class MessageFolderService {
 	// Simple CRUD methods ----------------------------------------------------
 	public MessageFolder create() {
 		//final Actor actorcreator = this.actorService.findPrincipal();
-		final MessageFolder messagefolder = new MessageFolder();
-		final List<Message> message = new ArrayList<>();
-		messagefolder.setMessages(message);
+		final MessageFolder messagefolder;
+		final List<Message> messages;
+
+		messagefolder = new MessageFolder();
+		messages = new ArrayList<>();
+		messagefolder.setMessages(messages);
 		//actorcreator.getMessagesFolders().add(messagefolder);, lo pongo en el save
 
 		return messagefolder;
@@ -62,23 +67,34 @@ public class MessageFolderService {
 		return messagefolder;
 	}
 	public MessageFolder save(final MessageFolder messageFolder) {
-		final Actor actorPrincipal = this.actorService.findPrincipal();
+		final Actor actorPrincipal;
+		MessageFolder res;
+
+		actorPrincipal = this.actorService.findPrincipal();
 		Assert.notNull(actorPrincipal);
 		Assert.notNull(messageFolder);
-		MessageFolder res;
+
 		res = this.messageFolderRepository.save(messageFolder);
 		//Se le añade al actor el messageFolder INSTRUMENTADO
 		actorPrincipal.getMessagesFolders().add(res);
-		//actorCreator = this.actorService.save(actorCreator); No hace falta hacerlo porque con el add te lo añade a la BD
-		//Assert.notNull(actorCreator);
 		Assert.notNull(res);
+
 		return res;
 	}
 	public void delete(final MessageFolder messageFolder) {
+		final Actor actorPrincipal;
 		Assert.notNull(messageFolder);
 		Assert.isTrue(messageFolder.isModifiable() == true);
 		Assert.isTrue(messageFolder.getId() != 0);
 		Assert.isTrue(this.messageFolderRepository.exists(messageFolder.getId()));
+
+		actorPrincipal = this.actorService.findPrincipal();
+		Assert.isTrue(actorPrincipal.getMessagesFolders().contains(messageFolder));
+		actorPrincipal.getMessagesFolders().remove(messageFolder);
+		//Se eliminan todos los messages de ese messageFolder
+		for (final Message message : messageFolder.getMessages())
+			this.messageService.delete(message);
+
 		this.messageFolderRepository.delete(messageFolder);
 
 	}
@@ -94,14 +110,21 @@ public class MessageFolderService {
 
 	public Collection<MessageFolder> createDefaultFolders() {
 		Collection<MessageFolder> res;
-		res = new ArrayList<MessageFolder>();
-		final Collection<Message> messages = new ArrayList<>();
+		final Collection<Message> messages;
+		MessageFolder inbox;
+		MessageFolder notificationbox;
+		MessageFolder outbox;
+		MessageFolder trashbox;
+		MessageFolder spambox;
 
-		MessageFolder inbox = new MessageFolder();
-		MessageFolder notificationbox = new MessageFolder();
-		MessageFolder outbox = new MessageFolder();
-		MessageFolder trashbox = new MessageFolder();
-		MessageFolder spambox = new MessageFolder();
+		res = new ArrayList<MessageFolder>();
+		messages = new ArrayList<>();
+		inbox = new MessageFolder();
+		notificationbox = new MessageFolder();
+		outbox = new MessageFolder();
+		trashbox = new MessageFolder();
+		spambox = new MessageFolder();
+
 		inbox.setModifiable(false);
 		outbox.setModifiable(false);
 		notificationbox.setModifiable(false);
@@ -136,16 +159,17 @@ public class MessageFolderService {
 
 	}
 
-	public MessageFolder returnOutboxFolder(Actor actor) {
-		MessageFolder res = null;
-		Collection<MessageFolder> messagefolders;
-		messagefolders = actor.getMessagesFolders();
-		for (final MessageFolder folder : messagefolders)
-			if (folder.getName().equals("out box")) {
+	public MessageFolder returnDefaultFolder(final Actor actor, final String name) {
+		MessageFolder res;
+
+		res = null;
+		Assert.isTrue(name.equals("in box") || name.equals("out box") || name.equals("Notification box") || name.equals("trash box") || name.equals("spam box"));
+		for (final MessageFolder folder : actor.getMessagesFolders())
+			if (folder.getName().equals(name)) {
 				res = folder;
 				break;
 			}
-
+		Assert.notNull(res);
 		return res;
 	}
 

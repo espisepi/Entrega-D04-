@@ -8,7 +8,6 @@ import javax.transaction.Transactional;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
@@ -50,22 +49,28 @@ public class MessageFolderServiceTest extends AbstractTest {
 		messageFolder.setName("Coordinador");
 		this.messageFolderService.save(messageFolder);
 
+		this.unauthenticate();
 	}
 
 	@Test
-	public void testdelete() {
-		final MessageFolder messageFolder = this.messageFolderService.findAll().iterator().next();
+	public void testDelete() {
+		this.authenticate("administrator1");
+		Administrator administratorPrincipal;
+		MessageFolder messageFolder;
+		administratorPrincipal = this.administratorService.findByPrincipal();
+		messageFolder = administratorPrincipal.getMessagesFolders().iterator().next();
 		messageFolder.setModifiable(true);
 		this.messageFolderService.delete(messageFolder);
 
+		this.unauthenticate();
 	}
 
 	@Test
-	@Rollback(false)
 	public void testCreateDefaultChapter() {
 		Administrator administrator;
+		final Collection<MessageFolder> folders;
 		administrator = this.administratorService.create();
-		Collection<MessageFolder> folders = this.messageFolderService.createDefaultFolders();
+		folders = this.messageFolderService.createDefaultFolders();
 
 		administrator.setName("name");
 		administrator.setSurname("surname");

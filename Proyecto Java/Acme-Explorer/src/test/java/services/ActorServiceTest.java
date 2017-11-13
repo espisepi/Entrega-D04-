@@ -44,8 +44,8 @@ public class ActorServiceTest extends AbstractTest {
 		Actor actor;
 		actor = actors.get(0);
 		actor.setEmail("juju@gmail.com");
-		Actor actorSave = this.actorService.save(actor);
-		Assert.isTrue(!(actor.getEmail().equals(actorSave)));
+		final Actor actorSave = this.actorService.save(actor);
+		Assert.isTrue(actor.getEmail().equals(actorSave.getEmail()));
 	}
 
 	@Test

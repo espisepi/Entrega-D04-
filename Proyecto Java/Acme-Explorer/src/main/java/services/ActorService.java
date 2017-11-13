@@ -20,12 +20,10 @@ public class ActorService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private ActorRepository			actorRepository;
+	private ActorRepository	actorRepository;
+
 
 	// Supporting services ----------------------------------------------------
-	@Autowired
-	private MessageFolderService	messageFolder;
-
 
 	// Constructors -----------------------------------------------------------
 	public ActorService() {
@@ -41,7 +39,7 @@ public class ActorService {
 		return result;
 	}
 
-	public Actor findOne(int actorId) {
+	public Actor findOne(final int actorId) {
 		Assert.isTrue(actorId != 0);
 
 		Actor result;
@@ -52,7 +50,7 @@ public class ActorService {
 		return result;
 	}
 
-	public Actor save(Actor actor) {
+	public Actor save(final Actor actor) {
 		Assert.notNull(actor);
 
 		Actor result;
@@ -62,7 +60,7 @@ public class ActorService {
 		return result;
 	}
 
-	public void delete(Actor actor) {
+	public void delete(final Actor actor) {
 		Assert.notNull(actor);
 		Assert.isTrue(actor.getId() != 0);
 		Assert.isTrue(this.actorRepository.exists(actor.getId()));
