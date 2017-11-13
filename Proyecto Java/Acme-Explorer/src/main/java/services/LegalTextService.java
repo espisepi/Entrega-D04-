@@ -70,16 +70,6 @@ public class LegalTextService {
 		this.administratorService.checkPrincipal();
 
 		LegalText result;
-		Date moment;
-
-		if (legalText.getId() == 0)
-			moment = new Date(System.currentTimeMillis() - 1000);
-
-		else
-
-			moment = legalText.getMoment();
-
-		legalText.setMoment(moment);
 
 		result = this.legalTextRepository.save(legalText);
 		result.setDraftMode(true);
