@@ -33,10 +33,14 @@ public class EducationRecordService {
 	// Simple CRUD methods------------------------------------------------
 
 	public EducationRecord create() {
-		EducationRecord educationRecord = new EducationRecord();
+		EducationRecord educationRecord;
+		List<String> comments;
 
-		List<String> comments = new ArrayList<String>();
+		educationRecord = new EducationRecord();
+		comments = new ArrayList<String>();
+
 		educationRecord.setComments(comments);
+
 		return educationRecord;
 
 	}
@@ -51,6 +55,7 @@ public class EducationRecordService {
 
 	public EducationRecord findOne(int educationRecordId) {
 		Assert.isTrue(educationRecordId != 0);
+		Assert.notNull(educationRecordId);
 
 		EducationRecord educationRecord;
 
@@ -61,10 +66,13 @@ public class EducationRecordService {
 
 	public EducationRecord save(EducationRecord educationRecord) {
 		Assert.notNull(educationRecord);
-		Assert.isTrue(educationRecord.getId() == 0);
 
-		EducationRecord newEducationRecord = this.educationRecordRepository.saveAndFlush(educationRecord);
+		EducationRecord newEducationRecord;
+
+		newEducationRecord = this.educationRecordRepository.save(educationRecord);
+
 		Assert.isTrue(newEducationRecord.getId() != 0);
+
 		return newEducationRecord;
 
 	}
@@ -74,11 +82,15 @@ public class EducationRecordService {
 		Assert.notNull(this.educationRecordRepository.findOne(educationRecord.getId()));
 
 		this.educationRecordRepository.delete(educationRecord);
+
+		Assert.isNull(this.educationRecordRepository.findOne(educationRecord.getId()));
 	}
 
 	public Collection<EducationRecord> saveAll(Collection<EducationRecord> educationRecords) {
 		Assert.notNull(educationRecords);
-		List<EducationRecord> newEducationRecords = new ArrayList<EducationRecord>();
+		List<EducationRecord> newEducationRecords;
+
+		newEducationRecords = new ArrayList<EducationRecord>();
 		newEducationRecords.addAll(this.educationRecordRepository.save(educationRecords));
 
 		return newEducationRecords;

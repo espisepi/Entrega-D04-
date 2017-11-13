@@ -35,9 +35,11 @@ public class EndorserRecordService {
 
 	public EndorserRecord create() {
 		EndorserRecord endorserRecord;
-		endorserRecord = new EndorserRecord();
+		List<String> comments;
 
-		List<String> comments = new ArrayList<String>();
+		endorserRecord = new EndorserRecord();
+		comments = new ArrayList<String>();
+
 		endorserRecord.setComments(comments);
 
 		return endorserRecord;
@@ -53,6 +55,8 @@ public class EndorserRecordService {
 
 	public EndorserRecord findOne(int endorserRecordId) {
 		Assert.isTrue(endorserRecordId != 0);
+		Assert.notNull(endorserRecordId);
+
 		EndorserRecord endorserRecord;
 
 		endorserRecord = this.endorserRecordRepository.findOne(endorserRecordId);
@@ -62,11 +66,10 @@ public class EndorserRecordService {
 
 	public EndorserRecord save(EndorserRecord endorserRecord) {
 		Assert.notNull(endorserRecord);
-		Assert.isTrue(endorserRecord.getId() == 0);
 
 		EndorserRecord newResult;
 
-		newResult = this.endorserRecordRepository.saveAndFlush(endorserRecord);
+		newResult = this.endorserRecordRepository.save(endorserRecord);
 
 		return newResult;
 
@@ -77,6 +80,8 @@ public class EndorserRecordService {
 		Assert.notNull(this.endorserRecordRepository.findOne(endorserRecord.getId()));
 
 		this.endorserRecordRepository.delete(endorserRecord);
+
+		Assert.isNull(this.endorserRecordRepository.findOne(endorserRecord.getId()));
 	}
 
 	public Collection<EndorserRecord> saveAll(Collection<EndorserRecord> endorserRecords) {
