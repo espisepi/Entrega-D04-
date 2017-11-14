@@ -19,7 +19,7 @@ public interface TripRepository extends JpaRepository<Trip, Integer> {
 	Collection<Trip> findAllTripsNoAuthenticate();
 
 	//Requisito 12.1
-	@Query("select t from Trip t where t.publicationDate!=null")
+	@Query("select t from Trip t where t.publicationDate=null")
 	Collection<Trip> findAllTripsNotPublished();
 
 	//Requisito 12.3
