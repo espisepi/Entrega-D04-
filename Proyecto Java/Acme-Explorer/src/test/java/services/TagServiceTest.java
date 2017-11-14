@@ -49,6 +49,7 @@ public class TagServiceTest extends AbstractTest {
 
 	@Test
 	public void testDelete() {
+		this.authenticate("administrator1");
 		Tag tag = this.tagService.create();
 
 		tag.setName("tag 11");
@@ -57,13 +58,18 @@ public class TagServiceTest extends AbstractTest {
 		Assert.notNull(newTag);
 
 		this.tagService.delete(newTag);
+		this.unauthenticate();
 
 	}
 
 	@Test
 	public void testUpdate() {
 		this.authenticate("administrator1");
-		this.tagService.update(6078, "Hotel");
+		Tag tag;
+		tag = this.tagService.create();
+		tag.setId(7547);
+		tag.setName("modificado1");
+		this.tagService.save(tag);
 		this.authenticate(null);
 	}
 }

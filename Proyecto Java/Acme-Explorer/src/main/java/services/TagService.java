@@ -1,9 +1,7 @@
 
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,7 +46,7 @@ public class TagService {
 		return result;
 	}
 
-	public Tag findOne(final int tagId) {
+	public Tag findOne(int tagId) {
 		Assert.isTrue(tagId != 0);
 
 		Tag result;
@@ -57,34 +55,41 @@ public class TagService {
 		return result;
 	}
 
-	public Tag save(final Tag tag) {
+	public Tag save(Tag tag) {
+		Collection<Tag> tagsWithTrip;
+		tagsWithTrip = this.tagRepository.findTagWithTrip();
+
+		if (tag.getId() != 0) {
+			Assert.isTrue(!tagsWithTrip.contains(tag));
+			this.administratorService.checkPrincipal();
+		}
 		Assert.notNull(tag);
-		Assert.isTrue(tag.getId() == 0);
 
 		Tag result;
-		result = this.tagRepository.saveAndFlush(tag);
-		Assert.isTrue(result.getId() != 0);
+		result = this.tagRepository.save(tag);
+		Assert.notNull(result);
 
 		return result;
 	}
 	public void delete(final Tag tag) {
+		this.administratorService.checkPrincipal();
 		Assert.notNull(tag);
 		Assert.notNull(this.tagRepository.findOne(tag.getId()));
 
 		this.tagRepository.delete(tag);
 	}
-	public Tag update(int tagId, String name) {
-		List<Tag> tagWithTrip = new ArrayList<Tag>();
-		tagWithTrip.addAll(this.tagRepository.findTagWithTrip());
-
-		Tag tagToModify = this.tagRepository.findOne(tagId);
-		Assert.notNull(this.tagRepository.findOne(tagId));
-		Assert.isTrue(!tagWithTrip.contains(this.tagRepository.findOne(tagId)));
-		this.administratorService.checkPrincipal();
-
-		tagToModify.setName(name);
-
-		return tagToModify;
-
-	}
+	//	public Tag update(int tagId, String name) {
+	//		List<Tag> tagWithTrip = new ArrayList<Tag>();
+	//		tagWithTrip.addAll(this.tagRepository.findTagWithTrip());
+	//
+	//		Tag tagToModify = this.tagRepository.findOne(tagId);
+	//		Assert.notNull(this.tagRepository.findOne(tagId));
+	//		Assert.isTrue(!tagWithTrip.contains(this.tagRepository.findOne(tagId)));
+	//		this.administratorService.checkPrincipal();
+	//
+	//		tagToModify.setName(name);
+	//
+	//		return tagToModify;
+	//
+	//	}
 }
