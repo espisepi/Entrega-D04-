@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.Collection;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,5 +73,18 @@ public class TagServiceTest extends AbstractTest {
 		tag.setName("modificado1");
 		this.tagService.save(tag);
 		this.authenticate(null);
+	}
+
+	@Test
+	public void testFindOne() {
+		Tag tag;
+		tag = this.tagService.findOne(super.getEntityId("tag1"));
+		Assert.notNull(tag);
+	}
+	@Test
+	public void testFindAll() {
+		Collection<Tag> tags;
+		tags = this.tagService.findAll();
+		Assert.notNull(tags);
 	}
 }

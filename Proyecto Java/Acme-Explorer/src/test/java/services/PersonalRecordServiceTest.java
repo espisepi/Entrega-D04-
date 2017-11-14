@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.Collection;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +74,28 @@ public class PersonalRecordServiceTest extends AbstractTest {
 
 		personalRecordToDelete = this.personalRecordService.findOne(super.getEntityId("personalRecord1"));
 		this.personalRecordService.delete(personalRecordToDelete);
+	}
+	@Test
+	public void testFindOne() {
+		PersonalRecord personalRecord;
+		personalRecord = this.personalRecordService.findOne(super.getEntityId("personalRecord1"));
+		Assert.notNull(personalRecord);
+	}
+
+	@Test
+	public void testFindAll() {
+		Collection<PersonalRecord> personalRecords;
+		personalRecords = this.personalRecordService.findAll();
+		Assert.notNull(personalRecords);
+	}
+	@Test
+	public void testEdit() {
+		PersonalRecord personalRecord;
+		PersonalRecord personalModified;
+		personalRecord = this.personalRecordService.findOne(super.getEntityId("personalRecord1"));
+		personalRecord.setFullName("modified");
+		personalModified = this.personalRecordService.findOne(super.getEntityId("personalRecord1"));
+		Assert.isTrue(personalModified.getFullName() == "modified");
 	}
 
 }

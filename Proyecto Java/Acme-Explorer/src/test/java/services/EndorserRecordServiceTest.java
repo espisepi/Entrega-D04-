@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.Collection;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,5 +65,28 @@ public class EndorserRecordServiceTest extends AbstractTest {
 		Assert.notNull(newEndorserRecord);
 
 		this.endorserRecordService.delete(newEndorserRecord);
+	}
+
+	@Test
+	public void testFindOne() {
+		EndorserRecord endorserRecord;
+		endorserRecord = this.endorserRecordService.findOne(super.getEntityId("endorserRecord1"));
+		Assert.notNull(endorserRecord);
+	}
+
+	@Test
+	public void testFindAll() {
+		Collection<EndorserRecord> endorserRecords;
+		endorserRecords = this.endorserRecordService.findAll();
+		Assert.notNull(endorserRecords);
+	}
+	@Test
+	public void testEdit() {
+		EndorserRecord endorserRecord;
+		EndorserRecord endorserRecordModified;
+		endorserRecord = this.endorserRecordService.findOne(super.getEntityId("endorserRecord1"));
+		endorserRecord.setFullName("modified");
+		endorserRecordModified = this.endorserRecordService.findOne(super.getEntityId("endorserRecord1"));
+		Assert.isTrue(endorserRecordModified.getFullName() == "modified");
 	}
 }
