@@ -1,0 +1,3 @@
+En la clase de revisión del proyecto del día 13/11/2017, le comentamos que en los métodos testSave() y testDelete()
+solo llamaba a la base de datos si le incluíamos la anotación @Rollback(false). Si no se la poníamos, el test daba
+resultado positivo aún habiendo fallos en el SQL.
