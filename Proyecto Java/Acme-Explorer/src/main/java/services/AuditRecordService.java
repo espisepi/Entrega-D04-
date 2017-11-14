@@ -58,13 +58,13 @@ public class AuditRecordService {
 	public Collection<AuditRecord> findAll() {
 		Collection<AuditRecord> result;
 		result = this.auditRecordRepository.findAll();
+		Assert.notNull(result);
 		return result;
 	}
 
 	public AuditRecord findOne(final int auditrecordId) {
 		AuditRecord result;
 		result = this.auditRecordRepository.findOne(auditrecordId);
-		Assert.notNull(result);
 		return result;
 	}
 
@@ -78,10 +78,12 @@ public class AuditRecordService {
 		result.setRealisedMoment(realisedMoment);
 		Assert.notNull(result);
 		result = this.auditRecordRepository.save(auditrecord);
+		Assert.notNull(result);
 		return result;
 	}
 	public void delete(final AuditRecord auditrecord) {
 		//se puede borrar o modificar si está en modo borrador
+		Assert.notNull(auditrecord);
 		Assert.isTrue(auditrecord.isDraftMode() == true);
 		this.auditRecordRepository.delete(auditrecord);
 	}

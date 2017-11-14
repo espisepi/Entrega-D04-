@@ -75,7 +75,6 @@ public class AdministratorService {
 		Assert.isTrue(administratorId != 0);
 		Administrator result;
 		result = this.administratorRepository.findOne(administratorId);
-		Assert.notNull(result);
 		return result;
 	}
 
@@ -83,6 +82,7 @@ public class AdministratorService {
 		Assert.notNull(administrator);
 		Administrator result;
 		result = this.administratorRepository.save(administrator);
+		Assert.notNull(result);
 		return result;
 	}
 
