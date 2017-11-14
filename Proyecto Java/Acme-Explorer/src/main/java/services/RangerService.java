@@ -81,7 +81,7 @@ public class RangerService {
 		Assert.isTrue(rangerId != 0);
 		Ranger result;
 		result = this.RangerRepository.findOne(rangerId);
-		Assert.notNull(result);
+
 		return result;
 	}
 

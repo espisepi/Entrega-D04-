@@ -94,8 +94,6 @@ public class SurvivalClassService {
 
 		result = this.survivalClassRecordRepository.findOne(survivalClassId);
 
-		Assert.notNull(result);
-
 		return result;
 	}
 

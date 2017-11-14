@@ -158,10 +158,19 @@ public class ExplorerService {
 	}
 
 	//Para el checkPrincipalExplorer obtenemos el explorer.
-	public Collection<Explorer> findExplorersByTripId(int tripId) {
+	public Collection<Explorer> findExplorersByTripId(final int tripId) {
 		Collection<Explorer> explorers;
 		explorers = new ArrayList<Explorer>(this.explorerRepository.findExplorersByTripId(tripId));
 		Assert.notNull(explorers);
 		return explorers;
+	}
+
+	public Collection<Explorer> findExplorersByContactEmergencyId(final int contactEmergencyId) {
+		Collection<Explorer> res;
+
+		res = this.explorerRepository.findExplorersByContactEmergencyId(contactEmergencyId);
+		Assert.notNull(res);
+
+		return res;
 	}
 }

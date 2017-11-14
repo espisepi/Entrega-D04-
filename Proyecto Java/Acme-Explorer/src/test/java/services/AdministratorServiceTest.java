@@ -71,7 +71,7 @@ public class AdministratorServiceTest extends AbstractTest {
 	@Test
 	public void testFindOne() {
 		Administrator administrator;
-		administrator = this.administratorService.findOne(super.getEntityId("administrator1"));
+		administrator = this.administratorService.findOne(super.getEntityId("administrator2"));
 		Assert.notNull(administrator);
 	}
 }

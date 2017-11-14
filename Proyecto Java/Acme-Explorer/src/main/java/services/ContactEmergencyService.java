@@ -10,6 +10,7 @@ import org.springframework.util.Assert;
 
 import repositories.ContactEmergencyRepository;
 import domain.ContactEmergency;
+import domain.Explorer;
 
 @Service
 @Transactional
@@ -20,8 +21,10 @@ public class ContactEmergencyService {
 	@Autowired
 	private ContactEmergencyRepository	contactEmergencyRepository;
 
-
 	// Supporting services ----------------------------------------------------
+	@Autowired
+	private ExplorerService				explorerService;
+
 
 	// Constructors -----------------------------------------------------------
 
@@ -69,13 +72,19 @@ public class ContactEmergencyService {
 	}
 
 	public void delete(final ContactEmergency contactEmergency) {
+		final Collection<Explorer> explorersWithThisContact;
 		Assert.notNull(contactEmergency);
 		Assert.isTrue(contactEmergency.getId() != 0);
-
 		Assert.isTrue(this.contactEmergencyRepository.exists(contactEmergency.getId()));
-
+		//De esta manera falla:
+		//Collection<ContactEmergency> contactsEmergency;
+		//contactsEmergency = this.findContactsEmergencyByContactEmergencyId(contactEmergency.getId());
+		//contactsEmergency.removeAll(contactsEmergency);
+		explorersWithThisContact = this.explorerService.findExplorersByContactEmergencyId(contactEmergency.getId());
+		for (final Explorer e : explorersWithThisContact)
+			e.getContactsEmergency().remove(contactEmergency);
 		this.contactEmergencyRepository.delete(contactEmergency);
 	}
-
 	// Other business methods -------------------------------------------------
+
 }

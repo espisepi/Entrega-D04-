@@ -431,7 +431,7 @@
 		<property name="subject" value="subject 2" />
 		<property name="body" value="body 2" />
 		<property name="priority" value="HIGH" />
-		<property name="messageFolder" ref="messageFolder3" />
+		<property name="messageFolder" ref="messageFolder2" />
 		<property name="sender" ref="auditor1" />
 		<property name="recipient" ref="auditor2" />
 	</bean>
@@ -441,7 +441,7 @@
 
 	<bean id="messageFolder1" class="domain.MessageFolder">
 		<property name="name" value="folder 1" />
-		<property name="modifiable" value="false" />
+		<property name="modifiable" value="true" />
 		<property name="messages">
 			<list>
 				<ref bean="message1" />
@@ -451,40 +451,37 @@
 
 	<bean id="messageFolder2" class="domain.MessageFolder">
 		<property name="name" value="folder 2" />
-		<property name="modifiable" value="false" />
+		<property name="modifiable" value="true" />
 		<property name="messages">
 			<list>
-				<ref bean="message1" />
+			<ref bean="message2" />
 			</list>
 		</property>
 	</bean>
 
 	<bean id="messageFolder3" class="domain.MessageFolder">
 		<property name="name" value="folder 3" />
-		<property name="modifiable" value="false" />
+		<property name="modifiable" value="true" />
 		<property name="messages">
 			<list>
-				<ref bean="message2" />
 			</list>
 		</property>
 	</bean>
 
 	<bean id="messageFolder4" class="domain.MessageFolder">
 		<property name="name" value="folder 4" />
-		<property name="modifiable" value="false" />
+		<property name="modifiable" value="true" />
 		<property name="messages">
 			<list>
-				<ref bean="message2" />
 			</list>
 		</property>
 	</bean>
 
 	<bean id="messageFolder5" class="domain.MessageFolder">
 		<property name="name" value="folder 4" />
-		<property name="modifiable" value="false" />
+		<property name="modifiable" value="true" />
 		<property name="messages">
 			<list>
-				<ref bean="message2" />
 			</list>
 		</property>
 	</bean>
@@ -775,7 +772,6 @@
 		<property name="userAccount" ref="userAccountAdmin4" />
 		<property name="messagesFolders">
 			<list>
-
 			</list>
 		</property>
 		<property name="socialIdentities">

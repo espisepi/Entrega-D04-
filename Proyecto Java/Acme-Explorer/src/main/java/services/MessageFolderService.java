@@ -90,11 +90,11 @@ public class MessageFolderService {
 
 		actorPrincipal = this.actorService.findPrincipal();
 		Assert.isTrue(actorPrincipal.getMessagesFolders().contains(messageFolder));
-		actorPrincipal.getMessagesFolders().remove(messageFolder);
 		//Se eliminan todos los messages de ese messageFolder
 		for (final Message message : messageFolder.getMessages())
 			this.messageService.delete(message);
 
+		actorPrincipal.getMessagesFolders().remove(messageFolder);
 		this.messageFolderRepository.delete(messageFolder);
 
 	}
