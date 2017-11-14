@@ -3,7 +3,6 @@ package services;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -48,7 +47,7 @@ public class TripService {
 
 	// Simple CRUD methods-----------------------------------------------------
 	//***** TEST HECHO *******
-	public Trip create(final Manager manager) {
+	public Trip create(Manager manager) {
 		this.managerService.checkPrincipal();
 		final Collection<SurvivalClass> classes = new ArrayList<SurvivalClass>();
 		final Collection<Story> stories = new ArrayList<Story>();
@@ -59,8 +58,8 @@ public class TripService {
 		final Collection<Sponsorship> sponsorships = new ArrayList<Sponsorship>();
 		final Collection<Stage> stages = new ArrayList<Stage>();
 		final Collection<Tag> tags = new ArrayList<Tag>();
-		final LegalText legalText = new LegalText();
-		final Ranger ranger = new Ranger();
+		LegalText legalText = new LegalText();
+		Ranger ranger = new Ranger();
 		Trip trip;
 		trip = new Trip();
 		trip.setManager(manager);
@@ -75,7 +74,6 @@ public class TripService {
 		trip.setStages(stages);
 		trip.setTags(tags);
 		trip.setLegalText(legalText);
-		manager.getTrips().add(trip);
 
 		return trip;
 	}
@@ -84,10 +82,8 @@ public class TripService {
 	public Trip save(final Trip trip) {
 		assert trip != null;
 		Trip result;
-		if (trip.isCancelled())
-			Assert.notNull(trip.getReasonWhy());
 		//Sólo los legalText que estén guardados como draftMode pueden ser referenciados a una Trip.
-		Assert.isTrue(trip.getLegalText().isDraftMode());
+		Assert.isTrue(!trip.getLegalText().isDraftMode());
 		result = this.tripRepository.save(trip);
 		return result;
 	}
@@ -104,6 +100,7 @@ public class TripService {
 	//***** TEST HECHO *******
 	public Trip findOne(final int tripId) {
 		Trip result;
+		Assert.isTrue(tripId != 0);
 		result = this.tripRepository.findOne(tripId);
 		return result;
 	}
@@ -125,7 +122,7 @@ public class TripService {
 	//Para quien no esté autenticado devolvemos todos los trips con restricciones
 	public Collection<Trip> findAllTripsNoAuthenticate() {
 		Collection<Trip> res;
-		res = new ArrayList<Trip>(this.tripRepository.findAll());
+		res = new ArrayList<Trip>(this.tripRepository.findAllTripsNoAuthenticate());
 		Assert.notNull(res);
 		return res;
 	}
@@ -173,21 +170,21 @@ public class TripService {
 	//**********************************************************************************
 	public Trip findOneToCancelManager(final int tripId) {
 		this.managerService.checkPrincipal();
-		Date date;
+		Collection<Trip> allTrips;
 		Trip trip;
 		Trip tripEdit;
 		Manager manager;
 		//Trip a editar
 		trip = this.tripRepository.findOne(tripId);
-		date = new Date();
 		//Para que un manager cancele un trip NO puede haber empezado
-		Assert.isTrue(trip.getStartDate().after(date));
+		allTrips = new ArrayList<>(this.tripRepository.findAllTripsPublishedNotStarted());
+		Assert.isTrue(allTrips.contains(trip));
 		//Comprobamos que sea de ese Manager
 		manager = this.managerService.findByPrincipal();
 		Assert.isTrue(manager.getTrips().contains(trip));
-		//Para que un manager edite un trip puede tener publicationDate
-		Assert.notNull(trip.getPublicationDate());
 		tripEdit = this.tripRepository.save(trip);
+		if (trip.isCancelled())
+			Assert.notNull(trip.getReasonWhy());
 		return tripEdit;
 	}
 
@@ -212,12 +209,14 @@ public class TripService {
 		//Vemos si el explorer conectado tiene ese trip
 		Assert.isTrue(explorers.contains(explorer));
 		tripEdit = this.tripRepository.save(trip);
+		if (trip.isCancelled())
+			Assert.notNull(trip.getReasonWhy());
 		return tripEdit;
 	}
 
 	//Todos los Trips que apply un explorer
 	//***** TEST HECHO *******
-	public Collection<Trip> findAllTripsApplyByExplorerId(final int explorerId) {
+	public Collection<Trip> findAllTripsApplyByExplorerId(int explorerId) {
 		Collection<Trip> trips;
 		trips = new ArrayList<>(this.tripRepository.findAllTripsApplyByExplorerId(explorerId));
 		Assert.notNull(trips);
@@ -226,7 +225,7 @@ public class TripService {
 
 	//Trips auditados por el auditorId
 	//***** TEST HECHO *******
-	public Collection<Trip> findByAuditorId(final int auditorId) {
+	public Collection<Trip> findByAuditorId(int auditorId) {
 		Collection<Trip> trips;
 		trips = new ArrayList<Trip>(this.tripRepository.findByAuditorId(auditorId));
 		Assert.notNull(trips);
@@ -260,7 +259,7 @@ public class TripService {
 	//		trip.setPrice(priceOfTrip);
 	//	}
 
-	public Double findPrice(final int tripId) {
+	public Double findPrice(int tripId) {
 		Double price;
 
 		price = this.tripRepository.findPrice(tripId);
@@ -268,7 +267,7 @@ public class TripService {
 
 		return price;
 	}
-	public void setPriceOfTrip(final Trip trip) {
+	public void setPriceOfTrip(Trip trip) {
 		Double price;
 		price = this.tripRepository.findPrice(trip.getId());
 		trip.setPrice(price);
@@ -279,7 +278,7 @@ public class TripService {
 		Collection<Trip> trips;
 		trips = this.tripRepository.findAll();
 
-		for (final Trip t : trips)
+		for (Trip t : trips)
 			this.setPriceOfTrip(t);
 
 	}
