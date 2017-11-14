@@ -50,7 +50,6 @@ public class SponsorshipService {
 		Assert.isTrue(sponsorshipId != 0);
 		Sponsorship result;
 		result = this.sponsorshipRepository.findOne(sponsorshipId);
-		Assert.notNull(result);
 		return result;
 	}
 

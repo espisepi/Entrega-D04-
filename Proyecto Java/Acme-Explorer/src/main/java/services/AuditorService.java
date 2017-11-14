@@ -83,14 +83,14 @@ public class AuditorService {
 		Assert.isTrue(auditorId != 0);
 		Auditor result;
 		result = this.auditorRepository.findOne(auditorId);
-		Assert.notNull(result);
 		return result;
 	}
 
 	public Auditor save(Auditor auditor) {
 		Assert.notNull(auditor);
 		Auditor result;
-		result = this.auditorRepository.saveAndFlush(auditor);
+		result = this.auditorRepository.save(auditor);
+		Assert.notNull(result);
 		return result;
 	}
 

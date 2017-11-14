@@ -85,7 +85,6 @@ public class AuditorServiceTest extends AbstractTest {
 	@Test
 	public void testFindOne() {
 		Auditor auditor;
-
 		auditor = this.auditorService.findOne(super.getEntityId("auditor1"));
 		Assert.notNull(auditor);
 	}

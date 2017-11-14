@@ -57,7 +57,6 @@ public class NoteService {
 		Assert.isTrue(noteId != 0);
 		Note result;
 		result = this.noteRepository.findOne(noteId);
-		Assert.notNull(result);
 		return result;
 	}
 
