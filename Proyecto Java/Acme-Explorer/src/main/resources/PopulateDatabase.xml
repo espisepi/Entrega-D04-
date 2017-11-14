@@ -1332,7 +1332,7 @@
 		</property>
 		<property name="categories">
 			<list>
-				<ref bean="mountain"></ref>
+				<ref bean="mountainClimbing"></ref>
 
 			</list>
 		</property>
@@ -2039,10 +2039,20 @@
 	</bean>
 
 	<!--Categoria Mountain -->
-	<bean id="mountain" class="domain.Category">
+	<bean id="mountainClimbing" class="domain.Category">
 		<property name="name" value="Mountain" />
 		<property name="fatherCategory">
 		<ref bean="climbing"/>
+		</property>
+		<property name="subCategories">
+			<list>
+			</list>
+		</property>
+	</bean>
+	<bean id="mountainGround" class="domain.Category">
+		<property name="name" value="Mountain" />
+		<property name="fatherCategory">
+		<ref bean="ground"/>
 		</property>
 		<property name="subCategories">
 			<list>
@@ -2073,7 +2083,7 @@
 		<property name="subCategories">
 			<list>
 				<ref bean="savana" />
-				<ref bean="mountain" />
+				<ref bean="mountainGround" />
 			</list>
 		</property>
 	</bean>
@@ -2088,7 +2098,7 @@
 		</property>
 		<property name="subCategories">
 			<list>
-				<ref bean="mountain" />
+				<ref bean="mountainClimbing" />
 				<ref bean="riverClimbing" />
 			</list>
 		</property>
