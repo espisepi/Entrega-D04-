@@ -1449,7 +1449,7 @@
 		</property>
 		<property name="categories">
 			<list>
-				<ref bean="mountain"></ref>
+				<ref bean="mountainClimbing"></ref>
 			</list>
 		</property>
 		<property name="sponsorships">
