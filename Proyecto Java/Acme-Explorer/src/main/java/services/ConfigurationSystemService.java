@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import repositories.ConfigurationSystemRepository;
+import domain.Category;
 import domain.ConfigurationSystem;
 
 @Service
@@ -93,5 +94,12 @@ public class ConfigurationSystemService {
 		vat = this.configurationSystemRepository.vat();
 
 		return vat;
+	}
+
+	public Collection<Category> defaultCategories() {
+		Collection<Category> res;
+		res = this.defaultCategories();
+		Assert.notNull(res);
+		return res;
 	}
 }

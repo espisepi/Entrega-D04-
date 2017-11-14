@@ -40,4 +40,7 @@ public interface TripRepository extends JpaRepository<Trip, Integer> {
 	@Query("select sum(c.totalPrice) from Trip r join r.stages c where r.id=?1")
 	Double findPrice(int tripId);
 
+	@Query("select t from Trip t join t.categories c where c.id=?1")
+	Collection<Trip> findAllTripsByCategoryId(int categoryId);
+
 }

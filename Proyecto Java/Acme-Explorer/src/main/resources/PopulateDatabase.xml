@@ -33,6 +33,21 @@
 				</value>
 			</list>
 		</property>
+		<property name="defaultCategories">
+			<list>
+				<ref bean="category" />
+				<ref bean="safari" />
+				<ref bean="climbing" />
+				<ref bean="mountainClimbing" />
+				<ref bean="riverClimbing" />
+				<ref bean="water" />
+				<ref bean="lake" />
+				<ref bean="riverWater" />
+				<ref bean="ground" />
+				<ref bean="savana" />
+				<ref bean="mountainGround" />
+			</list>
+		</property>
 	</bean>
 
 	<!-- User accounts -->

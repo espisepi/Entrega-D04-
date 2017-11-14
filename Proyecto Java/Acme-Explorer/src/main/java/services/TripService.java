@@ -48,7 +48,7 @@ public class TripService {
 
 	// Simple CRUD methods-----------------------------------------------------
 	//***** TEST HECHO *******
-	public Trip create(Manager manager) {
+	public Trip create(final Manager manager) {
 		this.managerService.checkPrincipal();
 		final Collection<SurvivalClass> classes = new ArrayList<SurvivalClass>();
 		final Collection<Story> stories = new ArrayList<Story>();
@@ -59,8 +59,8 @@ public class TripService {
 		final Collection<Sponsorship> sponsorships = new ArrayList<Sponsorship>();
 		final Collection<Stage> stages = new ArrayList<Stage>();
 		final Collection<Tag> tags = new ArrayList<Tag>();
-		LegalText legalText = new LegalText();
-		Ranger ranger = new Ranger();
+		final LegalText legalText = new LegalText();
+		final Ranger ranger = new Ranger();
 		Trip trip;
 		trip = new Trip();
 		trip.setManager(manager);
@@ -217,7 +217,7 @@ public class TripService {
 
 	//Todos los Trips que apply un explorer
 	//***** TEST HECHO *******
-	public Collection<Trip> findAllTripsApplyByExplorerId(int explorerId) {
+	public Collection<Trip> findAllTripsApplyByExplorerId(final int explorerId) {
 		Collection<Trip> trips;
 		trips = new ArrayList<>(this.tripRepository.findAllTripsApplyByExplorerId(explorerId));
 		Assert.notNull(trips);
@@ -226,7 +226,7 @@ public class TripService {
 
 	//Trips auditados por el auditorId
 	//***** TEST HECHO *******
-	public Collection<Trip> findByAuditorId(int auditorId) {
+	public Collection<Trip> findByAuditorId(final int auditorId) {
 		Collection<Trip> trips;
 		trips = new ArrayList<Trip>(this.tripRepository.findByAuditorId(auditorId));
 		Assert.notNull(trips);
@@ -241,6 +241,13 @@ public class TripService {
 		return trips;
 	}
 
+	public Collection<Trip> findAllTripsByCategoryId(final int categoryId) {
+		Collection<Trip> res;
+		res = this.tripRepository.findAllTripsByCategoryId(categoryId);
+		//Me da igual si el valor es null, no quiero que salte una excepción
+		return res;
+	}
+
 	//	public void setPriceOfTrip(Trip trip) {
 	//		Collection<Stage> stagesOfTrip;
 	//		Double priceOfTrip;
@@ -253,7 +260,7 @@ public class TripService {
 	//		trip.setPrice(priceOfTrip);
 	//	}
 
-	public Double findPrice(int tripId) {
+	public Double findPrice(final int tripId) {
 		Double price;
 
 		price = this.tripRepository.findPrice(tripId);
@@ -261,7 +268,7 @@ public class TripService {
 
 		return price;
 	}
-	public void setPriceOfTrip(Trip trip) {
+	public void setPriceOfTrip(final Trip trip) {
 		Double price;
 		price = this.tripRepository.findPrice(trip.getId());
 		trip.setPrice(price);
@@ -272,7 +279,7 @@ public class TripService {
 		Collection<Trip> trips;
 		trips = this.tripRepository.findAll();
 
-		for (Trip t : trips)
+		for (final Trip t : trips)
 			this.setPriceOfTrip(t);
 
 	}

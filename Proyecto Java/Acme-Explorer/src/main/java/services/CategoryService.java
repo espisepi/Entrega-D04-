@@ -11,6 +11,7 @@ import org.springframework.util.Assert;
 
 import repositories.CategoryRepository;
 import domain.Category;
+import domain.Trip;
 
 @Service
 @Transactional
@@ -18,12 +19,16 @@ public class CategoryService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private CategoryRepository		categoryRepository;
+	private CategoryRepository			categoryRepository;
 	@Autowired
-	private AdministratorService	administratorService;
-
+	private AdministratorService		administratorService;
 
 	// Supporting services ----------------------------------------------------
+	@Autowired
+	private TripService					tripService;
+	@Autowired
+	private ConfigurationSystemService	configurationSystemService;
+
 
 	// Constructors------------------------------------------------------------
 	public CategoryService() {
@@ -71,12 +76,27 @@ public class CategoryService {
 	}
 
 	public void delete(final Category category) {
+		Collection<Trip> tripsWithThisCategory;
 		Assert.notNull(category);
 		Assert.isTrue(category.getId() != 0);
 		Assert.isTrue(this.categoryRepository.exists(category.getId()));
 		this.administratorService.checkPrincipal();
-		category.getSubCategories().removeAll(category.getSubCategories());
-
-		this.categoryRepository.delete(category);
+		tripsWithThisCategory = this.tripService.findAllTripsByCategoryId(category.getId());
+		//Assert.isTrue((this.configurationSystemService.defaultCategories().contains(category)));
+		//		for (final Category cat : this.configurationSystemService.defaultCategories())
+		//			if (cat.equals(category)) {
+		//				System.out.println(cat);
+		//				System.out.println(category);
+		//			}
+		if (category.getSubCategories().isEmpty())
+			this.categoryRepository.delete(category);
+		else {
+			for (final Category subCategory : category.getSubCategories())
+				this.delete(subCategory);
+			this.categoryRepository.delete(category);
+		}
+		if (tripsWithThisCategory != null)
+			for (final Trip trip : tripsWithThisCategory)
+				trip.getCategories().remove(category);
 	}
 }

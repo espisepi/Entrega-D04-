@@ -20,7 +20,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -73,7 +72,7 @@ public class Trip extends DomainEntity {
 		return this.price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(final double price) {
 		this.price = price;
 	}
 
@@ -92,7 +91,7 @@ public class Trip extends DomainEntity {
 		return this.publicationDate;
 	}
 
-	public void setPublicationDate(Date publicationDate) {
+	public void setPublicationDate(final Date publicationDate) {
 		this.publicationDate = publicationDate;
 	}
 
@@ -128,7 +127,7 @@ public class Trip extends DomainEntity {
 		return this.cancelled;
 	}
 
-	public void setCancelled(boolean cancelled) {
+	public void setCancelled(final boolean cancelled) {
 		this.cancelled = cancelled;
 	}
 
@@ -225,7 +224,6 @@ public class Trip extends DomainEntity {
 	}
 
 	@NotNull
-	@NotEmpty
 	@ManyToMany
 	@Valid
 	public Collection<Category> getCategories() {

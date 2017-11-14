@@ -57,9 +57,10 @@ public class CategoryServicetest extends AbstractTest {
 		super.authenticate("administrator1");
 		Category category;
 
-		category = this.categoryService.findOne(super.getEntityId("category"));
-		//Me coge la category.SubCategories() como null?
-		System.out.println(category.getSubCategories().size());
+		category = this.categoryService.create();
+		category.setName("test delete");
+		category.setFatherCategory(this.categoryService.findOne(super.getEntityId("climbing")));
+		category = this.categoryService.save(category);
 		this.categoryService.delete(category);
 
 		super.unauthenticate();

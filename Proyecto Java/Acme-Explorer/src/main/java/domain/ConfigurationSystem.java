@@ -17,10 +17,11 @@ import org.hibernate.validator.constraints.URL;
 @Access(AccessType.PROPERTY)
 public class ConfigurationSystem extends DomainEntity {
 
-	private double				VAT;
-	private String				banner;
-	private Collection<String>	spamWords;
-	private Collection<String>	welcomeMessages;
+	private double					VAT;
+	private String					banner;
+	private Collection<String>		spamWords;
+	private Collection<String>		welcomeMessages;
+	private Collection<Category>	defaultCategories;
 
 
 	public double getVAT() {
@@ -61,6 +62,17 @@ public class ConfigurationSystem extends DomainEntity {
 
 	public void setWelcomeMessages(final Collection<String> welcomeMessages) {
 		this.welcomeMessages = welcomeMessages;
+	}
+
+	@ElementCollection
+	@NotNull
+	@NotEmpty
+	public Collection<Category> getDefaultCategories() {
+		return this.defaultCategories;
+	}
+
+	public void setDefaultCategories(final Collection<Category> defaultCategories) {
+		this.defaultCategories = defaultCategories;
 	}
 
 }
