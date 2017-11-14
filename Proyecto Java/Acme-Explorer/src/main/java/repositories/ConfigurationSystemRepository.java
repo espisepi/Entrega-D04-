@@ -15,4 +15,7 @@ public interface ConfigurationSystemRepository extends JpaRepository<Configurati
 	@Query("select t from ConfigurationSystem s join s.spamWords t")
 	Collection<String> spamWord();
 
+	@Query("select c.VAT from ConfigurationSystem c")
+	Double vat();
+
 }

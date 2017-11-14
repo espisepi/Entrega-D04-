@@ -36,4 +36,8 @@ public interface TripRepository extends JpaRepository<Trip, Integer> {
 	@Query("select t from Trip t join t.auditRecords a where a.auditor.id=?1")
 	Collection<Trip> findByAuditorId(int auditorId);
 
+	//Suma todos los precios con iva de las stages de la trip pasada como parametro.
+	@Query("select sum(c.totalPrice) from Trip r join r.stages c where r.id=?1")
+	Double findPrice(int tripId);
+
 }
