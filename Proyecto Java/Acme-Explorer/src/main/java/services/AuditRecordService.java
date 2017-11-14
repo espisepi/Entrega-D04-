@@ -90,10 +90,9 @@ public class AuditRecordService {
 
 	// Other business methods------------------------------------------------------
 
-	public AuditRecord OneToModified(AuditRecord auditRecord) {
+	public void checkToModified(AuditRecord auditRecord) {
 		this.auditorService.checkPrincipal();
 		Assert.notNull(auditRecord);
 		Assert.isTrue(auditRecord.isDraftMode() == true);
-		return auditRecord;
 	}
 }
