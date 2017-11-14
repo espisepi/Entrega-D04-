@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.Collection;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,4 +77,20 @@ public class ProfessionalRecordServiceTest extends AbstractTest {
 		this.professionalRecordService.delete(newProfessionalRecord);
 	}
 
+	@Test
+	public void testFindAll() {
+		Collection<ProfessionalRecord> professionalRecords;
+		professionalRecords = this.professionalRecordService.findAll();
+		Assert.notNull(professionalRecords);
+	}
+	@Test
+	public void testEdit() {
+		ProfessionalRecord professionalRecord;
+		ProfessionalRecord professionalRecordModified;
+		professionalRecord = this.professionalRecordService.findOne(super.getEntityId("professionalRecord1"));
+		professionalRecord.setCompanyName("modified");
+		professionalRecordModified = this.professionalRecordService.findOne(super.getEntityId("professionalRecord1"));
+		Assert.isTrue(professionalRecordModified.getCompanyName() == "modified");
+
+	}
 }

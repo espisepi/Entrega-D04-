@@ -82,12 +82,8 @@ public class CategoryService {
 		Assert.isTrue(this.categoryRepository.exists(category.getId()));
 		this.administratorService.checkPrincipal();
 		tripsWithThisCategory = this.tripService.findAllTripsByCategoryId(category.getId());
-		//Assert.isTrue((this.configurationSystemService.defaultCategories().contains(category)));
-		//		for (final Category cat : this.configurationSystemService.defaultCategories())
-		//			if (cat.equals(category)) {
-		//				System.out.println(cat);
-		//				System.out.println(category);
-		//			}
+		Assert.isTrue(!(this.configurationSystemService.defaultCategories().contains(category)));
+
 		if (category.getSubCategories().isEmpty())
 			this.categoryRepository.delete(category);
 		else {

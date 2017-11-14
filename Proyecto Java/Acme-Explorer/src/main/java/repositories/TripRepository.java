@@ -18,6 +18,10 @@ public interface TripRepository extends JpaRepository<Trip, Integer> {
 	@Query("select t from Trip t where t.publicationDate!=null and t.cancelled=false")
 	Collection<Trip> findAllTripsNoAuthenticate();
 
+	//Requisito 12.1
+	@Query("select t from Trip t where t.publicationDate=null")
+	Collection<Trip> findAllTripsNotPublished();
+
 	//Requisito 12.3
 	@Query(" select t from Trip t where t.publicationDate!=null and t.startDate>CURRENT_TIMESTAMP")
 	Collection<Trip> findAllTripsPublishedNotStarted();
@@ -26,13 +30,11 @@ public interface TripRepository extends JpaRepository<Trip, Integer> {
 	@Query("select t from Trip t join t.applicationsFor a where a.status='ACCEPTED' and t.startDate>CURRENT_TIMESTAMP")
 	Collection<Trip> findTripsWhitStatusAcceptedNotStarted();
 
-	//Requisito 12.1
-	@Query("select t from Trip t where t.publicationDate!=null")
-	Collection<Trip> findAllTripsNotPublished();
-
+	//Requisito de información C/5.
 	@Query("select t from Trip t join t.applicationsFor a where a.explorer.id=?1")
 	Collection<Trip> findAllTripsApplyByExplorerId(int explorerId);
 
+	//Requisito de Información B/10.
 	@Query("select t from Trip t join t.auditRecords a where a.auditor.id=?1")
 	Collection<Trip> findByAuditorId(int auditorId);
 
@@ -42,5 +44,4 @@ public interface TripRepository extends JpaRepository<Trip, Integer> {
 
 	@Query("select t from Trip t join t.categories c where c.id=?1")
 	Collection<Trip> findAllTripsByCategoryId(int categoryId);
-
 }

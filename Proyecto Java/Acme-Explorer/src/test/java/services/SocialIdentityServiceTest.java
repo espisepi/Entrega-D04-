@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.Collection;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +38,7 @@ public class SocialIdentityServiceTest extends AbstractTest {
 	@Test
 	public void testFindOne() {
 		SocialIdentity socialIdentty;
-		socialIdentty = this.socialIdentityService.findOne(6041);
+		socialIdentty = this.socialIdentityService.findOne(super.getEntityId("socialIdentityManager5"));
 
 		Assert.notNull(socialIdentty);
 	}
@@ -56,7 +58,24 @@ public class SocialIdentityServiceTest extends AbstractTest {
 	@Test
 	public void testDelete() {
 		SocialIdentity socialIdentity;
-		socialIdentity = this.socialIdentityService.findOne(6065);
+		socialIdentity = this.socialIdentityService.findOne(super.getEntityId("socialIdentityManager5"));
 		this.socialIdentityService.delete(socialIdentity);
+	}
+	@Test
+	public void testFindAll() {
+		Collection<SocialIdentity> socialIdentities;
+		socialIdentities = this.socialIdentityService.findAll();
+		Assert.notNull(socialIdentities);
+	}
+	@Test
+	public void testEdit() {
+		SocialIdentity socialIdentity;
+		SocialIdentity socialIdentityModified;
+
+		socialIdentity = this.socialIdentityService.findOne(super.getEntityId("socialIdentityManager5"));
+		socialIdentity.setName("modified");
+		socialIdentityModified = this.socialIdentityService.findOne(super.getEntityId("socialIdentityManager5"));
+		Assert.isTrue(socialIdentityModified.getName() == "modified");
+
 	}
 }

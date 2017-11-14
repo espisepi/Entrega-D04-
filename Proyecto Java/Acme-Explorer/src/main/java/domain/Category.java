@@ -22,6 +22,7 @@ public class Category extends DomainEntity {
 	private String	name;
 
 
+	//@Column(unique = true)
 	@NotBlank
 	public String getName() {
 		return this.name;

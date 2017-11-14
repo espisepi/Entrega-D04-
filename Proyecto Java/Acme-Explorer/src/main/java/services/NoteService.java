@@ -84,7 +84,6 @@ public class NoteService {
 	//anteriores y los nuevos 
 	public Note replyANote(Note note, String reply) {
 		this.managerService.checkPrincipal();
-
 		Date replyMoment;
 		replyMoment = new Date(System.currentTimeMillis() - 1000);
 		note.setReply(reply);

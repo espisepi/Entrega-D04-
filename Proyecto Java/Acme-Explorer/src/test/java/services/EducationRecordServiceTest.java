@@ -1,6 +1,8 @@
 
 package services;
 
+import java.util.Collection;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,5 +71,19 @@ public class EducationRecordServiceTest extends AbstractTest {
 
 		this.educationRecordService.delete(newEducationRecord);
 
+	}
+
+	@Test
+	public void testFindOne() {
+		EducationRecord educationRecord;
+		educationRecord = this.educationRecordService.findOne(super.getEntityId("educationRecord1"));
+		Assert.notNull(educationRecord);
+	}
+
+	@Test
+	public void testFindAll() {
+		Collection<EducationRecord> educationRecords;
+		educationRecords = this.educationRecordService.findAll();
+		Assert.notNull(educationRecords);
 	}
 }

@@ -118,7 +118,7 @@ public class LegalTextServceTest extends AbstractTest {
 		this.authenticate("administrator1");
 
 		LegalText result;
-		result = this.legalTextService.findOneToEdit(super.getEntityId("legalText2"));
+		result = this.legalTextService.findOneToEdit(super.getEntityId("legalText5"));
 
 		result.setLawsNumber(8);
 
