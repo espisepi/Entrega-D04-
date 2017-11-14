@@ -75,6 +75,7 @@ public class CategoryService {
 		Assert.isTrue(category.getId() != 0);
 		Assert.isTrue(this.categoryRepository.exists(category.getId()));
 		this.administratorService.checkPrincipal();
+		category.getSubCategories().removeAll(category.getSubCategories());
 
 		this.categoryRepository.delete(category);
 	}
