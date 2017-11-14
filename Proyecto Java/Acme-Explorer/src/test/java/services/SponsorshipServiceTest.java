@@ -73,7 +73,7 @@ public class SponsorshipServiceTest extends AbstractTest {
 		creditcard.setBrandName("brandNametest");
 		creditcard.setHolderName("holderNametest");
 		creditcard.setNumber("4388576018410707");
-		creditcard.setExpirationMonth("2");
+		creditcard.setExpirationMonth("02");
 		creditcard.setExpirationYear("19");
 		creditcard.setCvv(655);
 

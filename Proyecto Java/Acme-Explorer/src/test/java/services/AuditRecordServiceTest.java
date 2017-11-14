@@ -112,7 +112,7 @@ public class AuditRecordServiceTest extends AbstractTest {
 	public void testDelelePositive() {
 		// Porque sé que la auditrecord que le estoy pasando tiene el modo borrador a true
 		AuditRecord auditRecord;
-		auditRecord = this.auditRecordService.findOne(super.getEntityId("auditrecord1"));
+		auditRecord = this.auditRecordService.findOne(super.getEntityId("auditrecord3"));
 		this.auditRecordService.delete(auditRecord);
 
 	}
