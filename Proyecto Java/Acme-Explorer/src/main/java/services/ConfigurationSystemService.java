@@ -87,4 +87,11 @@ public class ConfigurationSystemService {
 
 		return res;
 	}
+
+	public Double getVat() {
+		Double vat;
+		vat = this.configurationSystemRepository.vat();
+
+		return vat;
+	}
 }

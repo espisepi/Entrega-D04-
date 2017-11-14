@@ -10,7 +10,6 @@ import java.util.GregorianCalendar;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
@@ -253,7 +252,6 @@ public class TripServiceTest extends AbstractTest {
 	}
 
 	@Test
-	@Rollback(false)
 	public void testFindOneToEdit() {
 		this.authenticate("manager1");
 		Trip trip;
@@ -266,7 +264,6 @@ public class TripServiceTest extends AbstractTest {
 	}
 
 	@Test
-	@Rollback(false)
 	public void testFindOneToCancelManager() {
 		this.authenticate("manager1");
 		Trip trip;
@@ -280,7 +277,6 @@ public class TripServiceTest extends AbstractTest {
 	}
 
 	@Test
-	@Rollback(false)
 	public void testFindOneToCancelExplorer() {
 		this.authenticate("explorer3");
 		Trip trip;
@@ -316,6 +312,27 @@ public class TripServiceTest extends AbstractTest {
 		Collection<Trip> trips;
 		trips = new ArrayList<>(this.tripService.findAllTripsNotPublished());
 		Assert.notNull(trips);
+	}
+
+	@Test
+	public void testFindPrice() {
+		Trip trip;
+		trip = this.tripService.findOne(super.getEntityId("trip1"));
+		this.tripService.findPrice(trip.getId());
+	}
+	@Test
+	public void testSetPriceOfTrip() {
+		Trip trip;
+		trip = this.tripService.findOne(super.getEntityId("trip1"));
+
+		this.tripService.setPriceOfTrip(trip);
+		Assert.isTrue(trip.getPrice() > 0.0);
+
+	}
+
+	@Test
+	public void testSetPriceOfAllTrips() {
+		this.tripService.setPriceOfAllTrips();
 	}
 
 }

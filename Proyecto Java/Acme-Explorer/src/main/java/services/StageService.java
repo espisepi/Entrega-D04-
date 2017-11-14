@@ -18,11 +18,14 @@ public class StageService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private StageRepository	stageRepository;
+	private StageRepository				stageRepository;
 
 	// Supporting services ----------------------------------------------------
 	@Autowired
-	private TripService		tripService;
+	private TripService					tripService;
+
+	@Autowired
+	private ConfigurationSystemService	configurationSystemService;
 
 
 	// Constructors------------------------------------------------------------
@@ -82,4 +85,17 @@ public class StageService {
 		this.stageRepository.delete(stage);
 	}
 
+	// Other method bussisnes ---------------------------------------------------------
+	public Collection<Stage> stages() {
+		Collection<Stage> stages;
+
+		stages = this.stageRepository.stages();
+		return stages;
+	}
+
+	public void setTotalPrice(Collection<Stage> stages) {
+		Double VAT = this.configurationSystemService.getVat();
+		for (Stage s : stages)
+			s.setTotalPrice(s.getPrice() * (1 + VAT));
+	}
 }

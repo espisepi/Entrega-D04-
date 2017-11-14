@@ -241,4 +241,40 @@ public class TripService {
 		return trips;
 	}
 
+	//	public void setPriceOfTrip(Trip trip) {
+	//		Collection<Stage> stagesOfTrip;
+	//		Double priceOfTrip;
+	//
+	//		priceOfTrip = 0.0;
+	//		stagesOfTrip = this.findOne(trip.getId()).getStages();
+	//
+	//		for (Stage s : stagesOfTrip)
+	//			priceOfTrip = priceOfTrip + s.getTotalPrice();
+	//		trip.setPrice(priceOfTrip);
+	//	}
+
+	public Double findPrice(int tripId) {
+		Double price;
+
+		price = this.tripRepository.findPrice(tripId);
+		Assert.notNull(price);
+
+		return price;
+	}
+	public void setPriceOfTrip(Trip trip) {
+		Double price;
+		price = this.tripRepository.findPrice(trip.getId());
+		trip.setPrice(price);
+
+	}
+
+	public void setPriceOfAllTrips() {
+		Collection<Trip> trips;
+		trips = this.tripRepository.findAll();
+
+		for (Trip t : trips)
+			this.setPriceOfTrip(t);
+
+	}
+
 }
