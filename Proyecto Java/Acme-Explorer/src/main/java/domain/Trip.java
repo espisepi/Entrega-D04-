@@ -248,7 +248,6 @@ public class Trip extends DomainEntity {
 	}
 
 	@NotNull
-	@NotEmpty
 	@OneToMany(cascade = CascadeType.ALL)
 	@Valid
 	public Collection<Stage> getStages() {
