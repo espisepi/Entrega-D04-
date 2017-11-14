@@ -98,7 +98,7 @@ public class ConfigurationSystemService {
 
 	public Collection<Category> defaultCategories() {
 		Collection<Category> res;
-		res = this.defaultCategories();
+		res = this.configurationSystemRepository.defaultCategories();
 		Assert.notNull(res);
 		return res;
 	}
