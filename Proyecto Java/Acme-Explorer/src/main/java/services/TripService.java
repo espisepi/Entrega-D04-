@@ -110,8 +110,11 @@ public class TripService {
 		Manager manager;
 		assert trip != null;
 		assert trip.getId() != 0;
+		Collection<Trip> tripsWithoutPublicationDate;
+		//Obtenemos todos los trips que no tengan Publication Date.
+		tripsWithoutPublicationDate = new ArrayList<Trip>(this.tripRepository.findAllTripsNotPublished());
 		//Comprobamos que ese trip no tenga fecha de publicación
-		Assert.isNull(trip.getPublicationDate());
+		Assert.isTrue(tripsWithoutPublicationDate.contains(trip));
 		manager = this.managerService.findByPrincipal();
 		Assert.isTrue(manager.getTrips().contains(trip));
 		this.tripRepository.delete(trip);
