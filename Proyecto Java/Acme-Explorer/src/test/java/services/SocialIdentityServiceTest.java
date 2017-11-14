@@ -36,7 +36,7 @@ public class SocialIdentityServiceTest extends AbstractTest {
 	@Test
 	public void testFindOne() {
 		SocialIdentity socialIdentty;
-		socialIdentty = this.socialIdentityService.findOne(6041);
+		socialIdentty = this.socialIdentityService.findOne(super.getEntityId("socialIdentityManager5"));
 
 		Assert.notNull(socialIdentty);
 	}
