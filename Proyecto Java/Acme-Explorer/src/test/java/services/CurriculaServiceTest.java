@@ -95,20 +95,40 @@ public class CurriculaServiceTest extends AbstractTest {
 	}
 	@Test
 	public void testUpdate() {
-		this.authenticate("ranger2");
-		PersonalRecord personalRecord1 = this.personalRecordService.create();
+		this.authenticate("ranger1");
+		Curricula curriculaModify;
+		Curricula curriculaModificated;
+		PersonalRecord personalRecordToSave;
+		PersonalRecord personalRecord1;
+		List<ProfessionalRecord> professionalRecords;
+		List<EducationRecord> educationRecords;
+		List<EndorserRecord> endorserRecords;
+		List<MiscellaneousRecord> miscellaneousRecords;
+
+		curriculaModificated = this.curriculaService.create();
+		curriculaModify = this.curriculaService.create();
+		personalRecord1 = this.personalRecordService.create();
 		personalRecord1.setEmail("modify@hotmail.com");
 		personalRecord1.setFullName("modify1");
 		personalRecord1.setLinkedProfile("https://www.modify.com");
 		personalRecord1.setPhone("+34(578)1294");
 		personalRecord1.setPhoto("https://www.photo.com");
+		personalRecordToSave = this.personalRecordService.save(personalRecord1);
 
-		List<ProfessionalRecord> professionalRecords = new ArrayList<ProfessionalRecord>();
-		List<EducationRecord> educationRecords = new ArrayList<EducationRecord>();
-		List<EndorserRecord> endorserRecords = new ArrayList<EndorserRecord>();
-		List<MiscellaneousRecord> miscellaneousRecords = new ArrayList<MiscellaneousRecord>();
+		professionalRecords = new ArrayList<ProfessionalRecord>();
+		educationRecords = new ArrayList<EducationRecord>();
+		endorserRecords = new ArrayList<EndorserRecord>();
+		miscellaneousRecords = new ArrayList<MiscellaneousRecord>();
 
-		this.curriculaService.update(super.getEntityId("curricula2"), personalRecord1, professionalRecords, educationRecords, endorserRecords, miscellaneousRecords);
+		curriculaModify.setEducationRecords(educationRecords);
+		curriculaModify.setEndorserRecords(endorserRecords);
+		curriculaModify.setMiscellaneousRecords(miscellaneousRecords);
+		curriculaModify.setId(super.getEntityId("curricula1"));
+		curriculaModify.setPersonalRecord(personalRecordToSave);
+		curriculaModify.setProfessionalRecords(professionalRecords);
+
+		curriculaModificated = this.curriculaService.save(curriculaModify);
+		Assert.notNull(curriculaModificated);
 		this.authenticate(null);
 	}
 }

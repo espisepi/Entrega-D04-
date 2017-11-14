@@ -2,6 +2,7 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.List;
 
@@ -15,7 +16,6 @@ import domain.Curricula;
 import domain.EducationRecord;
 import domain.EndorserRecord;
 import domain.MiscellaneousRecord;
-import domain.PersonalRecord;
 import domain.ProfessionalRecord;
 import domain.Ranger;
 
@@ -25,14 +25,11 @@ public class CurriculaService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private CurriculaRepository		curriculaRepository;
+	private CurriculaRepository	curriculaRepository;
 
 	// Supporting services ----------------------------------------------------
 	@Autowired
-	private RangerService			rangerService;
-
-	@Autowired
-	private PersonalRecordService	personalRecordService;
+	private RangerService		rangerService;
 
 
 	// Constructors-------------------------------------------------------
@@ -73,56 +70,37 @@ public class CurriculaService {
 	public Curricula save(Curricula curricula) {
 
 		this.rangerService.checkPrincipal();
-
-		Curricula newCurricula;
-
 		Assert.notNull(curricula);
 		Assert.notNull(curricula.getPersonalRecord());
 
-		newCurricula = this.curriculaRepository.save(curricula);
-
-		Assert.notNull(newCurricula);
-
-		return newCurricula;
-	}
-
-	public Curricula update(Integer curriculaId, PersonalRecord personalRecord, Collection<ProfessionalRecord> professionalRecords, Collection<EducationRecord> educationRecords, Collection<EndorserRecord> endorserRecords,
-		Collection<MiscellaneousRecord> miscellaneousRecords) {
-
+		Curricula newCurricula;
+		Curricula curriculaBeforeSave;
 		Ranger ranger;
-		Curricula updateCurricula;
-		PersonalRecord newPersonalRecord;
-		Curricula curriculaBeforeUpdate;
 
-		Assert.notNull(personalRecord);
-		Assert.notNull(this.curriculaRepository.findOne(curriculaId));
-
-		//Tengo que comprobar que el que quiera modificar esa curricula es su propio ranger
-		this.rangerService.checkPrincipal();
 		ranger = this.rangerService.findByPrincipal();
+		newCurricula = new Curricula();
 
-		Assert.isTrue(this.curriculaRepository.findOne(curriculaId) == this.curriculaRepository.findCurriculaFromRanger(ranger.getId()));
+		newCurricula.setId(curricula.getId());
+		newCurricula.setEducationRecords(curricula.getEducationRecords());
+		newCurricula.setEndorserRecords(curricula.getEndorserRecords());
+		newCurricula.setMiscellaneousRecords(curricula.getMiscellaneousRecords());
+		newCurricula.setPersonalRecord(curricula.getPersonalRecord());
+		newCurricula.setProfessionalRecords(curricula.getProfessionalRecords());
 
-		updateCurricula = new Curricula();
-		newPersonalRecord = this.personalRecordService.save(personalRecord);
+		Assert.isTrue(curricula.getRanger() == ranger);
+		if (curricula.getId() != 0)
+			newCurricula.setTicker(this.curriculaRepository.findOne(curricula.getId()).getTicker());
+		if (curricula.getId() == 0)
+			newCurricula.setTicker(this.generatedTicker());
 
-		updateCurricula.setEducationRecords(educationRecords);
-		updateCurricula.setEndorserRecords(endorserRecords);
-		updateCurricula.setMiscellaneousRecords(miscellaneousRecords);
-		updateCurricula.setPersonalRecord(newPersonalRecord);
-		updateCurricula.setProfessionalRecords(professionalRecords);
-		updateCurricula.setId(curriculaId);
-		updateCurricula.setRanger(ranger);
-		updateCurricula.setTicker(this.curriculaRepository.findOne(curriculaId).getTicker());
+		newCurricula.setRanger(ranger);
 
-		Assert.isTrue(updateCurricula.getTicker() == this.curriculaRepository.findOne(curriculaId).getTicker());
-		curriculaBeforeUpdate = this.curriculaRepository.save(updateCurricula);
+		curriculaBeforeSave = this.curriculaRepository.save(newCurricula);
+		Assert.notNull(curriculaBeforeSave);
 
-		Assert.notNull(curriculaBeforeUpdate);
-
-		return this.curriculaRepository.findOne(curriculaId);
-
+		return curriculaBeforeSave;
 	}
+
 	public void delete(Curricula curricula) {
 
 		Assert.notNull(curricula);
@@ -161,5 +139,28 @@ public class CurriculaService {
 		curricula = this.curriculaRepository.findCurriculaFromRanger(rangerId);
 
 		return curricula;
+	}
+
+	public String generatedTicker() {
+
+		Calendar calendar;
+
+		calendar = Calendar.getInstance();
+		String ticker;
+
+		ticker = String.valueOf(calendar.get(Calendar.YEAR)).substring(2) + String.valueOf(calendar.get(Calendar.MONTH) + 1) + String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+		char[] arr = new char[] {
+			'A', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+		};
+		String cadenaAleatoria = "";
+		for (Integer i = 0; i <= 3; i++) {
+			char elegido = arr[(int) (Math.random() * 26)];
+			cadenaAleatoria = cadenaAleatoria + elegido;
+
+		}
+
+		ticker = ticker + "-" + cadenaAleatoria;
+
+		return ticker;
 	}
 }
