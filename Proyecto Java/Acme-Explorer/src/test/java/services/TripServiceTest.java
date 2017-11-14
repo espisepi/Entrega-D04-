@@ -326,7 +326,7 @@ public class TripServiceTest extends AbstractTest {
 		trip = this.tripService.findOne(super.getEntityId("trip1"));
 
 		this.tripService.setPriceOfTrip(trip);
-		Assert.isTrue(trip.getPrice() > 0.0);
+		Assert.isTrue(trip.getPrice() >= 0.0);
 
 	}
 
