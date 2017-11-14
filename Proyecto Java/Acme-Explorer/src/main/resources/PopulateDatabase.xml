@@ -2059,7 +2059,7 @@
 		<property name="body" value="body 1" />
 		<property name="lawsNumber" value="1"></property>
 		<property name="moment" value="2017/10/29 23:59"></property>
-		<property name="draftMode" value="true"></property>
+		<property name="draftMode" value="false"></property>
 	</bean>
 
 	<bean id="legalText2" class="domain.LegalText">
@@ -2067,7 +2067,7 @@
 		<property name="body" value="body 2" />
 		<property name="lawsNumber" value="1"></property>
 		<property name="moment" value="2017/11/02 23:59"></property>
-		<property name="draftMode" value="true"></property>
+		<property name="draftMode" value="false"></property>
 	</bean>
 
 
@@ -2076,7 +2076,7 @@
 		<property name="body" value="body 3" />
 		<property name="lawsNumber" value="1"></property>
 		<property name="moment" value="2017/11/12 23:59"></property>
-		<property name="draftMode" value="true"></property>
+		<property name="draftMode" value="false"></property>
 	</bean>
 
 
@@ -2085,7 +2085,7 @@
 		<property name="body" value="body 4" />
 		<property name="lawsNumber" value="4"></property>
 		<property name="moment" value="2017/11/23 23:59"></property>
-		<property name="draftMode" value="true"></property>
+		<property name="draftMode" value="false"></property>
 	</bean>
 
 	<bean id="legalText5" class="domain.LegalText">
@@ -2101,7 +2101,7 @@
 		<property name="body" value="bodyA+" />
 		<property name="lawsNumber" value="1"></property>
 		<property name="moment" value="2017/12/23 23:59"></property>
-		<property name="draftMode" value="true"></property>
+		<property name="draftMode" value="false"></property>
 	</bean>
 
 	<!-- SponsorShip -->
