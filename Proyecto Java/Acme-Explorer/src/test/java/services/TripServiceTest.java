@@ -93,7 +93,6 @@ public class TripServiceTest extends AbstractTest {
 		Manager manager;
 		Ranger ranger;
 		LegalText legalText;
-		String ticker;
 		String title;
 		String description;
 		Collection<String> requerimentsExplorers;
@@ -119,7 +118,6 @@ public class TripServiceTest extends AbstractTest {
 		manager = this.managerService.findByPrincipal();
 		ranger = this.rangerService.findOne(super.getEntityId("ranger1"));
 		trip = this.tripService.create(manager);
-		ticker = "170412-WWWW";
 		title = "trip1";
 		description = "trip de test";
 		requerimentsExplorers = new ArrayList<String>();
@@ -127,7 +125,6 @@ public class TripServiceTest extends AbstractTest {
 		price = 400.;
 
 		trip.setRanger(ranger);
-		trip.setTicker(ticker);
 		trip.setTitle(title);
 		trip.setDescription(description);
 		trip.setRequirementsExplorers(requerimentsExplorers);

@@ -2,6 +2,7 @@
 package services;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,6 +75,7 @@ public class TripService {
 		trip.setStages(stages);
 		trip.setTags(tags);
 		trip.setLegalText(legalText);
+		trip.setTicker(this.generatedTicker());
 
 		return trip;
 	}
@@ -81,6 +83,8 @@ public class TripService {
 	//***** TEST HECHO *******
 	public Trip save(final Trip trip) {
 		assert trip != null;
+		if (trip.getId() == 0)
+			trip.setTicker(this.generatedTicker());
 		Trip result;
 		//Sólo los legalText que estén guardados como draftMode pueden ser referenciados a una Trip.
 		Assert.isTrue(!trip.getLegalText().isDraftMode());
@@ -284,6 +288,29 @@ public class TripService {
 		for (Trip t : trips)
 			this.setPriceOfTrip(t);
 
+	}
+
+	public String generatedTicker() {
+
+		Calendar calendar;
+
+		calendar = Calendar.getInstance();
+		String ticker;
+
+		ticker = String.valueOf(calendar.get(Calendar.YEAR)).substring(2) + String.valueOf(calendar.get(Calendar.MONTH) + 1) + String.valueOf(calendar.get(Calendar.DAY_OF_MONTH));
+		char[] arr = new char[] {
+			'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+		};
+		String cadenaAleatoria = "";
+		for (Integer i = 0; i <= 3; i++) {
+			char elegido = arr[(int) (Math.random() * 26)];
+			cadenaAleatoria = cadenaAleatoria + elegido;
+
+		}
+
+		ticker = ticker + "-" + cadenaAleatoria;
+
+		return ticker;
 	}
 
 }
