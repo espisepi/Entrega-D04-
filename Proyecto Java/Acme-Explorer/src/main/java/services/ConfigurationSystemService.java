@@ -46,6 +46,7 @@ public class ConfigurationSystemService {
 		ConfigurationSystem res;
 
 		res = this.findAll().iterator().next();
+		Assert.notNull(res);
 
 		return res;
 
@@ -55,6 +56,7 @@ public class ConfigurationSystemService {
 		ConfigurationSystem result;
 
 		result = this.configurationSystemRepository.findOne(configurationSystemId);
+		Assert.notNull(result);
 
 		return result;
 	}
@@ -67,15 +69,6 @@ public class ConfigurationSystemService {
 		result = this.configurationSystemRepository.save(configurationSystem);
 
 		return result;
-	}
-
-	public void delete(final ConfigurationSystem configurationSystem) {
-		Assert.notNull(configurationSystem);
-		Assert.isTrue(configurationSystem.getId() != 0);
-
-		Assert.isTrue(this.configurationSystemRepository.exists(configurationSystem.getId()));
-
-		this.configurationSystemRepository.delete(configurationSystem);
 	}
 
 	// Other business methods -------------------------------------------------
