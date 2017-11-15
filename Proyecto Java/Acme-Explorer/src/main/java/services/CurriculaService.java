@@ -163,4 +163,10 @@ public class CurriculaService {
 
 		return ticker;
 	}
+
+	public Curricula CurriculaWithThisPersonalRecord(int personalRecordId) {
+
+		Assert.isTrue(personalRecordId != 0);
+		return this.curriculaRepository.CurriculaWithThisPersonalRecord(personalRecordId);
+	}
 }

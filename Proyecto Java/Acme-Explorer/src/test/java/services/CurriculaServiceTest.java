@@ -20,6 +20,7 @@ import domain.EndorserRecord;
 import domain.MiscellaneousRecord;
 import domain.PersonalRecord;
 import domain.ProfessionalRecord;
+import domain.Ranger;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -37,6 +38,9 @@ public class CurriculaServiceTest extends AbstractTest {
 
 	@Autowired
 	private PersonalRecordService	personalRecordService;
+
+	@Autowired
+	private RangerService			rangerService;
 
 
 	// Test -----------------------------------------------------------------------------
@@ -130,5 +134,31 @@ public class CurriculaServiceTest extends AbstractTest {
 		curriculaModificated = this.curriculaService.save(curriculaModify);
 		Assert.notNull(curriculaModificated);
 		this.authenticate(null);
+	}
+
+	@Test
+	public void testFindCurriculaFromRanger() {
+		Curricula curricula;
+		Ranger ranger;
+		ranger = this.rangerService.findOne(super.getEntityId("ranger2"));
+		curricula = this.curriculaService.findCurriculaFromRanger(ranger.getId());
+		Assert.notNull(curricula);
+	}
+
+	@Test
+	public void testGeneratedTicker() {
+		String ticker;
+		ticker = this.curriculaService.generatedTicker();
+		Assert.notNull(ticker);
+	}
+
+	@Test
+	public void testCurriculaWithPersonalRecord() {
+		Curricula curriculaWithPersonalRecord;
+		PersonalRecord personalRecord;
+
+		personalRecord = this.personalRecordService.findOne(super.getEntityId("personalRecord1"));
+		curriculaWithPersonalRecord = this.curriculaService.CurriculaWithThisPersonalRecord(personalRecord.getId());
+		Assert.notNull(curriculaWithPersonalRecord);
 	}
 }

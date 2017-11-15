@@ -74,19 +74,13 @@ public class PersonalRecordService {
 
 	}
 
-	public Curricula CurriculaWithThisPersonalRecord(int personalRecordId) {
-
-		Assert.isTrue(personalRecordId != 0);
-		return this.personalRecordRepository.CurriculaWithThisPersonalRecord(personalRecordId);
-	}
-
 	public void delete(PersonalRecord personalRecord) {
 
 		Assert.notNull(personalRecord);
 		Assert.isTrue(personalRecord.getId() != 0);
 
 		Curricula curriculaWithThisPersonalRecord;
-		curriculaWithThisPersonalRecord = this.personalRecordRepository.CurriculaWithThisPersonalRecord(personalRecord.getId());
+		curriculaWithThisPersonalRecord = this.curriculaService.CurriculaWithThisPersonalRecord(personalRecord.getId());
 		if (curriculaWithThisPersonalRecord != null && curriculaWithThisPersonalRecord.getId() != 0)
 			this.curriculaService.delete(curriculaWithThisPersonalRecord);
 

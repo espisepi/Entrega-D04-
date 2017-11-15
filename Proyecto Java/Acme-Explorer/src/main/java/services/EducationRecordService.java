@@ -86,14 +86,4 @@ public class EducationRecordService {
 		Assert.isNull(this.educationRecordRepository.findOne(educationRecord.getId()));
 	}
 
-	public Collection<EducationRecord> saveAll(Collection<EducationRecord> educationRecords) {
-		Assert.notNull(educationRecords);
-		List<EducationRecord> newEducationRecords;
-
-		newEducationRecords = new ArrayList<EducationRecord>();
-		newEducationRecords.addAll(this.educationRecordRepository.save(educationRecords));
-
-		return newEducationRecords;
-	}
-
 }

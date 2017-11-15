@@ -84,12 +84,4 @@ public class EndorserRecordService {
 		Assert.isNull(this.endorserRecordRepository.findOne(endorserRecord.getId()));
 	}
 
-	public Collection<EndorserRecord> saveAll(Collection<EndorserRecord> endorserRecords) {
-		Assert.notNull(endorserRecords);
-		List<EndorserRecord> newEndorserRecords = new ArrayList<EndorserRecord>();
-		newEndorserRecords.addAll(this.endorserRecordRepository.save(endorserRecords));
-
-		return newEndorserRecords;
-	}
-
 }

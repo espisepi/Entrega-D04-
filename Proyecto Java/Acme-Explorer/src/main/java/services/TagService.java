@@ -78,18 +78,5 @@ public class TagService {
 
 		this.tagRepository.delete(tag);
 	}
-	//	public Tag update(int tagId, String name) {
-	//		List<Tag> tagWithTrip = new ArrayList<Tag>();
-	//		tagWithTrip.addAll(this.tagRepository.findTagWithTrip());
-	//
-	//		Tag tagToModify = this.tagRepository.findOne(tagId);
-	//		Assert.notNull(this.tagRepository.findOne(tagId));
-	//		Assert.isTrue(!tagWithTrip.contains(this.tagRepository.findOne(tagId)));
-	//		this.administratorService.checkPrincipal();
-	//
-	//		tagToModify.setName(name);
-	//
-	//		return tagToModify;
-	//
-	//	}
+
 }

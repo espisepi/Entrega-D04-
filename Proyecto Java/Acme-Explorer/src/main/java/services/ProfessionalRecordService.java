@@ -82,11 +82,4 @@ public class ProfessionalRecordService {
 		Assert.isNull(this.professionalRecordRepository.findOne(professionalRecord.getId()));
 	}
 
-	public Collection<ProfessionalRecord> saveAll(Collection<ProfessionalRecord> professionalRecords) {
-		Assert.notNull(professionalRecords);
-		List<ProfessionalRecord> newProfessionalRecords = new ArrayList<ProfessionalRecord>();
-		newProfessionalRecords.addAll(this.professionalRecordRepository.save(professionalRecords));
-
-		return newProfessionalRecords;
-	}
 }
