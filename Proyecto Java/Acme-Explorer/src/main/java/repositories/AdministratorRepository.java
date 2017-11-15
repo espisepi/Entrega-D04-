@@ -16,14 +16,14 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
 	@Query("select a from Administrator a where a.userAccount.id = ?1")
 	Administrator findByUserAccountId(int id);
 
-	@Query("select max(t.applicationsFor.size), min(t.applicationsFor.size), avg(t.applicationsFor.size) , stddev(t.applicationsFor.size) from Trip t")
-	Double[] findMaxMinAvgStddevOfTheNumOfApplicationsPerTrip();
+	@Query("select avg(t.applicationsFor.size) ,min(t.applicationsFor.size),max(t.applicationsFor.size), stddev(t.applicationsFor.size) from Trip t")
+	Double[] findAvgMinMaxStddevOfTheNumOfApplicationsPerTrip();
 
-	@Query("select max(m.trips.size), min(m.trips.size), avg(m.trips.size), stddev(m.trips.size) from Manager m")
-	Double[] findMaxMinAvgStddevOfTheNumOfTripsPerManager();
+	@Query("select avg(m.trips.size), min(m.trips.size), max(m.trips.size), stddev(m.trips.size) from Manager m")
+	Double[] findAvgMinMaxStddevOfTheNumOfTripsPerManager();
 
-	@Query("select min(t.price), max(t.price), avg(t.price), stddev(t.price) from Trip t")
-	Double[] findMinMaxAvgStddevOfThePriceOfTheTrips();
+	@Query("select avg(t.price), min(t.price), max(t.price), stddev(t.price) from Trip t")
+	Double[] findAvgMinMaxStddevOfThePriceOfTheTrips();
 
 	@Query("select avg(r.trips.size),min(r.trips.size),max(r.trips.size), stddev(r.trips.size) from Ranger r")
 	Double[] findAvgMinMaxStddevOfTheNumTripsPerRanger();

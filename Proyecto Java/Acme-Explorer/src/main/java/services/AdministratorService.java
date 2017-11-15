@@ -117,23 +117,23 @@ public class AdministratorService {
 		Assert.isTrue(authorities.contains(auth));
 	}
 
-	public Double[] findMaxMinAvgStddevOfTheNumOfApplicationsPerTrip() {
+	public Double[] findAvgMinMaxStddevOfTheNumOfApplicationsPerTrip() {
 		Double[] result;
-		result = this.administratorRepository.findMaxMinAvgStddevOfTheNumOfApplicationsPerTrip();
+		result = this.administratorRepository.findAvgMinMaxStddevOfTheNumOfApplicationsPerTrip();
 		Assert.notNull(result);
 		return result;
 	}
 
-	public Double[] findMaxMinAvgStddevOfTheNumOfTripsPerManager() {
+	public Double[] findAvgMinMaxStddevOfTheNumOfTripsPerManager() {
 		Double[] result;
-		result = this.administratorRepository.findMaxMinAvgStddevOfTheNumOfTripsPerManager();
+		result = this.administratorRepository.findAvgMinMaxStddevOfTheNumOfTripsPerManager();
 		Assert.notNull(result);
 		return result;
 	}
 
-	public Double[] findMinMaxAvgStddevOfThePriceOfTheTrips() {
+	public Double[] findAvgMinMaxStddevOfThePriceOfTheTrips() {
 		Double[] result;
-		result = this.administratorRepository.findMinMaxAvgStddevOfThePriceOfTheTrips();
+		result = this.administratorRepository.findAvgMinMaxStddevOfThePriceOfTheTrips();
 		Assert.notNull(result);
 		return result;
 	}
