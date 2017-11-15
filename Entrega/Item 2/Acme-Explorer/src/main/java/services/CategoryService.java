@@ -20,14 +20,14 @@ public class CategoryService {
 	// Managed repository -----------------------------------------------------
 	@Autowired
 	private CategoryRepository			categoryRepository;
-	@Autowired
-	private AdministratorService		administratorService;
 
 	// Supporting services ----------------------------------------------------
 	@Autowired
 	private TripService					tripService;
 	@Autowired
 	private ConfigurationSystemService	configurationSystemService;
+	@Autowired
+	private AdministratorService		administratorService;
 
 
 	// Constructors------------------------------------------------------------
