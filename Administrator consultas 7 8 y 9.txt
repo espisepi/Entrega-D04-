@@ -1,0 +1,20 @@
+@Test
+	public void testFindRatioOfApplicationsAccepted() {
+		Double ratioOfApplicationsAccepted;
+		ratioOfApplicationsAccepted = this.administratorService.findRatioOfApplicationsAccepted();
+		Assert.notNull(ratioOfApplicationsAccepted);
+	}
+
+	@Test
+	public void testFindRatioOfApplicationsCancelled() {
+		Double ratioOfApplicationsCancelled;
+		ratioOfApplicationsCancelled = this.administratorService.findRatioOfApplicationsCancelled();
+		Assert.notNull(ratioOfApplicationsCancelled);
+	}
+
+	@Test
+	public void testFindRatioOfTheTripsCancelledvsTripsOrganised() {
+		Double ratioOfTheTripsCancelledvsTripsOrganised;
+		ratioOfTheTripsCancelledvsTripsOrganised = this.administratorService.findRatioOfTheTripsCancelledvsTripsOrganised();
+		Assert.notNull(ratioOfTheTripsCancelledvsTripsOrganised);
+	}
