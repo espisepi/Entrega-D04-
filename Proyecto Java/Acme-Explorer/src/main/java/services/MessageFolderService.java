@@ -100,6 +100,12 @@ public class MessageFolderService {
 	}
 	// Other business methods -------------------------------------------------
 
+	public Collection<MessageFolder> ActorFolders(int id) {
+		Collection<MessageFolder> res;
+		res = this.messageFolderRepository.ActorFolders(id);
+		return res;
+
+	}
 	public Collection<MessageFolder> findAllByActorAutenticate() {
 		Actor actor;
 		actor = this.actorService.findPrincipal();

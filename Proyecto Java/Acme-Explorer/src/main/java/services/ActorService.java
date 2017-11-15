@@ -85,4 +85,10 @@ public class ActorService {
 			result = true;
 		return result;
 	}
+	public Actor findActorByUseraccount(int id) {
+		Actor res;
+		res = this.findActorByUseraccount(id);
+		return res;
+
+	}
 }
