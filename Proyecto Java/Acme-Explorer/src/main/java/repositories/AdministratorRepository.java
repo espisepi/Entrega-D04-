@@ -29,19 +29,19 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
 	Double[] findAvgMinMaxStddevOfTheNumTripsPerRanger();
 
 	@Query("select (select count(a) from ApplicationFor a where a.status='PENDING') *1.0 / count(a) from ApplicationFor a")
-	Double findRatioOfApplicationsPending();
+	Double findRatOfApplicationsPending();
 
 	@Query("select (select count(a) from ApplicationFor a where a.status='DUE') *1.0 / count(a) from ApplicationFor a")
 	Double findRatioOfApplicationsDue();
 
 	@Query("select (select count(c) from ApplicationFor c where c.status='ACCEPTED') *1.0 / count(r) from ApplicationFor r")
-	Double findRatioOfApplicationsAccepted();
+	Double findRatOfApplicationsAccepted();
 
 	@Query("select (select count(c) from ApplicationFor c where c.status='CANCELLED') *1.0 / count(r) from ApplicationFor r")
-	Double findRatioOfApplicationsCancelled();
+	Double findRatOfApplicationsCancelled();
 
 	@Query("select (select count(c) from Trip c where c.cancelled=true) * 1.0 / count(r) from Trip r where r.publicationDate is not null")
-	Double findRatioOfTheTripsCancelledvsTripsOrganised();
+	Double findRatOfTheTripsCancelledvsTripsOrganised();
 
 	@Query("select t from Trip t where t.applicationsFor.size > 1.1*(select avg(t.applicationsFor.size) from Trip t) order by t.applicationsFor.size")
 	Collection<Trip> findTrips10porcentMoreApplicationsThanAvg();
@@ -65,8 +65,8 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
 	Double findTheRatOfRangersWhoseCurrIsEndorsed();
 
 	@Query("select (select count(m1) from Manager m1 where m1.suspicious=false)*1.0/count(m) from Manager m")
-	Double findTheRatioOFSuspiciousManagers();
+	Double findTheRatOFSuspiciousManagers();
 
 	@Query("select (select count(r1) from Ranger r1 where r1.suspicious=false)*1.0/count(r) from Ranger r")
-	Double findTheRatioOFSuspiciousRangers();
+	Double findTheRatOFSuspiciousRangers();
 }

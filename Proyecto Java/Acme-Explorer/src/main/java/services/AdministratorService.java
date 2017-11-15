@@ -145,9 +145,9 @@ public class AdministratorService {
 		return result;
 	}
 
-	public Double findRatioOfApplicationsPending() {
+	public Double findRatOfApplicationsPending() {
 		Double result;
-		result = this.administratorRepository.findRatioOfApplicationsPending();
+		result = this.administratorRepository.findRatOfApplicationsPending();
 		return result;
 	}
 
@@ -157,21 +157,21 @@ public class AdministratorService {
 		return result;
 	}
 
-	public Double findRatioOfApplicationsAccepted() {
+	public Double findRatOfApplicationsAccepted() {
 		Double result;
-		result = this.administratorRepository.findRatioOfApplicationsAccepted();
+		result = this.administratorRepository.findRatOfApplicationsAccepted();
 		return result;
 	}
 
-	public Double findRatioOfApplicationsCancelled() {
+	public Double findRatOfApplicationsCancelled() {
 		Double result;
-		result = this.administratorRepository.findRatioOfApplicationsCancelled();
+		result = this.administratorRepository.findRatOfApplicationsCancelled();
 		return result;
 	}
 
-	public Double findRatioOfTheTripsCancelledvsTripsOrganised() {
+	public Double findRatOfTheTripsCancelledvsTripsOrganised() {
 		Double result;
-		result = this.administratorRepository.findRatioOfTheTripsCancelledvsTripsOrganised();
+		result = this.administratorRepository.findRatOfTheTripsCancelledvsTripsOrganised();
 		return result;
 	}
 
@@ -219,15 +219,15 @@ public class AdministratorService {
 		return result;
 	}
 
-	public Double findTheRatioOFSuspiciousManagers() {
+	public Double findTheRatOFSuspiciousManagers() {
 		Double result;
-		result = this.administratorRepository.findTheRatioOFSuspiciousManagers();
+		result = this.administratorRepository.findTheRatOFSuspiciousManagers();
 		return result;
 	}
 
-	public Double findTheRatioOFSuspiciousRangers() {
+	public Double findTheRatOFSuspiciousRangers() {
 		Double result;
-		result = this.administratorRepository.findTheRatioOFSuspiciousRangers();
+		result = this.administratorRepository.findTheRatOFSuspiciousRangers();
 		return result;
 	}
 
