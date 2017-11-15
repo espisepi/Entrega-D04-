@@ -332,4 +332,20 @@ public class TripServiceTest extends AbstractTest {
 		this.tripService.setPriceOfAllTrips();
 	}
 
+	@Test
+	public void testGeneratedTicker() {
+		String ticker;
+		ticker = this.tripService.generatedTicker();
+		Assert.notNull(ticker);
+	}
+
+	@Test
+	public void testFindAllTripsByCategoryId() {
+		Category category;
+		Collection<Trip> trips;
+		category = this.categoryService.findOne(super.getEntityId("water"));
+		trips = new ArrayList<Trip>(this.tripService.findAllTripsByCategoryId(category.getId()));
+		Assert.notNull(trips);
+	}
+
 }
