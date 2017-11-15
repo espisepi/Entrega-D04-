@@ -72,7 +72,6 @@ public class LegalTextService {
 		LegalText result;
 
 		result = this.legalTextRepository.save(legalText);
-		result.setDraftMode(true);
 
 		return result;
 	}
