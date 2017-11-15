@@ -64,7 +64,7 @@ public class EndorserRecord extends DomainEntity {
 		this.comments = comments;
 	}
 
-	@NotNull
+	@NotBlank
 	public String getPhone() {
 		return this.phone;
 	}

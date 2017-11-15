@@ -52,7 +52,7 @@ public class PersonalRecord extends DomainEntity {
 		this.email = email;
 	}
 
-	@NotNull
+	@NotBlank
 	public String getPhone() {
 		return this.phone;
 	}
